@@ -258,7 +258,7 @@
     <script>
         
       // Set up your OpenAI API key
-const openaiApiKey = 'sk-proj-1R615hAmPdPe1f3L0pzzT3BlbkFJkMhIgu2vWB6qBxHfx8Kb';
+// const openaiApiKey = 'sk-proj-1R615hAmPdPe1f3L0pzzT3BlbkFJkMhIgu2vWB6qBxHfx8Kb';
 
 // Define your prompt for DALL-E 2
 
