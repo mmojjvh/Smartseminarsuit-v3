@@ -6,36 +6,39 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 
-use App\Domain\Interfaces\Repositories\Backoffice\IFAQsRepository;
-use App\Domain\Interfaces\Repositories\Backoffice\IRecordsRepository;
-use App\Domain\Interfaces\Repositories\Backoffice\IPatientsRepository;
-use App\Domain\Interfaces\Repositories\Backoffice\IServicesRepository;
-use App\Domain\Interfaces\Repositories\Backoffice\IAppointmentsRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\IStaffsRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\IEventsRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\IFeedbacksRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\IParticipantsRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\ICertificatesRepository;
 
 use Input;
 
 class DashboardController extends Controller
 {
-    public function __construct(
-                                IFAQsRepository $faqRepo,
-                                IRecordsRepository $recordRepo, 
-                                IPatientsRepository $patientRepo, 
-                                IServicesRepository $serviceRepo, 
-                                IAppointmentsRepository $appointmentRepo){
+    public function __construct(IStaffsRepository $staffRepo,
+                                IEventsRepository $eventRepo,
+                                IFeedbacksRepository $feedbackRepo, 
+                                IParticipantsRepository $participantRepo,
+                                ICertificatesRepository $certificateRepo){
         $this->data = [];
-        $this->faqRepo = $faqRepo;
-        $this->recordRepo = $recordRepo;
-        $this->patientRepo = $patientRepo;
-        $this->serviceRepo = $serviceRepo;
-        $this->appointmentRepo = $appointmentRepo;
+        $this->staffRepo = $staffRepo;
+        $this->eventRepo = $eventRepo;
+        $this->feedbackRepo = $feedbackRepo;
+        $this->participantRepo = $participantRepo;
+        $this->certificateRepo = $certificateRepo;
     }
     
     public function index(){
-        $this->data['faqs'] = $this->faqRepo->fetch();
-        $this->data['patientCount'] = $this->patientRepo->fetch()->count();
-        $this->data['newPatientCount'] = $this->patientRepo->newPatients()->count();
-        $this->data['appointmentsCount'] = $this->appointmentRepo->scheduledAppoints()->count();
-        $this->data['appointments'] = $this->appointmentRepo->fetch();
+        $this->data['events'] = $this->eventRepo->fetchOnGoing();
+        $this->data['staffs'] = $this->staffRepo->fetch();
+
+        $this->data['staffCount'] = $this->data['staffs']->count();
+        $this->data['participantCount'] = $this->participantRepo->fetch()->count();
+        $this->data['feedbackCount'] = $this->feedbackRepo->fetch()->count();
+        $this->data['eventCount'] = $this->eventRepo->fetch()->count();
+        $this->data['attendedCount'] = $this->eventRepo->fetchAttended(auth()->user()->id)->count();
+        $this->data['certificateCount'] = $this->certificateRepo->fetchAll()->count();
     	return view('backoffice.pages.dashboard.index', $this->data);
     }
 
@@ -99,7 +102,7 @@ class DashboardController extends Controller
     public function viewAppointment(){
         $start = Input::get('_start');
         $end = Input::get('_end');
-        $appointments = $this->appointmentRepo->getAppointments($start, $end);
+        $appointments = $this->eventRepo->getAppointments($start, $end);
         $appts = [];
         foreach ($appointments as $appointment) {
             array_push($appts,[  
@@ -115,7 +118,7 @@ class DashboardController extends Controller
     }
 
     public function downloadAppointments($start, $end){
-        $appointments = $this->appointmentRepo->getAppointments($start, $end);
+        $appointments = $this->eventRepo->getAppointments($start, $end);
         $fileName = 'AppointmentSummaryReport-'.$start.'-'.$end.'.csv';
 
         $headers = array(

@@ -8,6 +8,6 @@
 <link class="main-stylesheet" href="{{asset('web/pages/css/index.css')}}" rel="stylesheet" type="text/css" />
 <style>
     .bg-success-dark {
-        background-color: #0911ca!important;
+        /* background-color: #0911ca!important; */
     }
 </style>

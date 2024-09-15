@@ -60,7 +60,7 @@ class RouteServiceProvider extends ServiceProvider
         Route::middleware('web')
              ->namespace($this->backofficeNamespace)
              ->name('backoffice.')
-             ->prefix('clinic')
+             ->prefix('backoffice')
              ->group(base_path('routes/backoffice.php'));
     }
 

@@ -8,6 +8,8 @@
  * ------------------------------------
  *
  */
+Route::any('cert/auth/{id}',['as' => "verify_certificate",'uses' => "CertificateController@verifyCertificate"]);
+
 Route::group(['middleware' => "backoffice.guest", 'as' => "auth." ], function(){
     Route::get('login',['as' => "login", 'uses' => "LoginController@login"]);
     Route::post('login',['uses' => "LoginController@authenticate"]);
@@ -22,6 +24,8 @@ Route::group(['middleware' => "backoffice.guest", 'as' => "auth." ], function(){
     Route::post('reset-password/{token}',['uses' => "ForgotPasswordController@updatePass"]);
 
     Route::any('auto-reply',['as' => "autoReply",'uses' => "ChatBotController@autoReply"]);
+
+    // Route::any('cert/auth/{id}',['as' => "verify_certificate",'uses' => "CertificateController@verifyCertificate"]);
     
 });
 
@@ -33,62 +37,65 @@ Route::group(['middleware' => ["backoffice.auth"
     Route::any('download/{start?}/{end?}',['as' => "download",'uses' => "DashboardController@downloadReport"]);
     Route::any('viewReport',['as' => "viewReport",'uses' => "DashboardController@viewReport"]);
 
-    Route::group(['as' => "patients.", 'prefix' => "patients"], function(){
-        Route::get('/',['as' => "index", 'middleware' => "backoffice.superUserOnly", 'uses' => "PatientsController@index"]);
-        Route::get('create',['as' => "create", 'middleware' => "backoffice.superUserOnly", 'uses' => "PatientsController@create"]);
-        Route::post('create',['middleware' => "backoffice.superUserOnly", 'uses' => "PatientsController@store"]);
-        Route::get('view/{id}',['as' => "view",'uses' => "PatientsController@view"]);
-        Route::get('edit/{id}',['as' => "edit",'uses' => "PatientsController@edit"]);
-        Route::post('edit/{id}',['as' => "update",'uses' => "PatientsController@update"]);
-
-        Route::get('create-treatment/{id}',['as' => "create_treatment",'uses' => "TreatmentsController@create"]);
-        Route::get('view-treatment/{id}',['as' => "view_treatment",'uses' => "TreatmentsController@view"]);
-        Route::post('view-treatment/{id}',['uses' => "TreatmentsController@save"]);
+    Route::group(['as' => "participants.", 'prefix' => "participants"], function(){
+        Route::get('/',['as' => "index", 'uses' => "ParticipantsController@index"]);
+        Route::get('create',['as' => "create", 'uses' => "ParticipantsController@create"]);
+        Route::post('create',['middleware' => "backoffice.superUserOnly", 'uses' => "ParticipantsController@store"]);
+        Route::get('view/{id}',['as' => "view",'uses' => "ParticipantsController@view"]);
+        Route::get('edit/{id}',['as' => "edit",'uses' => "ParticipantsController@edit"]);
+        Route::post('edit/{id}',['as' => "update",'uses' => "ParticipantsController@update"]);
     });
 
-    Route::group(['as' => "chatbot.", 'prefix' => "chatbot"], function(){
-        Route::get('/',['as' => "index", 'middleware' => "backoffice.superUserOnly", 'uses' => "ChatBotController@index"]);
-        Route::post('/',['middleware' => "backoffice.superUserOnly", 'uses' => "ChatBotController@create"]);
-        Route::any('auto-reply',['as' => "autoReply",'uses' => "ChatBotController@autoReply"]);
-
-        Route::post('train',['as' => "train", 'middleware' => "backoffice.superUserOnly", 'uses' => "ChatBotController@train"]);
+    Route::group(['as' => "staffs.", 'prefix' => "staffs"], function(){
+        Route::get('/',['as' => "index", 'middleware' => "backoffice.superUserOnly", 'uses' => "StaffsController@index"]);
+        Route::get('create',['as' => "create", 'middleware' => "backoffice.superUserOnly", 'uses' => "StaffsController@create"]);
+        Route::post('create',['middleware' => "backoffice.superUserOnly", 'uses' => "StaffsController@store"]);
+        Route::get('view/{id}',['as' => "view", 'middleware' => "backoffice.superUserOnly",'uses' => "StaffsController@view"]);
+        Route::get('edit/{id}',['as' => "edit", 'middleware' => "backoffice.superUserOnly",'uses' => "StaffsController@edit"]);
+        Route::post('edit/{id}',['as' => "update", 'middleware' => "backoffice.superUserOnly",'uses' => "StaffsController@update"]);
+        Route::get('delete/{id}',['as' => "delete", 'middleware' => "backoffice.superUserOnly",'uses' => "StaffsController@delete"]);
     });
 
-    Route::group(['as' => "services.", 'prefix' => "services"], function(){
-        Route::get('/',['as' => "index", 'middleware' => "backoffice.superUserOnly", 'uses' => "ServicesController@index"]);
-        Route::get('create',['as' => "create", 'middleware' => "backoffice.superUserOnly", 'uses' => "ServicesController@create"]);
-        Route::post('create',['middleware' => "backoffice.superUserOnly", 'uses' => "ServicesController@store"]);
-        Route::get('view/{id}',['as' => "view",'uses' => "ServicesController@view"]);
-        Route::get('edit/{id}',['as' => "edit",'uses' => "ServicesController@edit"]);
-        Route::post('edit/{id}',['as' => "update",'uses' => "ServicesController@update"]);
+    Route::group(['as' => "feedbacks.", 'prefix' => "feedbacks"], function(){
+        Route::get('/',['as' => "index", 'uses' => "FeedbacksController@index"]);
+        Route::get('create',['as' => "create", 'uses' => "FeedbacksController@create"]);
+        Route::post('create',['uses' => "FeedbacksController@store"]);
+        Route::get('view/{id}',['as' => "view",'uses' => "FeedbacksController@view"]);
+        Route::get('edit/{id}',['as' => "edit",'uses' => "FeedbacksController@edit"]);
+        Route::post('edit/{id}',['as' => "update",'uses' => "FeedbacksController@update"]);
 
-        Route::get('{id}/type/add',['as' => "addType",'uses' => "ServicesController@addType"]);
-        Route::post('{id}/type/add',['uses' => "ServicesController@saveType"]);
-        Route::get('type/edit/{id}',['as' => "editType",'uses' => "ServicesController@editType"]);
-        Route::post('type/edit/{id}',['uses' => "ServicesController@updateType"]);
-        Route::get('type/delete/{id}',['as' => "deleteType",'uses' => "ServicesController@deleteType"]);
-
-        Route::any('types',['as' => "serviceTypes",'uses' => "ServicesController@serviceTypes"]);
-        Route::any('type-detail',['as' => "serviceTypeDetail",'uses' => "ServicesController@serviceTypeDetail"]);
+        Route::post('add',['as' => "add",'uses' => "FeedbacksController@add"]);
     });
 
-    Route::group(['as' => "faqs.", 'prefix' => "faqs"], function(){
-        Route::get('/',['as' => "index", 'middleware' => "backoffice.superUserOnly", 'uses' => "FAQsController@index"]);
-        Route::get('create',['as' => "create", 'middleware' => "backoffice.superUserOnly", 'uses' => "FAQsController@create"]);
-        Route::post('create',['middleware' => "backoffice.superUserOnly", 'uses' => "FAQsController@store"]);
-        Route::get('view/{id}',['as' => "view",'uses' => "FAQsController@view"]);
-        Route::get('edit/{id}',['as' => "edit",'uses' => "FAQsController@edit"]);
-        Route::post('edit/{id}',['as' => "update",'uses' => "FAQsController@update"]);
+    Route::group(['as' => "attendance.", 'prefix' => "attendance"], function(){
+        Route::get('/',['as' => "index", 'uses' => "AttendanceController@index"]);
+        Route::get('participants/{id}',['as' => "participants", 'uses' => "AttendanceController@participants"]);
     });
 
-    Route::group(['as' => "appointments.", 'prefix' => "appointments"], function(){
-        Route::get('/',['as' => "index", 'uses' => "AppointmentsController@index"]);
-        Route::get('create',['as' => "create", 'uses' => "AppointmentsController@create"]);
-        Route::post('create',['uses' => "AppointmentsController@store"]);
-        Route::get('delete/{id}',['as' => "delete",'uses' => "AppointmentsController@delete"]);
-        Route::get('view/{id}',['as' => "view",'uses' => "AppointmentsController@view"]);
-        Route::get('edit/{id}',['as' => "edit",'uses' => "AppointmentsController@edit"]);
-        Route::post('edit/{id}',['as' => "update",'uses' => "AppointmentsController@update"]);
+    
+    Route::group(['as' => "certificates.", 'prefix' => "certificates"], function(){
+        Route::any('view/{id}',['as' => "view",'uses' => "CertificateController@view"]);
+    });
+
+    Route::group(['as' => "events.", 'prefix' => "events"], function(){
+        Route::get('/',['as' => "index", 'uses' => "EventsController@index"]);
+        Route::get('create',['as' => "create", 'uses' => "EventsController@create"]);
+        Route::post('create',['uses' => "EventsController@store"]);
+        Route::get('cancel/{id}',['as' => "cancel",'uses' => "EventsController@cancel"]);
+        Route::get('view/{id}',['as' => "view",'uses' => "EventsController@view"]);
+        Route::get('edit/{id}',['as' => "edit",'uses' => "EventsController@edit"]);
+        Route::post('edit/{id}',['as' => "update",'uses' => "EventsController@update"]);
+
+        Route::any('attend/{id}',['as' => "attend",'uses' => "EventsController@attend"]);
+
+        Route::get('list',['as' => "list",'uses' => "EventsController@list"]);
+        Route::get('completed',['as' => "completed",'uses' => "EventsController@completed"]);
+
+        Route::any('update-status/{id}/{status}',['as' => "update_status",'uses' => "EventsController@updateStatus"]);
+
+        Route::post('certificate-prompt',['as' => "certificate-prompt",'uses' => "CertificateController@getCertificatePrompt"]);
+
+        Route::any('generate-certificate/{id}',['as' => "generate_certificate",'uses' => "CertificateController@genCert"]);
     });
 
     Route::group(['as' => "account.", 'prefix' => "account"], function(){

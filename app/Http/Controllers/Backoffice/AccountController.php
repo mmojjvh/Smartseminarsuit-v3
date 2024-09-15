@@ -10,7 +10,8 @@ use App\Events\SendEmailEvent;
 
 //Services & Repositories
 use App\Domain\Interfaces\Services\Backoffice\ICRUDService;
-use App\Domain\Interfaces\Repositories\Backoffice\IPatientsRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\IStaffsRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\IParticipantsRepository;
 
 //Request Validator
 use App\Http\Requests\Backoffice\AccountRequest;
@@ -25,10 +26,13 @@ use Input, Auth;
 class AccountController extends Controller
 {
     //Do some magic
-    public function __construct(IPatientsRepository $patientRepo, ICRUDService $CRUDservice){
+    public function __construct(ICRUDService $CRUDservice, IStaffsRepository $staffRepo, IParticipantsRepository $participantRepo){
         $this->data = [];
-        $this->patientRepo = $patientRepo;
         $this->CRUDservice = $CRUDservice;
+
+        $this->staffRepo = $staffRepo;
+        $this->participantRepo = $participantRepo;
+        
         $this->data['title'] = 'Account';
         $this->data['account'] = null;
     }
@@ -37,17 +41,23 @@ class AccountController extends Controller
         if(!auth()->check())
             return abort(404);
         $account = null;
-        if(auth()->user()->type == 'patient'){
-            $account = $this->patientRepo->fetchPatient(auth()->user()->id);
-        }
+        // if(auth()->user()->type == 'participant'){
+        //     $account = $this->participantRepo->findOrFail(auth()->user()->participant->id);
+        // }
+        // if(auth()->user()->type == 'staff'){
+        //     $account = $this->staffRepo->findOrFail(auth()->user()->staff->id);
+        // }
 
         $this->data['account'] = $account;
         return view('backoffice.pages.account.index',$this->data);
     }
 
     public function save(AccountRequest $request){
-        if(auth()->user()->type == 'patient'){
-            $this->CRUDservice->save($request, $this->patientRepo);
+        if(auth()->user()->type == 'participant'){
+            $this->CRUDservice->save($request, $this->participantRepo);
+        }
+        if(auth()->user()->type == 'staff'){
+            $this->CRUDservice->save($request, $this->staffRepo);
         }
         return redirect()->back();
     }

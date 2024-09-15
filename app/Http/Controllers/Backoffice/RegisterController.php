@@ -15,12 +15,12 @@ use App\Events\SendEmailEvent;
 
 //Services & Repositories
 use App\Domain\Interfaces\Services\Backoffice\ICRUDService;
-use App\Domain\Interfaces\Repositories\Backoffice\IPatientsRepository;
+use App\Domain\Interfaces\Repositories\Backoffice\IParticipantsRepository;
 
 class RegisterController extends Controller
 {
     //do some magic
-    public function __construct(Logic $logic, IPatientsRepository $repo, ICRUDService $CRUDservice) {
+    public function __construct(Logic $logic, IParticipantsRepository $repo, ICRUDService $CRUDservice) {
         $this->repo = $repo;
         $this->logic = $logic;
         $this->CRUDservice = $CRUDservice;
@@ -33,13 +33,13 @@ class RegisterController extends Controller
 
 	public function authenticate(RegisterRequest $request) {
         $crudData = $this->CRUDservice->save($request, $this->repo);
-        // Auth::loginUsingId($crudData->id);
-        if($crudData){
-            event(new SendEmailEvent($crudData,'account_verification'));
-        }
+        Auth::loginUsingId($crudData->id);
+        // if($crudData){
+        //     event(new SendEmailEvent($crudData,'account_verification'));
+        // }
 
-        session()->flash('notification-status', "info");
-        session()->flash('notification-msg', 'Account Verification has been sent to your email. Please click the link to verify your account.');
+        // session()->flash('notification-status', "info");
+        // session()->flash('notification-msg', 'Account Verification has been sent to your email. Please click the link to verify your account.');
 
         return redirect()->route('backoffice.auth.login');
 	}

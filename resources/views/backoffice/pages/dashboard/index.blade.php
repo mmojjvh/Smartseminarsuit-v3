@@ -17,168 +17,199 @@
     .modal-content{
         max-width: 750px!important;
     }
+    .feather-50{
+        width: 50px;
+        height: 50px;
+    }
+    .feather-16{
+        width: 16px;
+        height: 16px;
+    }
 </style>
 @endpush
 
 @push('content')
- <!-- Content Wrapper. Contains page content -->
+ 
  <div class="content-wrapper">
     <div class="container-full">
       <!-- Main content -->
       <section class="content">
           <div class="row">
-            @if(auth()->user()->type != 'patient')
-            <div class="col-xl-3 col-md-6 col-xs-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="text-center">
-                            <h1 class="fs-50 text-warning"><i class="mdi mdi-account"></i></h1>	
-                            <h2>{{ $patientCount }}</h2>	
-                            <span class="badge badge-pill badge-warning px-10 mb-10">Total Patients</span>						
-                        </div>					
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 col-xs-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="text-center">
-                            <h1 class="fs-50 text-success"><i class="mdi mdi-calendar"></i></h1>	
-                            <h2>{{ $appointmentsCount }}</h2>	
-                            <span class="badge badge-pill badge-success px-10 mb-10">Total Appointments</span>						
-                        </div>					
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 col-xs-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="text-center">
-                            <h1 class="fs-50 text-danger"><i class="mdi mdi-check"></i></h1>	
-                            <h2>{{ $newPatientCount }}</h2>	
-                            <span class="badge badge-pill badge-danger px-10 mb-10">Today's New Registered Patient</span>						
-                        </div>					
-                    </div>
-                </div>
-            </div>
-            <div class="col-xl-3 col-md-6 col-xs-12">
-                <div class="box">
-                    <div class="box-body">
-                        <div class="text-center">
-                            <h1 class="fs-40 text-primary mb-20">₱</h1>
-                            <h2 class="fs-20 mb-20">Earning Summary Report</h2>	
-                            <div class="row">
-                                <div class="col-9">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <input type="date" name="start" class="form-control" id="start" oninput="appointment()" placeholder="" required/>
-                                        </div>
-                                        <div class="col-6">
-                                            <input type="date" name="end" class="form-control" id="end" oninput="appointment()" placeholder="" required/>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-3">
-                                    <button type="button" class="btn btn-primary btn-md" data-bs-toggle="modal" data-bs-target="#modal-fill-earning">View</button>
-                                </div>
+            @if(auth()->user()->type != 'participant')
+            <div class="col-xl-6">
+                <div class="row">
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="box">
+                        <div class="box-body text-center">
+                            <div class="bg-primary-light rounded10 p-20 mx-auto w-100 h-100">
+                                <h1 class="text-default"><i data-feather="calendar" class="text-dark feather-50"></i></h1>
                             </div>
-                        </div>					
-                    </div>
-                </div>
-            </div>
-            @endif
-          </div>	
-          <div class="row">
-            <div class="col-md-12">
-                <div class="box no-border no-shadow">
-                    <div class="box-body overflow-auto">
-                        <!-- the events -->
-                        <div id="external-events">
-                            <h3 class="fw-300">Appointments</h3>
-                            <hr>
-                            <table class="table border-no" id="example1">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Information</th>
-                                        <th>Status</th>
-                                        <th>Schedule</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($appointments as $index => $appointment)
-                                    @if((auth()->user()->type == 'patient' AND ($appointment->patient_id? $appointment->patient->user->id == auth()->user()->id: false)) OR auth()->user()->type != 'patient')
-                                    <tr class="hover-primary">
-                                        <td>{{$index+1}}</td>
-                                        <td>
-                                            @if($appointment->patient_id)
-                                            <strong>Patient</strong> : {{$appointment->patient->user->name}} <br>
-                                            @else
-                                            <strong>Patient</strong> : {{$appointment->name}} <br>
-                                            @endif
-                                            <strong>Service</strong> : {{ $appointment->service->name }} </td>
-                                        <td>{{$appointment->status}}</td>
-                                        <td>
-                                            <strong>Start</strong> : {{$appointment->start?date('M d, Y @ h:i a', strtotime($appointment->start)):'---'}} <br>
-                                            <strong>End</strong> : {{$appointment->end?date('M d, Y @ h:i a', strtotime($appointment->end)):'---'}}
-                                        </td>
-                                    </tr>
-                                    @endif
-                                    @empty
-                                    <tr class="hover-primary">
-                                        <td colspan="4" class="text-center">No Appointments yet...</td>
-                                    </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                            <p class="text-fade mt-15 mb-5">Total Events</p>
+                            <h2 class="mt-0">{{ $eventCount }}</h2>
                         </div>
                     </div>
                 </div>
-                <a href="{{ route('backoffice.appointments.index') }}" class="btn btn-primary">
-                    Go to Appointments <i class="ti-arrow-right"></i>
-                </a>
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="box">
+                        <div class="box-body text-center">
+                            <div class="bg-danger-light rounded10 p-20 mx-auto w-100 h-100">
+                                <h1 class="text-default"><i data-feather="message-square" class="text-dark feather-50"></i></h1>
+                            </div>
+                            <p class="text-fade mt-15 mb-5">Feedbacks</p>
+                            <h2 class="mt-0">{{ $feedbackCount }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="box">
+                        <div class="box-body text-center">
+                            <div class="bg-warning-light rounded10 p-20 mx-auto w-100 h-100">
+                                <h1 class="text-default"><i data-feather="award" class="text-dark feather-50"></i></h1>
+                            </div>
+                            <p class="text-fade mt-15 mb-5">Certifications</p>
+                            <h2 class="mt-0">{{ $certificateCount }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="box">
+                        <div class="box-body text-center">
+                            <div class="bg-info-light rounded10 p-20 mx-auto w-100 h-100">
+                                <h1 class="text-default"><i data-feather="users" class="text-dark feather-50"></i></h1>
+                            </div>
+                            <p class="text-fade mt-15 mb-5">Partipants</p>
+                            <h2 class="mt-0">{{ $participantCount }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-6 col-6">
+                    <div class="box">
+                        <div class="box-body text-center">
+                            <div class="bg-success-light rounded10 p-20 mx-auto w-100 h-100">
+                                <h1 class="text-default"><i data-feather="users" class="text-dark feather-50"></i></h1>
+                            </div>
+                            <p class="text-fade mt-15 mb-5">Staff</p>
+                            <h2 class="mt-0">{{ $staffCount }}</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-md-6 col-sm-12">
+                    <div class="box">
+                        <div class="box-header with-border">
+                            <h3 class="box-title fw-300">Staff List</h3>
+                            @if(in_array(auth()->user()->type, ['admin', 'super_user']))
+                            <a class="mb-0 pull-right" href="{{ route('backoffice.staffs.index') }}"><i data-feather="plus-circle" class="text-dark"></i></a>
+                            @endif
+                        </div>
+                        <div class="box-body">
+                            <div class="inner-user-div3">
+                                @forelse($staffs as $index => $staff)
+                                <div class="d-flex align-items-center mb-30">
+                                    <div class="me-15 avatar avatar-lg ">
+                                        <img src="{{ asset($staff->getAvatar()) }}" class="bg-primary-light" alt="{{ $staff->user->name }}">
+                                    </div>
+                                    <div class="d-flex flex-column flex-grow-1 fw-500">
+                                        <a href="{{ route('backoffice.staffs.view', $staff->id) }}" class="text-dark hover-warning mb-1 fs-16">{{ $staff->user->name }}</a>
+                                        <span class="text-fade">{{ $staff->user->email }}</span>
+                                    </div>
+                                    <div class="dropdown">
+                                        <a class="px-10 pt-5" href="#" data-bs-toggle="dropdown"><i class="ti-more-alt"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-end">
+                                            <a class="dropdown-item" href="{{ route('backoffice.staffs.view', $staff->id) }}">View</a>
+                                            <!-- <a class="dropdown-item" href="{{ route('backoffice.staffs.view', $staff->id) }}">Deactivate</a> -->
+                                        </div>
+                                    </div>
+                                </div>
+                                @empty
+                                @endforelse
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>	
             </div>
-          </div>		
+            @endif
+            <div class="col-xl-6">
+                @if(auth()->user()->type == 'participant')
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 col-6">
+                        <div class="box">
+                            <div class="box-body text-center">
+                                <div class="bg-warning-light rounded10 p-20 mx-auto w-100 h-100">
+                                    <h1 class="text-default"><i data-feather="award" class="text-dark feather-50"></i></h1>
+                                </div>
+                                <p class="text-fade mt-15 mb-5">Certificates</p>
+                                <h2 class="mt-0">{{ $eventCount }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-6">
+                        <div class="box">
+                            <div class="box-body text-center">
+                                <div class="bg-primary-light rounded10 p-20 mx-auto w-100 h-100">
+                                    <h1 class="text-default"><i data-feather="calendar" class="text-dark feather-50"></i></h1>
+                                </div>
+                                <p class="text-fade mt-15 mb-5">Events & Seminars Attended</p>
+                                <h2 class="mt-0">{{ $attendedCount }}</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endif
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="box no-border no-shadow">
+                            <div class="box-body overflow-auto">
+                                <!-- the events -->
+                                <div id="external-events">
+                                    <h3 class="fw-300">Events & Seminars</h3>
+                                    <hr>
+                                    <table class="table border-no" id="example1">
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Information</th>
+                                                <th>Status</th>
+                                                <th>Schedule</th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse($events as $index => $event)
+                                            <tr class="hover-primary">
+                                                <td>{{$index+1}}</td>
+                                                <td>
+                                                    <strong>Event</strong> : {{$event->name}}
+                                                <td>{{$event->status}}</td>
+                                                <td>
+                                                    <strong>Start</strong> : {{$event->start?date('M d, Y @ h:i a', strtotime($event->start)):'---'}} <br>
+                                                    <strong>End</strong> : {{$event->end?date('M d, Y @ h:i a', strtotime($event->end)):'---'}}
+                                                </td>
+                                                <td>
+                                                    <a href="{{ route('backoffice.events.view', $event->id) }}" class="waves-effect waves-light btn btn-primary-light">
+                                                        View
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            <tr class="hover-primary">
+                                                <td colspan="4" class="text-center">No Events yet...</td>
+                                            </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="{{ route('backoffice.events.index') }}" class="btn btn-primary">
+                            Go to Events <i class="ti-arrow-right"></i>
+                        </a>
+                    </div>
+                </div>	
+            </div>
+          </div>	
       </section>
       <!-- /.content -->
-    </div>
-</div>
-<div class="modal modal-fill fade" data-backdrop="false" id="modal-fill-earning" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-            <h4 class="modal-title" id="modal-title-earning">No Month Selected</h4>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="table-responsive">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Patient Name</th>
-                                <th>Service</th>
-                                <th>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody class="table-data-earning">
-
-                        </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>Total Payment</th>
-                                <td></td>
-                                <td></td>
-                                <th>₱ <span id="total-payment-earning">00</span></th>
-                            </tr>
-                        </tfoot>
-                    </table>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <a href="#" class="btn btn-primary btn-outline btn-sm" target="_blank" id="download-earning"><i class="fa fa-download"></i> Download</a>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -204,55 +235,6 @@
 
 <script src="{{asset('pages/js/moment.js')}}"></script>
 <script src="{{asset('pages/js/chat.js')}}"></script>
-<script type="module" src="{{asset('pages/js/firebase-chat.js')}}"></script>
 <script>
-
-    function appointment(){
-        var start = $('#start').val()?$('#start').val():'(Please select Start Date)';
-        var end = $('#end').val()?$('#end').val():'(Please select End Date)';
-
-        console.log('Im change');
-
-        $("#download-earning").attr("href", "{!! route('backoffice.download') !!}/"+start+"/"+end);
-        $("#modal-title-earning").text("Earning Summary Report of "+start+" - "+end);
-
-        $.ajax({
-            type: "POST",
-            url: "{!! route('backoffice.viewReport') !!}",
-            data: { _start : start , _end : end , _token : "{{csrf_token()}}"  },
-            dataType: "json",
-            async: true,
-            success: function(data){
-                console.log(data.datas);
-                $(".table-data-earning").empty();
-                if(data.datas.services.length > 0){
-                    data.datas.services.forEach(function (service) {
-                        $(".table-data-earning").append(
-                            `
-                            <tr>
-                                <td>${service.date}</td>
-                                <td>${service.patient_name}</td>
-                                <td>${service.service}</td>
-                                <td>₱ ${service.price}</td>
-                            </tr>
-                            `
-                        );
-                    });
-                }else{
-                    $(".table-data-earning").append(
-                        `
-                        <tr>
-                            <td colspan="4" class="text-center">No data...</td>
-                        </tr>
-                        `
-                    );
-                }
-                $("#total-payment-earning").text(data.datas.total_payments);
-            },
-            error: function(error){
-                console.log(error);
-            }
-        });
-    };
 </script>
 @endpush

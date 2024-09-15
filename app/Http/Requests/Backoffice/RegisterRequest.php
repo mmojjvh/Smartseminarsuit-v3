@@ -27,14 +27,18 @@ class RegisterRequest extends FormRequest
             //
             'fname' => "required",
             'lname' => "required",
-            'username' => "required|unique:users,username",
+
             'email' => "required|unique:users,email",
             'contact_number' => "required",
-            'address' => "required",
-            'birthdate' => "required",
+
+            'age' => "required",
             'gender' => "required",
+
+            // 'province' => "required",
+            // 'city' => "required",
+            // 'barangay' => "required",
+            'address' => "required",
+            'signature' => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
+            // 'username' => "required|unique:users,username",
             'password' => "confirmed|min:8",
-            'password_confirmation' => "required",
-        ];
-    }
-}
+            'password_confirmation' => "required", ]; } }

@@ -35,15 +35,6 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="form-group {{$errors->has('mname')?'error':null}}">
-                    <label class="form-label">Middle Name <span class="text-danger">*</span></label>
-                    <input type="text" name="mname" value="{{old('mname',$account?$account->mname:'')}}" class="form-control" placeholder="Middle Name">
-                    @if($errors->has('mname'))
-                    <div class="help-block"><ul role="alert"><li>{{$errors->first('mname')}}</li></ul></div>
-                    @endif
-                </div>
-            </div>
-            <div class="col-md-4">
                 <div class="form-group {{$errors->has('lname')?'error':null}}">
                     <label class="form-label">Last Name <span class="text-danger">*</span></label>
                     <input type="text" name="lname" value="{{old('lname',$account?$account->lname:'')}}" class="form-control" placeholder="Last Name">

@@ -41,19 +41,25 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function patient(){
-        return $this->hasOne('App\Models\Backoffice\Patient', 'user_id','id');
+    public function participant(){
+        return $this->hasOne('App\Models\Backoffice\Participant', 'user_id','id');
     }
 
-    public function vet(){
-        return $this->hasOne('App\Models\Backoffice\Vet', 'user_id','id');
+    public function staff(){
+        return $this->hasOne('App\Models\Backoffice\Staff', 'user_id','id');
+    }
+
+    public function certificate(){
+        return $this->hasMany('App\Models\Backoffice\Certificate', 'user_id','id');
     }
 
     public function getAvatar(){
-        if(auth()->user()->type == 'patient')
-            return $this->patient->getAvatar();
-        if(auth()->user()->type == 'vet')
-            return $this->vet->getAvatar();
+        if(auth()->user()->type == 'participant')
+            return $this->participant->getAvatar();
         return 'vet-clinic/images/face0.jpg';
+    }
+
+    public function myCertificate($eventId){
+        return $this->certificate->where('event_id', $eventId)->first();
     }
 }

@@ -11,70 +11,64 @@
 							<span>Dashboard</span>
 						</a>
 					</li>
+					<li class="treeview {{Request::is('backoffice/events*')?'menu-open':''}}">
+						<a href="#" class="{{Request::is('backoffice/events*')?'text-primary':''}}">
+							<i data-feather="calendar" class="{{Request::is('backoffice/events*')?'text-primary':''}}"></i>
+							<span>Events</span>
+							<span class="pull-right-container">
+								<i class="ti-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu {{Request::is('backoffice/events*')?'display-block':''}}">	
+							<li><a class="{{in_array(request()->route()->getName(),['backoffice.events.index'])?'text-primary':''}}" href="{{route('backoffice.events.index')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Calendar</a></li>
+							@if( in_array(auth()->user()->type, ['participant']) )	
+							<li><a class="{{in_array(request()->route()->getName(),['backoffice.events.completed'])?'text-primary':''}}" href="{{route('backoffice.events.completed')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Completed</a></li>
+							@endif
+							@if( in_array(auth()->user()->type, ['super_user', 'admin', 'staff']) )	
+							<li><a class="{{in_array(request()->route()->getName(),['backoffice.events.list'])?'text-primary':''}}" href="{{route('backoffice.events.list')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>List</a></li>
+							@endif
+						</ul>	
+					</li>
+					@if( in_array(auth()->user()->type, ['super_user', 'admin', 'staff']) )	
+					@if( in_array(auth()->user()->type, ['super_user', 'admin']))
+					<li class="treeview {{Request::is('backoffice/staffs*')?'menu-open':''}}">
+						<a href="#" class="{{Request::is('backoffice/staffs*')?'text-primary':''}}">
+							<i data-feather="user-check" class="{{Request::is('backoffice/staffs*')?'text-primary':''}}"></i>
+							<span>Staffs</span>
+							<span class="pull-right-container">
+								<i class="ti-angle-right pull-right"></i>
+							</span>
+						</a>
+						<ul class="treeview-menu {{Request::is('backoffice/staffs*')?'display-block':''}}">	
+							<li><a class="{{in_array(request()->route()->getName(),['backoffice.staffs.index'])?'text-primary':''}}" href="{{route('backoffice.staffs.index')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>List</a></li>
+							<li><a class="{{in_array(request()->route()->getName(),['backoffice.staffs.create'])?'text-primary':''}}" href="{{route('backoffice.staffs.create')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Create</a></li>
+						</ul>	
+					</li>
+					@endif
 					<li>
-						<a class="{{in_array(request()->route()->getName(),['backoffice.appointments.index'])?'text-primary':''}}" href="{{ route('backoffice.appointments.index') }}">
-							<i data-feather="calendar" class="{{in_array(request()->route()->getName(),['backoffice.appointments.index'])?'text-primary':''}}"></i>
-							<span>Appointments</span>
+						<a class="{{in_array(request()->route()->getName(),['backoffice.participants.index'])?'text-primary':''}}" href="{{ route('backoffice.participants.index') }}">
+							<i data-feather="users" class="{{in_array(request()->route()->getName(),['backoffice.participants.index'])?'text-primary':''}}"></i>
+							<span>Participants</span>
 						</a>
 					</li>		
-					@if( in_array(auth()->user()->type, ['super_user', 'admin']) )			
-					<li class="treeview {{Request::is('backoffice/patients*')?'menu-open':''}}">
-						<a href="#" class="{{Request::is('backoffice/patients*')?'text-primary':''}}">
-							<i data-feather="users" class="{{Request::is('backoffice/patients*')?'text-primary':''}}"></i>
-							<span>Patients</span>
-							<span class="pull-right-container">
-								<i class="ti-angle-right pull-right"></i>
-							</span>
-						</a>
-						<ul class="treeview-menu {{Request::is('backoffice/patients*')?'display-block':''}}">	
-							<li><a class="{{in_array(request()->route()->getName(),['backoffice.patients.index'])?'text-primary':''}}" href="{{route('backoffice.patients.index')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>List</a></li>
-							<li><a class="{{in_array(request()->route()->getName(),['backoffice.patients.create'])?'text-primary':''}}" href="{{route('backoffice.patients.create')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Create</a></li>
-						</ul>	
-					</li>	
-					<!-- <li>
-						<a class="{{in_array(request()->route()->getName(),['backoffice.patients.index'])?'text-primary':''}}" href="{{ route('backoffice.patients.index') }}">
-							<i data-feather="users" class="{{in_array(request()->route()->getName(),['backoffice.patients.index'])?'text-primary':''}}"></i>
-							<span>Patients</span>
-						</a>
-					</li> -->
-					
-					<li class="treeview {{Request::is('backoffice/services*')?'menu-open':''}}">
-						<a href="#" class="{{Request::is('backoffice/services*')?'text-primary':''}}">
-							<i data-feather="heart" class="{{Request::is('backoffice/services*')?'text-primary':''}}"></i>
-							<span>Services</span>
-							<span class="pull-right-container">
-								<i class="ti-angle-right pull-right"></i>
-							</span>
-						</a>
-						<ul class="treeview-menu {{Request::is('backoffice/services*')?'display-block':''}}">	
-							<li><a class="{{in_array(request()->route()->getName(),['backoffice.services.index'])?'text-primary':''}}" href="{{route('backoffice.services.index')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>List</a></li>
-							<li><a class="{{in_array(request()->route()->getName(),['backoffice.services.create'])?'text-primary':''}}" href="{{route('backoffice.services.create')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Create</a></li>
-						</ul>	
-					</li>
-					<li class="treeview {{Request::is('backoffice/faqs*')?'menu-open':''}}">
-						<a href="#" class="{{Request::is('backoffice/faqs*')?'text-primary':''}}">
-							<i data-feather="help-circle" class="{{Request::is('backoffice/faqs*')?'text-primary':''}}"></i>
-							<span>FAQs</span>
-							<span class="pull-right-container">
-								<i class="ti-angle-right pull-right"></i>
-							</span>
-						</a>
-						<ul class="treeview-menu {{Request::is('backoffice/faqs*')?'display-block':''}}">	
-							<li><a class="{{in_array(request()->route()->getName(),['backoffice.faqs.index'])?'text-primary':''}}" href="{{route('backoffice.faqs.index')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>List</a></li>
-							<li><a class="{{in_array(request()->route()->getName(),['backoffice.faqs.create'])?'text-primary':''}}" href="{{route('backoffice.faqs.create')}}"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Create</a></li>
-						</ul>	
-					</li>
 					<li>
-						<a class="{{in_array(request()->route()->getName(),['backoffice.chatbot.index'])?'text-primary':''}}" href="{{ route('backoffice.chatbot.index') }}">
-							<i data-feather="message-circle" class="{{in_array(request()->route()->getName(),['backoffice.chatbot.index'])?'text-primary':''}}"></i>
-							<span>ChatBot</span>
+						<a class="{{in_array(request()->route()->getName(),['backoffice.attendance.index'])?'text-primary':''}}" href="{{ route('backoffice.attendance.index') }}">
+							<i data-feather="book" class="{{in_array(request()->route()->getName(),['backoffice.attendance.index'])?'text-primary':''}}"></i>
+							<span>Attendance</span>
 						</a>
 					</li>
+								
+					<li>
+						<a class="{{in_array(request()->route()->getName(),['backoffice.feedbacks.index'])?'text-primary':''}}" href="{{ route('backoffice.feedbacks.index') }}">
+							<i data-feather="message-square" class="{{in_array(request()->route()->getName(),['backoffice.feedbacks.index'])?'text-primary':''}}"></i>
+							<span>Feedbacks</span>
+						</a>
+					</li>		
 					@else
 					<li>
-						@if(auth()->user()->type == 'patient')
-						<a class="{{in_array(request()->route()->getName(),['backoffice.patients.view'])?'text-primary':''}}" href="{{ route('backoffice.patients.view', auth()->user()->patient->id) }}">
-							<i data-feather="user" class="{{in_array(request()->route()->getName(),['backoffice.patients.view'])?'text-primary':''}}"></i>
+						@if(auth()->user()->type == 'participant')
+						<a class="{{in_array(request()->route()->getName(),['backoffice.participants.view'])?'text-primary':''}}" href="{{ route('backoffice.participants.view', auth()->user()->participant->id) }}">
+							<i data-feather="user" class="{{in_array(request()->route()->getName(),['backoffice.participants.view'])?'text-primary':''}}"></i>
 							<span>My Info</span>
 						</a>
 						@endif
@@ -85,10 +79,10 @@
 				<div class="sidebar-widgets">
 					<div class="mx-25 mb-30 pb-20 side-bx bg-primary-light rounded20">
 						<div class="text-center">
-							<img src="{{asset('images/1-remove.png')}}" class="sideimg p-5" alt="">
-							<h4 class="title-bx text-primary">Request for an Appointment</h4>
-							<a href="{{ route('backoffice.appointments.index') }}" class="py-10 fs-14 mb-0 text-primary">
-								Best Dental Care here <i class="mdi mdi-arrow-right"></i>
+							<img src="{{asset('images/side-image.png')}}" class="sideimg p-5" alt="">
+							<h4 class="title-bx text-primary">Look for Seminar</h4>
+							<a href="{{ route('backoffice.events.index') }}" class="py-10 fs-14 mb-0 text-primary">
+								Best Seminars here <i class="mdi mdi-arrow-right"></i>
 							</a>
 						</div>
 					</div>

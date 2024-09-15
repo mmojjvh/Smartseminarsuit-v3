@@ -47,7 +47,7 @@
 				<div class="d-flex pt-5">
 					<div class="text-end me-10">
 						<p class="pt-5 fs-14 mb-0 fw-700 text-primary">{{auth()->user()->name}}</p>
-						<small class="fs-10 mb-0 text-uppercase text-mute">{{ auth()->user()->type != 'patient'?'Admin/Doctor':str_replace('_',' ',auth()->user()->type)}}</small>
+						<small class="fs-10 mb-0 text-uppercase text-mute">{{ auth()->user()->type }}</small>
 					</div>
 					@if(auth()->user()->getAvatar())
 					<img src="{{asset(auth()->user()->getAvatar())}}" class="avatar rounded-10 bg-white h-40 w-40" alt="avatar"/>
