@@ -1,0 +1,1 @@
+<?php /**PATH /Users/bpaltezo/Desktop/Smartseminarsuit-v3/resources/views/frontend/web/_components/search.blade.php ENDPATH**/ ?>
