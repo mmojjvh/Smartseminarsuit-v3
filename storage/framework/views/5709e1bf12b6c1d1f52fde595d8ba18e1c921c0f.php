@@ -1,1 +1,0 @@
-<?php /**PATH C:\Users\markj\OneDrive\Desktop\capstone\smartserminar-suit\resources\views/commons/chatbot.blade.php ENDPATH**/ ?>

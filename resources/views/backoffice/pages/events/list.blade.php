@@ -179,7 +179,8 @@
 <script type="text/javascript">
 
   let currentEvent = {id: null, name: ''};
-  const defaultPrompt = "A high-quality background image for %event_name% event certificate with a blue border and a small gold seal, use light colors and gradients. Do not use dark colors.";
+
+  const defaultPrompt = '{{ env('DEFAULT_PROMPT') }}';
 
   function setPromptInputValue () {
     $("#promptInput").val(defaultPrompt.replace("%event_name%", currentEvent.name));

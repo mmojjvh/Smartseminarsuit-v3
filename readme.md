@@ -70,3 +70,27 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Debugging
+
+  - Manage saving generated image to database, execute on phpMyAdmin
+
+    * set global net_buffer_length=1000000; 
+    * set global max_allowed_packet=1000000000;
+
+    * OR: change the my.cnf or my.ini file (usually found in /etc/mysql/)
+
+      * max_allowed_packet=100M
+      
+  
+  - Configure server:
+
+    * update php.ini file
+      
+      - * post_max_size = 800M 
+      - * upload_max_filesize = 800M 
+      - * max_execution_time = 5000 
+      - * max_input_time = 5000 
+      - * memory_limit = 1000M
+        
+    * restart server

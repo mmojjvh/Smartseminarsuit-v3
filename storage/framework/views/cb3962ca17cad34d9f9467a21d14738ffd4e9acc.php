@@ -1,1 +1,0 @@
-<?php /**PATH C:\wamp64\www\smartserminar-suit\resources\views/frontend/web/_components/search.blade.php ENDPATH**/ ?>
