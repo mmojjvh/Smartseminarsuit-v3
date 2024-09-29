@@ -34,6 +34,17 @@ class EventsRepository extends Model implements IEventsRepository
         return self::where('status','Completed')->whereIn('id', $attendance)->orderBy('start','DESC')->get();
     }
 
+    public function fetchParticipating(){
+        $attendanceId = Attendance::where('user_id', auth()->user()->id)->pluck('event_id');
+        // return self::where('status','Happening')->whereIn('id', $attendanceId)->orderBy('start','DESC')->get();
+    
+        return self::select('events.*', 'attendance.id as attendance_id', 'attendance.timeout')
+        ->join('attendance', 'attendance.event_id', '=', 'events.id')
+        ->where('attendance.user_id', auth()->user()->id)
+        ->where('events.status','Happening')
+        ->get();
+    }
+
     public function fetchAttended($userId){
         $attendance = Attendance::where('user_id', $userId)->pluck('event_id');
         return self::whereIn('id', $attendance)->orderBy('start', 'DESC')->get();
@@ -106,5 +117,11 @@ class EventsRepository extends Model implements IEventsRepository
         $event = self::where('id', $id)->first();
         $event->status = $status;
         $event->save();
+    }
+
+    public function quitEvent($id){
+        $attendance = Attendance::where('id', $id)->where('user_id', auth()->user()->id)->first();
+        $attendance->timeout = now();
+        $attendance->save();
     }
 }

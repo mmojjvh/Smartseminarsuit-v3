@@ -139,4 +139,14 @@ class EventsController extends Controller
         $this->data['events'] = $this->repo->fetchCompleted();
         return view('backoffice.pages.events.list',$this->data);
     }
+
+    public function attendance(){
+        $this->data['events'] = $this->repo->fetchParticipating();
+        return view('backoffice.pages.events.attendance',$this->data);
+    }
+
+    public function quitEvent($id){
+        $this->data['event'] = $this->repo->quitEvent($id);
+        return redirect()->back();
+    }
 }

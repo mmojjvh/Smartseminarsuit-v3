@@ -23,7 +23,7 @@ class CertificatesRepository extends Model implements ICertificatesRepository
     }
 
     public function generateCertificate($event, $quote, $background){
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try {
             $attandanceList = $event->attendance;
             $certificates = [];
@@ -41,16 +41,23 @@ class CertificatesRepository extends Model implements ICertificatesRepository
                 $data->directory = $event->certCat->directory;
                 $data->filename = $event->certCat->filename;
                 $data->background_image = $background;
-                $data->save();
-                array_push($certificates, $data);
+
+                $isInTimeFrame = $this->timeFrameValidation($event->start, $event->end, $attendance->created_at, $attendance->timeout);
+                echo "USER: ".$attendance->user->name."<br>";
+                echo "IS IN TIME FRAME: ".$isInTimeFrame."<br><br>";
+                if($isInTimeFrame){
+                    $data->save();
+                    array_push($certificates, $data);
+                }
+
             }
 
-            DB::commit();
+            // DB::commit();
             
-            // return $certificates;
+            return $certificates;
 
             // Fetch certificates with user details after generating them
-            return $this->fetchCertificatesWithUserDetails($event->id);
+            // return $this->fetchCertificatesWithUserDetails($event->id);
             
         } catch (\Exception $e) {
             DB::rollback();
@@ -79,5 +86,26 @@ class CertificatesRepository extends Model implements ICertificatesRepository
             ->where('certificates.event_id', $eventId)
             ->select('certificates.*', 'participants.esignature as user_signature')
             ->get();
+    }
+
+    public function timeFrameValidation($start, $end, $timein, $timeout) {
+
+        if(!$timeout) return true;
+
+        $eventDuration = strtotime($end) - strtotime($start);
+        $attendanceDuration = strtotime($timeout) - strtotime($timein);
+        $requiredDuration = 0.7 * $eventDuration;
+
+        echo "EVENT DURATION: ".$eventDuration."<br>";
+        echo "ATTENDANCE DURATION: ".$attendanceDuration."<br>";
+        echo "REQUIRED DURATION: ".$requiredDuration."<br>";
+
+        if ($attendanceDuration < $requiredDuration) {
+            // INVALID
+            return false;
+        } else {
+            return true;
+        }
+        
     }
 }

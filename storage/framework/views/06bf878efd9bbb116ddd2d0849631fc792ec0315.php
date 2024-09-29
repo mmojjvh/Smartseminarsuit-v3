@@ -22,6 +22,7 @@
 						<ul class="treeview-menu <?php echo e(Request::is('backoffice/events*')?'display-block':''); ?>">	
 							<li><a class="<?php echo e(in_array(request()->route()->getName(),['backoffice.events.index'])?'text-primary':''); ?>" href="<?php echo e(route('backoffice.events.index')); ?>"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Calendar</a></li>
 							<?php if( in_array(auth()->user()->type, ['participant']) ): ?>	
+							<li><a class="<?php echo e(in_array(request()->route()->getName(),['backoffice.events.attendance'])?'text-primary':''); ?>" href="<?php echo e(route('backoffice.events.attendance')); ?>"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Attendance</a></li>
 							<li><a class="<?php echo e(in_array(request()->route()->getName(),['backoffice.events.completed'])?'text-primary':''); ?>" href="<?php echo e(route('backoffice.events.completed')); ?>"><i class="icon-Commit"><span class="path1"></span><span class="path2"></span></i>Completed</a></li>
 							<?php endif; ?>
 							<?php if( in_array(auth()->user()->type, ['super_user', 'admin', 'staff']) ): ?>	

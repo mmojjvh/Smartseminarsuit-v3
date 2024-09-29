@@ -1,30 +1,66 @@
-.page-break { page-break-after: always; }
+.page-break { 
+  page-break-after: always; 
+}
 
-@page { margin-top:0; margin-bottom:0; margin-left:0;margin-right:0;padding: 0; }
+@page { 
+  margin-top:0; 
+  margin-bottom:0; 
+  margin-left:0;
+  margin-right:0;
+  padding: 0; 
+}
 
-body { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; overflow: hidden; }
+body { 
+  padding: 0; 
+  margin: 0; 
+  font-family: Arial, Helvetica, sans-serif; 
+  overflow: hidden; 
+}
 
-.certificate { width: 100%; height:100%; }
+.certificate { 
+  width: 100%; 
+  height:100%; 
+}
 
-.background { background-color: chocolate; background-blend-mode: color;mix-blend-mode: difference; }
+.background { 
+  background-color: aliceblue;
+  background-blend-mode: color;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
 
 .main { 
   width: 90%; 
   height: 87.5%; 
   padding: 10px; 
-  background-color: #fff;
+  background-color: rgb(255, 255, 255, 0.1);
   border-radius: 15px; 
   margin-left: 5%;
   box-shadow: 0 30px 40px rgba(0,0,0,0.1);
+  mix-blend-mode: difference;
 }
 
-.header { width: 100%; justify-content: center; padding-top: 20px;}
+.header { 
+  width: 100%; 
+  justify-content: center; 
+  padding-top: 20px;
+}
 
-.header .qrcode { margin-top: -20px; }
+.header .qrcode { 
+  margin-top: -20px; 
+}
 
-.content { margin-top: 0px; }
+.content { 
+  margin-top: 0px; 
+}
 
-.footer { margin-top: 0%; padding: 0px; padding-left: 0px; padding-right: 0px; }
+.footer { 
+  margin-top: 0%; 
+  padding: 0px; 
+  padding-left: 0px;
+  padding-right: 0px; 
+}
 
 .content h1 { 
   font-size: 42pt; 
@@ -32,6 +68,8 @@ body { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; overflo
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bold;
   font-style: normal;
+  text-shadow: white 10px 10px 10px;
+  mix-blend-mode: difference;
 }
 
 /* RECIPIENT */
@@ -42,25 +80,65 @@ body { padding: 0; margin: 0; font-family: Arial, Helvetica, sans-serif; overflo
   color: #372680;
 }
 
-.content label{ font-size: 13pt;margin-top: 0px; }
+.content label{ 
+  font-size: 13pt;
+  margin-top: 0px; 
+  text-shadow: white 0px 0px 10px; 
+}
 
-.content .details { width: 70%; font-size: 13pt; text-align: center;margin-left: 15%;}
+.content .details { 
+  width: 70%; 
+  font-size: 13pt; 
+  text-align: center;
+  margin-left: 15%; 
+  text-shadow: white 0px 0px 10px; 
+  mix-blend-mode: difference;
+}
 
-.content .quote { font-size: 12pt; margin-top: -10px;color: dimgray; }
+.content .quote { 
+  font-size: 12pt; 
+  margin-top: -10px;
+  color: dimgray; 
+  text-shadow: white 0px 0px 10px; 
+}
 
-.row { display: flex; position: relative; flex-direction: row; width: 100%;}
+.row { 
+  display: flex; 
+  position: relative; 
+  flex-direction: row; 
+  width: 100%;
+}
 
-.col { flex: 1; position: relative; width: 100%;}
+.col { 
+  flex: 1; 
+  position: relative; 
+  width: 100%;
+}
 
-.align-center { align-content: center; align-items: center; justify-content: center; text-align: center; }
+.align-center { 
+  align-content: center; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center; 
+}
 
-.float-right { float: right; }
+.float-right { 
+  float: right; 
+}
 
-hr.large { width: 40%; margin-top: -30px; }
+hr.large { 
+  width: 40%; 
+  margin-top: -30px; 
+}
 
-hr.small { width: 20%; margin-top: -40px; }
+hr.small { 
+  width: 20%; 
+  margin-top: -40px; 
+}
 
-.signature { margin-top: -30px; }
+.signature { 
+  margin-top: -30px; 
+}
 
 table {
   width: 100%;
@@ -79,6 +157,8 @@ table tbody tr td {
   text-align: center;
   font-size: 11pt;
   color: #0a0a0a;
+  mix-blend-mode: difference;
+  text-shadow: #fff;
 }
 
 table tbody tr td img {

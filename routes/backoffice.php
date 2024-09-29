@@ -96,6 +96,9 @@ Route::group(['middleware' => ["backoffice.auth"
         Route::post('certificate-prompt',['as' => "certificate-prompt",'uses' => "CertificateController@getCertificatePrompt"]);
 
         Route::any('generate-certificate/{id}',['as' => "generate_certificate",'uses' => "CertificateController@genCert"]);
+    
+        Route::get('attendance',['as' => "attendance",'uses' => "EventsController@attendance"]);
+        Route::any('quit_event/{id}',['as' => "quit_event",'uses' => "EventsController@quitEvent"]);
     });
 
     Route::group(['as' => "account.", 'prefix' => "account"], function(){

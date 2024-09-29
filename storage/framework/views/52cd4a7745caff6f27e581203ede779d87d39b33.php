@@ -1,0 +1,1 @@
+<?php /**PATH /Users/bpaltezo/Desktop/Smartseminarsuit-v3/resources/views/commons/chatbot.blade.php ENDPATH**/ ?>

@@ -51,7 +51,6 @@ class CertificateController extends Controller
         $check = $this->certRepo->fetch($id);
 
         if($check->count() == 0){
-
             $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background);
         }else{
 

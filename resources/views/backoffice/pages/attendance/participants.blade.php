@@ -54,6 +54,7 @@
                                           <th>Email</th>
                                           <th>Contact Number</th>
                                           <th>Contact Address</th>
+                                          <th>Status</th>
                                           <th></th>
                                       </tr>
                                   </thead>
@@ -67,6 +68,13 @@
                                           <td>{{$participant->user->email}}</td>
                                           <td>{{$participant->user->contact_number}}</td>
                                           <td>{{$participant->user->participant->address}}</td>
+                                          @if(!$participant->timeout)
+                                          <td><span class="badge badge-primary">Present</span></td>
+                                          @else
+                                          <td>
+                                            <strong>Signed Out</strong> : <br />{{$participant->timeout?date('M d, Y @ h:i a', strtotime($participant->timeout)):'---'}}
+                                          </td>
+                                          @endif
                                           <td>												
                                               <div class="btn-group">
                                                 <a class="hover-primary dropdown-toggle no-caret" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></a>
