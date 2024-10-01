@@ -3,10 +3,11 @@
 namespace App\Repositories\Backoffice;
 use App\Domain\Interfaces\Repositories\Backoffice\IEventsRepository;
 
-use App\Services\ImageUploader as UploadLogic;
+use App\Logic\ImageUploader as UploadLogic;
 use App\Models\Backoffice\Event as Model;
 use App\Models\User;
 use App\Models\Backoffice\Attendance;
+use App\Models\Backoffice\Coordinator;
 use DB, Str, Carbon, Input;
 
 class EventsRepository extends Model implements IEventsRepository
@@ -58,7 +59,7 @@ class EventsRepository extends Model implements IEventsRepository
         return self::where('status', '!=','Pending')->get();
     }
 
-    public function saveData($request){
+    public function saveData($request){        
         DB::beginTransaction();
         try {
             $event = self::find($request->id)? : new self;

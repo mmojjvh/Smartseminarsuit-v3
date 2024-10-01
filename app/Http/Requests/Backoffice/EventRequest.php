@@ -26,10 +26,11 @@ class EventRequest extends FormRequest
         return [
             'name' => "required",
             'details' => "required",
-            'category_id' => "required",
+            // 'category_id' => "required",
             'start' => "required",
             'end' => "required",
             'status' => "required",
+            
         ];
         
     }

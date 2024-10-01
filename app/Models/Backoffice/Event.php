@@ -26,4 +26,8 @@ class Event extends Model
     public function certCat(){
         return $this->belongsTo('App\Models\Backoffice\CertificateCategory', 'category_id','id');
     }
+
+    public function coordinator(){
+        return $this->hasMany('App\Models\Backoffice\Coordinator', 'event_id','id');
+    }
 }

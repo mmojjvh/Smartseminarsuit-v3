@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Backoffice;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Logic\ImageUploader as UploadLogic;
+use App\Models\Backoffice\Coordinator;
+
 //Events
 use App\Events\SendEmailEvent;
 
@@ -81,9 +84,32 @@ class EventsController extends Controller
     }
 
     public function store(EventRequest $request){
+
         $crudData = $this->repo->saveData($request);
         if(!$crudData){
             return redirect()->back();
+        }
+
+        $coordinators = array();
+            
+        if($request->hasFile("coordinatesigs")) {
+
+            $signatures = $request->file("coordinatesigs");
+            $names = $request->coordinatenames;
+
+            foreach ($signatures as $key => $signature) {
+                $upload = UploadLogic::upload($signature, 'storage/coordinators/');                    
+                $esignature = $upload["esignature"];
+                $coordinators[] = ['name'=> $names[$key], 'signature'=> $esignature];
+            }
+
+            foreach ($coordinators as $key => $coordinator) {
+                $coord = new Coordinator;
+                $coord->event_id = $crudData->id;
+                $coord->name = $coordinator['name'];
+                $coord->signature = $coordinator['signature'];
+                $coord->save();
+            }
         }
         return redirect()->route('backoffice.events.index');
     }
