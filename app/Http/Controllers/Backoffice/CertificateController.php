@@ -11,6 +11,8 @@ use App\Domain\Interfaces\Repositories\Backoffice\IEventsRepository;
 use App\Domain\Interfaces\Repositories\Backoffice\ICertificatesRepository;
 use App\Domain\Interfaces\Repositories\Backoffice\IParticipantsRepository;
 
+use App\Models\Backoffice\Coordinator;
+
 use App\Logic\DalleAIGenerator;
 use App\Logic\QRCode\QRCodeMaker;
 
@@ -70,6 +72,10 @@ class CertificateController extends Controller
             $certificate->qrcode = $qrCodes[$certificate->id];
         }
 
+        // Event Coordinators
+        $coordinators = $this->certRepo->getCoordinators($id);
+        $data['coordinators'] = $coordinators;
+
         $pdf = PDF::loadView('pdf.ai.all', compact('data'))->setPaper('A4', 'landscape')->stream();
         
         // return view('pdf.ai.all', compact('data'));
@@ -87,6 +93,10 @@ class CertificateController extends Controller
 
         $qrData = $baseUrl .'/backoffice/cert/auth/' . $certificate->certificate_id;
         $certificate['qrcode'] = QRCodeMaker::qrcode($qrData);
+
+        // Event Coordinators
+        $coordinators = $this->certRepo->getCoordinators($certificate->event_id);
+        $data['coordinators'] = $coordinators;
 
         $data['certificate'] = $certificate;
 

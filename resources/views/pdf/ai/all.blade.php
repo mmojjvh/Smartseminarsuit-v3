@@ -61,25 +61,29 @@
 
     <br /><br />
     <div>
-      <table>
-        <tbody>
-          <tr>
-            <td></td>
-            <td class="col-200"></td>
-            <td></td>
-            <td class="col-200">
-              <img class="" src="{{ $certificate->user_signature }}" />
+      <table class="signatures-table">
+        <tr>
+          <td>
+            <img class="" src="{{ $certificate->user_signature }}" />
+            <br>
+            <span class="name">John Dela Cruz</span>
+            <div class="signature-line"></div>
+            <br>     
+            <span class="role">Recipient</span>                                 
+          </td>
+
+          <!-- Loop through the coordinators -->
+          @foreach ($data['coordinators'] as $coordinator)
+            <td>
+              <img class="" src="{{ $coordinator->signature }}" />
+              <br>
+              <span class="name">{{ $coordinator->name }}</span>
+              <div class="signature-line"></div>
+              <br>
+              <span class="role">Coordinator</span>                        
             </td>
-            <td></td>
-          </tr>
-          <tr>
-            <td></td>
-            <td class="underline-top">Coordinator</td>
-            <td></td>
-            <td class="underline-top">Signature</td>
-            <td></td>
-          </tr>
-        </tbody>
+          @endforeach
+        </tr>
       </table>
     </div>
   </div>

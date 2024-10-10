@@ -7,7 +7,7 @@ use App\Logic\ImageUploader as UploadLogic;
 use App\Models\Backoffice\Event as Model;
 use App\Models\User;
 use App\Models\Backoffice\Attendance;
-use App\Models\Backoffice\Coordinator;
+use App\Models\Backoffice\Coordinators;
 use DB, Str, Carbon, Input;
 
 class EventsRepository extends Model implements IEventsRepository

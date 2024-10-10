@@ -173,3 +173,43 @@ table tbody tr td img {
 .underline-top {
   border-top:2px solid #ccc;
 }
+
+.certificate-container {
+  text-align: center;
+  padding: 50px;
+  border: 5px solid #000;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.signatures-table {
+  width: 100%;
+  /* margin-top: 50px; */
+}
+
+.signatures-table td {
+  text-align: center;
+  padding: 10px;
+}
+
+.signatures-table img {
+  width: 150px;
+  height: 50px;
+  object-fit: contain;
+  top:-10px;
+}
+
+.signature-line {
+  border-top: 1px solid #000;
+  width: 200px;
+  margin: 0 auto;
+  margin-top:2px;
+}
+
+.signatures-table .role {
+  font-weight: bold;
+}
+
+.signatures-table .name {
+  font-size:14pt;
+}

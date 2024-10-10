@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Logic\ImageUploader as UploadLogic;
-use App\Models\Backoffice\Coordinator;
+use App\Models\Backoffice\Coordinators;
 
 //Events
 use App\Events\SendEmailEvent;
@@ -104,7 +104,7 @@ class EventsController extends Controller
             }
 
             foreach ($coordinators as $key => $coordinator) {
-                $coord = new Coordinator;
+                $coord = new Coordinators;
                 $coord->event_id = $crudData->id;
                 $coord->name = $coordinator['name'];
                 $coord->signature = $coordinator['signature'];

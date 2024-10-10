@@ -6,6 +6,7 @@ use App\Domain\Interfaces\Repositories\Backoffice\ICertificatesRepository;
 use App\Services\ImageUploader as UploadLogic;
 use App\Models\Backoffice\Certificate as Model;
 use App\Models\Backoffice\AvailedService;
+use App\Models\Backoffice\Coordinators;
 use App\Models\User;
 use DB, Str;
 
@@ -23,7 +24,7 @@ class CertificatesRepository extends Model implements ICertificatesRepository
     }
 
     public function generateCertificate($event, $quote, $background){
-        // DB::beginTransaction();
+        DB::beginTransaction();
         try {
             $attandanceList = $event->attendance;
             $certificates = [];
@@ -52,12 +53,12 @@ class CertificatesRepository extends Model implements ICertificatesRepository
 
             }
 
-            // DB::commit();
+            DB::commit();
             
-            return $certificates;
+            // return $certificates;
 
             // Fetch certificates with user details after generating them
-            // return $this->fetchCertificatesWithUserDetails($event->id);
+            return $this->fetchCertificatesWithUserDetails($event->id);
             
         } catch (\Exception $e) {
             DB::rollback();
@@ -107,5 +108,12 @@ class CertificatesRepository extends Model implements ICertificatesRepository
             return true;
         }
         
+    }
+
+    public function getCoordinators($eventId) {
+        return self::join('coordinators', 'certificates.event_id', '=', 'coordinators.event_id')
+            ->where('certificates.event_id', $eventId)
+            ->select('coordinators.*')
+            ->get();
     }
 }
