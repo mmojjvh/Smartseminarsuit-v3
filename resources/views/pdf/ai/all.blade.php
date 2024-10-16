@@ -64,7 +64,7 @@
       <table class="signatures-table">
         <tr>
           <td>
-            <img class="" src="{{ $certificate->user_signature }}" />
+            <!-- <img class="" src="{{ $certificate->user_signature }}" /> -->
             <br>
             <span class="name">John Dela Cruz</span>
             <div class="signature-line"></div>
