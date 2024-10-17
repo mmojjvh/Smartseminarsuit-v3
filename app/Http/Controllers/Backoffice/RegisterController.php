@@ -34,6 +34,7 @@ class RegisterController extends Controller
 	public function authenticate(RegisterRequest $request) {
         $crudData = $this->CRUDservice->save($request, $this->repo);
         Auth::loginUsingId($crudData->id);
+
         // if($crudData){
         //     event(new SendEmailEvent($crudData,'account_verification'));
         // }

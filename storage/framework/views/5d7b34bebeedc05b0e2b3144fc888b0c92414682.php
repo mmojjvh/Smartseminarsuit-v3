@@ -64,7 +64,7 @@
       <table class="signatures-table">
         <tr>
           <td>
-            <img class="" src="<?php echo e($certificate->user_signature); ?>" />
+            <!-- <img class="" src="<?php echo e($certificate->user_signature); ?>" /> -->
             <br>
             <span class="name">John Dela Cruz</span>
             <div class="signature-line"></div>

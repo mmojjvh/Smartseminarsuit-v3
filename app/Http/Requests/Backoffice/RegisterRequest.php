@@ -38,7 +38,7 @@ class RegisterRequest extends FormRequest
             // 'city' => "required",
             // 'barangay' => "required",
             'address' => "required",
-            'signature' => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
+            // 'signature' => "required|image|mimes:jpeg,png,jpg,gif|max:2048",
             // 'username' => "required|unique:users,username",
             'password' => "confirmed|min:8",
             'password_confirmation' => "required", ]; } }

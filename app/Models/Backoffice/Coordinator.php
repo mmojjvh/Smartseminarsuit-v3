@@ -5,7 +5,7 @@ namespace App\Models\Backoffice;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Coordinators extends Model
+class Coordinator extends Model
 {
     use SoftDeletes;
 

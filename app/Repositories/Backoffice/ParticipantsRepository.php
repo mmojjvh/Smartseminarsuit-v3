@@ -68,13 +68,18 @@ class ParticipantsRepository extends Model implements IParticipantsRepository
             $participant->gender = $request->gender?$request->gender:$participant->gender;
             $participant->address = $request->address;
             
-            if($request->hasFile('signature')){
-                $upload = UploadLogic::upload($request->signature,'storage/participant');
-                $participant->path = $upload["path"];
-                $participant->directory = $upload["directory"];
-                $participant->filename = $upload["filename"];
-                $participant->esignature = $upload["esignature"];
-            }
+            // if($request->hasFile('signature')){
+            //     $upload = UploadLogic::upload($request->signature,'storage/participant');
+            //     $participant->path = $upload["path"];
+            //     $participant->directory = $upload["directory"];
+            //     $participant->filename = $upload["filename"];
+            //     $participant->esignature = $upload["esignature"];
+            // }
+
+            $participant->path = '';
+            $participant->directory = '';
+            $participant->filename = '';
+            $participant->esignature = '';
             
             $participant->save();
 
@@ -84,6 +89,7 @@ class ParticipantsRepository extends Model implements IParticipantsRepository
             return $user;
         } catch (\Exception $e) {
              DB::rollback();
+             echo json_encode($e);
              return false;
         }
     }
