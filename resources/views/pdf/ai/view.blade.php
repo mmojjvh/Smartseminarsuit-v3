@@ -51,7 +51,7 @@
             <td>
               <!-- <img class="" src="{{ $data['certificate']->user_signature }}" /> -->
               <br>
-              <span class="name">John Dela Cruz</span>
+              <span class="name">{{ $data['certificate']->user_name }}</span>
               <div class="signature-line"></div>
               <br>     
               <span class="role">Recipient</span>                                 
