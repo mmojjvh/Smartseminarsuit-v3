@@ -36,8 +36,7 @@
 
     <div class="header row">
       <div class="col">
-        <img src="<?php echo e(public_path('images/psu-logo.png')); ?>" style="width: 55px;height: 55px;" />
-        <img src="<?php echo e(public_path('images/logo-long.png')); ?>" style="width: 150px;height: 35ßpx;margin-bottom:10px;" />
+        <img src="<?php echo e(public_path('images/psu-logo.png')); ?>" style="width: 100px;height: 100px;" />
         <img class="qrcode float-right" src="<?php echo e($certificate->qrcode); ?>" style="width: 100px;height: 100px;" />
       </div>
     </div>
@@ -52,25 +51,24 @@
       <hr class="large" />
       <br />
 
-      <p class="details">For completing the <strong><?php echo e($certificate->category); ?></strong> with the event <br>
-      title of "<strong><?php echo e(Str::title($certificate->event_name)); ?></strong>" that was held on <strong><?php echo e($certificate->date?date('M d, Y', strtotime($certificate->date)):'---'); ?>.</strong></p>
+      <!-- <p class="details">For completing the <strong><?php echo e($certificate->category); ?></strong> with the event <br> -->
+      <p class="details">For completing the event title of "<strong><?php echo e(Str::title($certificate->event_name)); ?></strong>" that was held on <strong><?php echo e($certificate->date?date('M d, Y', strtotime($certificate->date)):'---'); ?>.</strong></p>
       <br />
       <p class="quote">" <?php echo $certificate->quote; ?> "</p>
 
     </center>
 
-    <br /><br />
     <div>
       <table class="signatures-table">
         <tr>
-          <td>
-            <!-- <img class="" src="<?php echo e($certificate->user_signature); ?>" /> -->
+          <!-- <td>
+            <img class="" src="<?php echo e($certificate->user_signature); ?>" />
             <br>
-            <span class="name">John Dela Cruz</span>
+            <span class="name"><?php echo e($certificate->user_name); ?></span>
             <div class="signature-line"></div>
             <br>     
             <span class="role">Recipient</span>                                 
-          </td>
+          </td> -->
 
           <!-- Loop through the coordinators -->
           <?php $__currentLoopData = $data['coordinators']; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $coordinator): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
@@ -80,11 +78,14 @@
               <span class="name"><?php echo e($coordinator->name); ?></span>
               <div class="signature-line"></div>
               <br>
-              <span class="role">Coordinator</span>                        
+              <span class="role"> <?php echo e($coordinator->position); ?> </span>                        
             </td>
           <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
         </tr>
       </table>
+    </div>
+    <div>
+      <img src="<?php echo e(public_path('images/logo-long.png')); ?>" style="width: 150px;height: 35ßpx;" />
     </div>
   </div>
 

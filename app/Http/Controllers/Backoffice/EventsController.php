@@ -96,17 +96,19 @@ class EventsController extends Controller
 
             $signatures = $request->file("coordinatesigs");
             $names = $request->coordinatenames;
+            $positions = $request->coordinatepositions;
 
             foreach ($signatures as $key => $signature) {
                 $upload = UploadLogic::upload($signature, 'storage/coordinators/');                    
                 $esignature = $upload["esignature"];
-                $coordinators[] = ['name'=> $names[$key], 'signature'=> $esignature];
+                $coordinators[] = ['name'=> $names[$key], 'position'=> $positions[$key], 'signature'=> $esignature];
             }
 
             foreach ($coordinators as $key => $coordinator) {
                 $coord = new Coordinator;
                 $coord->event_id = $crudData->id;
                 $coord->name = $coordinator['name'];
+                $coord->position = $coordinator['position'];
                 $coord->signature = $coordinator['signature'];
                 $coord->save();
             }

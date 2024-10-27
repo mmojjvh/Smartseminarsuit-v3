@@ -320,6 +320,7 @@ $(function() {
   submitBtn.addEventListener("click", function(e) {
     var dataUrl = canvas.toDataURL();
     var name = $("#coordname").val()
+    var position = $("#coordpos").val()
     // sigText.innerHTML = dataUrl;
 
     // convert to Blob (async)
@@ -328,7 +329,7 @@ $(function() {
       const dT = new DataTransfer();
       dT.items.add( file );
       // document.getElementById("signatureInput").files = dT.files;
-      renderCoordinator(name, dataUrl, dT.files);
+      renderCoordinator(name, position, dataUrl, dT.files);
       // document.querySelector( "input" ).files = dT.files;
     } );
     
@@ -336,7 +337,7 @@ $(function() {
     // sigImage.setAttribute("src", dataUrl);
   }, false);	
 
-  function renderCoordinator(name, img, file) {
+  function renderCoordinator(name, position, img, file) {
 
     
     const total = $("#co-container .coord-row").length    
@@ -355,6 +356,7 @@ $(function() {
 
     $("#co-sig-inputs").append(`<input id="coordRow${total + 1}cosiginput" type="file" accept="image/*" name="coordinatesigs[]" multiple="multiple" style="visibility:hidden;" />`);
     $("#co-name-inputs").append(`<input id="coordRow${total + 1}conameinput" type="text" name="coordinatenames[]" value="${name}" multiple="multiple" style="visibility:hidden;" />`);
+    $("#co-pos-inputs").append(`<input id="coordRow${total + 1}coposinput" type="text" name="coordinatepositions[]" value="${position}" multiple="multiple" style="visibility:hidden;" />`);
     
     document.getElementById(`coordRow${total + 1}cosiginput`).files = file
 

@@ -105,6 +105,7 @@
 
                         <div class="row mt-5 p-5" id="co-container"></div>
                         <div id="co-name-inputs"></div>
+                        <div id="co-pos-inputs"></div>
                         <div id="co-sig-inputs"></div>
 
                     </div>
