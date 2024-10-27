@@ -12,7 +12,10 @@
     <meta name="msapplication-TileImage" content="{{public_path('images/favicons/ms-icon-144x144.png')}}">
     <title>{{$data['title']}}</title>
 
-    <link rel="stylesheet" type="text/css" href="{{ public_path('custom/certificate.css') }}" >
+    @include('commons.customfonts')
+    <link rel="stylesheet" href="{{ URL::asset('custom/customfonts.css') }}">
+
+    <link rel="stylesheet" type="text/css" href="{{ asset('custom/certificate.css') }}" >
 </head>
 <body>
 

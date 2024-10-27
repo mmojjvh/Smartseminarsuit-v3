@@ -12,7 +12,10 @@
     <meta name="msapplication-TileImage" content="<?php echo e(public_path('images/favicons/ms-icon-144x144.png')); ?>">
     <title><?php echo e($data['title']); ?></title>
 
-    <link rel="stylesheet" type="text/css" href="<?php echo e(public_path('custom/certificate.css')); ?>" >
+    <?php echo $__env->make('commons.customfonts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <link rel="stylesheet" href="<?php echo e(URL::asset('custom/customfonts.css')); ?>">
+
+    <link rel="stylesheet" type="text/css" href="<?php echo e(asset('custom/certificate.css')); ?>" >
 </head>
 <body>
 
