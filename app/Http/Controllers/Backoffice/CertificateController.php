@@ -87,7 +87,7 @@ class CertificateController extends Controller
         $coordinators = $this->certRepo->getCoordinators($id);
         $data['coordinators'] = $coordinators;
 
-        $pdf = PDF::loadView('pdf.ai.all', compact('data'))->setPaper('A4', 'landscape')->stream();
+        // $pdf = PDF::loadView('pdf.ai.all', compact('data'))->setPaper('A4', 'landscape')->stream();
         
         return view('pdf.ai.all', compact('data'));
         // return $pdf;
@@ -111,7 +111,7 @@ class CertificateController extends Controller
 
         $data['certificate'] = $certificate;
 
-        $pdf = PDF::loadView('pdf.ai.view', compact('data'))->setPaper('A4', 'landscape')->stream();
+        // $pdf = PDF::loadView('pdf.ai.view', compact('data'))->setPaper('A4', 'landscape')->stream();
 
         return view('pdf.ai.view', compact('data'));
         // return $pdf;

@@ -224,7 +224,7 @@ return array (
     'bold_italic' => $fontDir . '/inter_bold_italic_b196ee153480c9f3ed400e26e73a63f2',
     '800_italic' => $fontDir . '/inter_800_italic_3d05b5fd55ff4d62e32531351fa8b2b3',
     '900_italic' => $fontDir . '/inter_900_italic_5c53b9688b1b37f9d90e405b0ddd7221',
-    '100' => $fontDir . '/inter_100_e28ff0ba5d2b1a0d9870187024e25b42',
+    '100' => $fontDir . '/inter_100_e82efd582b2707329d7db98534462978',
     '200' => $fontDir . '/inter_200_028ea6c251b673ea32ae8a9e29b7ecf2',
     '300' => $fontDir . '/inter_300_5a4c9c8fe9dbd54be8e4d766ecaa0038',
     'normal' => $fontDir . '/inter_normal_43098e1f9093546fdbc88d8bba522601',

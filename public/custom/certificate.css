@@ -24,7 +24,6 @@ body {
 
 .background { 
   background-color: aliceblue;
-  background-blend-mode: color;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -38,13 +37,12 @@ body {
   border-radius: 15px; 
   margin-left: 5%;
   box-shadow: 0 30px 40px rgba(0,0,0,0.1);
-  mix-blend-mode: difference;
 }
 
 .header { 
   width: 100%; 
   justify-content: center; 
-  padding-top: 20px;
+  /* padding-top: 20px; */
 }
 
 .header .qrcode { 
@@ -62,44 +60,43 @@ body {
   padding-right: 0px; 
 }
 
-.content h1 { 
+.content .head{ 
   font-size: 42pt; 
-  color: #372680;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
+  /* color: #372680;
+  font-family: Arial, Helvetica, sans-serif; */
   font-style: normal;
-  text-shadow: white 10px 10px 10px;
-  mix-blend-mode: difference;
+  /* text-shadow: white 0.1px 0.1px 0.1px; */
+  /* mix-blend-mode: difference; */
 }
 
 /* RECIPIENT */
 .content h2 { 
   font-size: 35pt; 
   font-style: italic;
-  font-family: Arial, Helvetica, sans-serif;
-  color: #372680;
+  /* font-family: Arial, Helvetica, sans-serif; */
+  /* color: #372680; */
 }
 
 .content label{ 
   font-size: 13pt;
   margin-top: 0px; 
-  text-shadow: white 0px 0px 10px; 
+  /* text-shadow: white 0px 0px 10px;  */
 }
 
 .content .details { 
   width: 70%; 
   font-size: 13pt; 
   text-align: center;
-  margin-left: 15%; 
-  text-shadow: white 0px 0px 10px; 
-  mix-blend-mode: difference;
+  /* margin-left: 15%;  */
+  /* text-shadow: white 0px 0px 10px;  */
+  /* mix-blend-mode: difference; */
 }
 
 .content .quote { 
   font-size: 12pt; 
   margin-top: -10px;
   color: dimgray; 
-  text-shadow: white 0px 0px 10px; 
+  /* text-shadow: white 0px 0px 10px;  */
 }
 
 .row { 
@@ -156,9 +153,9 @@ table tbody tr td {
   justify-content: center;
   text-align: center;
   font-size: 11pt;
-  color: #0a0a0a;
-  mix-blend-mode: difference;
-  text-shadow: #fff;
+  text-shadow: white 0px 0px 10px;
+  /* mix-blend-mode: difference; */
+  /* text-shadow: #fff; */
 }
 
 table tbody tr td img {
