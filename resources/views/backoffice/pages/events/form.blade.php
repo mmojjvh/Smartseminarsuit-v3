@@ -1,4 +1,4 @@
-<form class="form " action="" method="POST" enctype="multipart/form-data">
+<form class="form " action="" method="POST" enctype="multipart/form-data" id="eventForm">
     {{csrf_field()}}
     @if($event)
     <input type="hidden" name="id" value="{{ $event->id }}" class="form-control">
@@ -88,7 +88,7 @@
                 <a href="{{route('backoffice.events.index')}}" class="btn waves-effect waves-light btn btn-outline btn-warning me-1">
                     <i class="fa fa-sign-out" style="font-size:24px"></i> Exit
                 </a>
-                <button type="submit" class="btn waves-effect waves-light btn btn-outline btn-primary ">
+                <button type="button" class="btn waves-effect waves-light btn btn-outline btn-primary " id="formSubmitBtn">
                     <i class="ti-save-alt"></i> Save
                 </button>
             </div>
@@ -96,9 +96,10 @@
         <div class="col-md-6">
             <div class="box-body">
                 <div class="form-group">
-                    <label class="form-label">Coordinators <span class="text-danger">*</span></label>
+                    <label class="form-label">Coordinators <span class="text-danger">*</span></label><br>
+                    <label class="text-danger" id="coordformerror"></label><br>
                     <div class="form-controlx">
-                        <button type="button" data-toggle="modal" data-target="#exampleModal" class="btn waves-effect waves-light btn btn-outlined btn-primary ">
+                        <button type="button" data-toggle="modal" id="addCoordBtn" data-target="#exampleModal" class="btn waves-effect waves-light btn btn-outlined btn-primary ">
                             <i class="ti-plus"></i> Add Coordinator
                         </button>
 
@@ -131,9 +132,13 @@
         <div class="modal-body">
             <div class="container">
                 <div class="row">
-                    <div class="form-group {{$errors->has('end')?'error':null}} end-date">
+                    <div class="form-group {{$errors->has('name')?'error':null}} end-date">
                         <label class="form-label">Full Name <span class="text-danger">*</span></label>
                         <input type="text" name="coordname" id="coordname" class="form-control" placeholder="">  
+                    </div>
+                    <div class="form-group {{$errors->has('position')?'error':null}} end-date">
+                        <label class="form-label">Position <span class="text-danger">*</span></label>
+                        <input type="text" name="coordpos" id="coordpos" class="form-control" placeholder="">  
                     </div>
                 </div>
                 <div class="row">

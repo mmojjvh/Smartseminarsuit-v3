@@ -366,6 +366,21 @@ $(function() {
   }
 
 })();
+
+  $("#formSubmitBtn").on("click", () => {
+    const totalCoordinates = $("#co-container .coord-row").length
+    if(totalCoordinates > 5 || totalCoordinates < 2){
+      $("#coordformerror").html("Coordinators must be more than 2 and less than 5")
+      window.scrollTo(0, 0)
+    }else{
+      $("#eventForm").submit()
+    }
+  });
+
+  $("#addCoordBtn").on("click", function() {
+    $("#coordformerror").html("")
+  })
+
 </script>
 
 <?php $__env->stopPush(); ?>
