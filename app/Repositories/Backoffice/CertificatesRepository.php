@@ -23,11 +23,12 @@ class CertificatesRepository extends Model implements ICertificatesRepository
         return self::all();
     }
 
-    public function generateCertificate($event, $quote, $background){
+    public function generateCertificate($event, $quote, $background, $styles){
         DB::beginTransaction();
         try {
             $attandanceList = $event->attendance;
-            $certificates = [];
+            $certificates = [];            
+
             foreach($attandanceList as $index => $attendance){
                 $certificate_id = $event->id.$attendance->user_id.date('mdy').$index;
                 $data = new self;
@@ -42,6 +43,16 @@ class CertificatesRepository extends Model implements ICertificatesRepository
                 $data->directory = $event->certCat->directory;
                 $data->filename = $event->certCat->filename;
                 $data->background_image = $background;
+
+                $data->heading_style = $styles["heading"];
+                $data->title_style = $styles["title"];
+                $data->text_style = $styles["text"];
+                $data->quotes_style = $styles["quotes"];
+
+                $data->heading_color = $styles["heading_color"];
+                $data->title_color = $styles["title_color"];
+                $data->text_color = $styles["text_color"];
+                $data->quotes_color = $styles["quotes_color"];
 
                 $isInTimeFrame = $this->timeFrameValidation($event->start, $event->end, $attendance->created_at, $attendance->timeout);
                 echo "USER: ".$attendance->user->name."<br>";
@@ -66,9 +77,21 @@ class CertificatesRepository extends Model implements ICertificatesRepository
         }
     }
 
-    public function updateAndFetch($id, $background) {
+    public function updateAndFetch($id, $background, $styles) {
         
-        $certificate = self::where('event_id', $id)->update(['background_image' => $background]);
+        $certificate = self::where('event_id', $id)->update([
+            'background_image' => $background,
+
+            'heading_style' => $styles["heading"],
+            'title_style' => $styles["title"],
+            'text_style' => $styles["text"],
+            'quotes_style' => $styles["quotes"],
+
+            'heading_color' => $styles["heading_color"],
+            'title_color' => $styles["title_color"],
+            'text_color' => $styles["text_color"],
+            'quotes_color' => $styles["quotes_color"],
+        ]);
         // $certificate->background_image = $background;
         // $certificate->save();
 

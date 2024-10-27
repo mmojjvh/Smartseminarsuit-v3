@@ -35,8 +35,19 @@ class CertificateController extends Controller
     public function genCert($id, Request $request){
 
         $baseUrl = $request->root();
-        $generate_prompt_data = $request->session()->get('data');
-        $prompt = $generate_prompt_data["prompt"];
+        $payload = $request->session()->get('data');
+        $prompt = $payload["prompt"];
+
+        //custom styles
+        $customStyles = [];
+        $customStyles["heading"] = $payload["cfheading"];
+        $customStyles["title"] = $payload["cftitle"];
+        $customStyles["text"] = $payload["cftext"];
+        $customStyles["quotes"] = $payload["cfquotes"];
+        $customStyles["heading_color"] = $payload["cfheadingcolor"];
+        $customStyles["title_color"] = $payload["cftitlecolor"];
+        $customStyles["text_color"] = $payload["cftextcolor"];
+        $customStyles["quotes_color"] = $payload["cfquotescolor"];
 
         // $ai_bg = $this->generateCertificateBackground($prompt);
         // $base64_background = "data:image/png;base64,".$ai_bg;
@@ -53,11 +64,11 @@ class CertificateController extends Controller
         $check = $this->certRepo->fetch($id);
 
         if($check->count() == 0){
-            $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background);
+            $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background, $customStyles);
         }else{
 
             //update background to new generated
-            $data['certificates'] = $this->certRepo->updateAndFetch($id, $ai_background);
+            $data['certificates'] = $this->certRepo->updateAndFetch($id, $ai_background, $customStyles);
             // $data['certificates'] = $this->certRepo->fetch($id);
         }
 
@@ -78,8 +89,8 @@ class CertificateController extends Controller
 
         $pdf = PDF::loadView('pdf.ai.all', compact('data'))->setPaper('A4', 'landscape')->stream();
         
-        // return view('pdf.ai.all', compact('data'));
-        return $pdf;
+        return view('pdf.ai.all', compact('data'));
+        // return $pdf;
     }
 
     public function view($id, Request $request){
@@ -102,8 +113,8 @@ class CertificateController extends Controller
 
         $pdf = PDF::loadView('pdf.ai.view', compact('data'))->setPaper('A4', 'landscape')->stream();
 
-        // return view('pdf.ai.view', compact('data'));
-        return $pdf;
+        return view('pdf.ai.view', compact('data'));
+        // return $pdf;
     }
 
     public function verifyCertificate($id){

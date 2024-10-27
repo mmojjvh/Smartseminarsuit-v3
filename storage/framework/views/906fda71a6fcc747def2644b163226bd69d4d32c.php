@@ -1,11 +1,14 @@
 <?php $__env->startPush('title',$title.' List'); ?>
 
+<?php echo $__env->make('commons.customfonts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<link rel="stylesheet" href="<?php echo e(URL::asset('custom/customfonts.css')); ?>">
+
 <?php $__env->startPush('css'); ?>
-    <style type="text/css">
-        .overflow-visible { 
-            overflow: visible;
-        }
-    </style>
+  <style type="text/css">
+    .overflow-visible { 
+      overflow: visible;
+    }
+  </style>
 <?php $__env->stopPush(); ?>
 
 <?php $__env->startPush('content'); ?>
@@ -137,25 +140,121 @@
           <div class="container">
           <div class="row">
               <div class="col-md-12">
-                  <p>Enter the prompt that the AI will use to generate the certificate.</p>
+                  <p>Enter the prompt that the AI will use to generate the certificate background.</p>
               </div>
           </div>
           <div class="row">
-              <div class="col-md-12">
-                  <input required readonly type="text" name="id" id="promptEventId" style="display:none;">
-                  <textarea required name="prompt" id="promptInput" style="width: 100%;" rows="10"></textarea>
-              </div>
+            <div class="col-md-12">
+              <input required readonly type="text" name="id" id="promptEventId" style="display:none;">
+              <textarea required name="prompt" id="promptInput" style="width: 100%;" rows="5"></textarea>
+            </div>
           </div>
           <br/>
-      </div>
-        </div>
-        <div class="modal-footer">
-          <button id="useDefaultBtn" type="button" class="btn btn-secondary">Use Default</button>
-          <button id="proceedBtn" type="submit" class="btn btn-primary">Proceed</button>
-        </div>
+          <div class="row">
+            <div class="col-md-12">
+              <label>Fonts Customization:</label>
+              <br>
+            </div>
+            <div class="col-md-12">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Heading</label>
+                    <div class="row">
+                      <div class="col-lg-10">
+                        <select class="form-control" id="cf-heading" name="cfheading">
+                          <option disabled>Select Font</option>
+                        </select>
+                      </div>
+                      <div class="col-lg-2">
+                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-heading-color" name="cfheadingcolor" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Title</label>
+                    <div class="row">
+                      <div class="col-lg-10">
+                        <select class="form-control" id="cf-title" name="cftitle">
+                        </select>
+                      </div>
+                      <div class="col-lg-2">
+                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-title-color" name="cftitlecolor" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Text</label>
+                    <div class="row">
+                      <div class="col-lg-10">
+                        <select class="form-control" id="cf-text" name="cftext">
+                        </select>
+                      </div>
+                      <div class="col-lg-2">
+                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-text-color" name="cftextcolor" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-6">
+                  <div class="form-group">
+                    <label>Quotes</label>
+                    <div class="row">
+                      <div class="col-lg-10">
+                        <select class="form-control" id="cf-quotes" name="cfquotes">
+                        </select>
+                      </div>
+                      <div class="col-lg-2">
+                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-quotes-color" name="cfquotescolor" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
 
-        </form>
+          <div class="mt-5">
+            <div class="col-md-12">
+              <label>Preview:</label>
+              <br>
+              <div class="row">
+
+                <center>
+
+                  <h1 id="preview-heading">CERTIFICATE OF COMPLETION</h1>
+                  <label>IS PRESENTED TO:</label>
+                  <br />
+                  <h2 id="preview-title">Juan Dela Cruz</h2>
+                  <br />
+
+                  <div class="text-center" style="text-align:center;">
+                    <label id="preview-text" >This is the texts section this is the texts section</label>
+                    <br />
+                    <label id="preview-quotes" style="font-style:italic;">" This is a sample quotation section "</label>
+                  </div>
+
+                </center>
+
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
+      <br><br>
+      <div class="modal-footer float-right">
+        <button id="useDefaultBtn" type="button" class="btn btn-secondary">Use Default</button>
+        <button id="proceedBtn" type="submit" class="btn btn-primary">Proceed</button>
+      </div>
+
+    </form>
+  </div>
     
   </div>
 </div>
@@ -169,6 +268,8 @@
 <script src="<?php echo e(asset('vet-clinic/assets/vendor_components/datatable/datatables.min.js')); ?>"></script>
 <script src="<?php echo e(asset('vet-clinic/main/js/template.js')); ?>"></script>
 <script src="<?php echo e(asset('vet-clinic/main/js/pages/events.js')); ?>"></script>
+
+<script src="<?php echo e(URL::asset('custom/js/customfonts.js')); ?>"></script>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
@@ -195,6 +296,29 @@
   $("#useDefaultBtn").on("click", () => {
     setPromptInputValue();
   });
+
+
+  // font customizations
+  loadCustomFonts("cf-heading", "preview-heading")
+  loadCustomFonts("cf-title", "preview-title")
+  loadCustomFonts("cf-text", "preview-text")
+  loadCustomFonts("cf-quotes", "preview-quotes")
+
+  $("#cf-heading-color").on("change", (e) => {
+    $("#preview-heading").css("color", e.currentTarget.value)
+  })
+
+  $("#cf-title-color").on("change", (e) => {
+    $("#preview-title").css("color", e.currentTarget.value)
+  })
+
+  $("#cf-text-color").on("change", (e) => {
+    $("#preview-text").css("color", e.currentTarget.value)
+  })
+
+  $("#cf-quotes-color").on("change", (e) => {
+    $("#preview-quotes").css("color", e.currentTarget.value)
+  })
 
 </script>
 
