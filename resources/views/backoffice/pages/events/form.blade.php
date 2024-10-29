@@ -15,7 +15,7 @@
                     @endif
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="form-group {{$errors->has('category_id')?'error':null}}">
                     <label class="form-label">Event Category <span class="text-danger">*</span></label>
                     <select name="category_id" class="form-control">
@@ -32,7 +32,7 @@
                     <div class="help-block"><ul role="alert"><li>{{$errors->first('category_id')}}</li></ul></div>
                     @endif
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="form-group {{$errors->has('details')?'error':null}}">
                     <label class="form-label">Details <span class="text-danger">*</span></label>
