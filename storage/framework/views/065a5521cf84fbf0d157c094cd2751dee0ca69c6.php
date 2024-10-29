@@ -16,7 +16,7 @@
                     <?php endif; ?>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="form-group <?php echo e($errors->has('category_id')?'error':null); ?>">
                     <label class="form-label">Event Category <span class="text-danger">*</span></label>
                     <select name="category_id" class="form-control">
@@ -33,7 +33,7 @@
                     <div class="help-block"><ul role="alert"><li><?php echo e($errors->first('category_id')); ?></li></ul></div>
                     <?php endif; ?>
                 </div>
-            </div>
+            </div> -->
             <div class="row">
                 <div class="form-group <?php echo e($errors->has('details')?'error':null); ?>">
                     <label class="form-label">Details <span class="text-danger">*</span></label>

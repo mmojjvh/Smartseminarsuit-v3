@@ -55,8 +55,8 @@ class CertificatesRepository extends Model implements ICertificatesRepository
                 $data->quotes_color = $styles["quotes_color"];
 
                 $isInTimeFrame = $this->timeFrameValidation($event->start, $event->end, $attendance->created_at, $attendance->timeout);
-                echo "USER: ".$attendance->user->name."<br>";
-                echo "IS IN TIME FRAME: ".$isInTimeFrame."<br><br>";
+                // echo "USER: ".$attendance->user->name."<br>";
+                // echo "IS IN TIME FRAME: ".$isInTimeFrame."<br><br>";
                 if($isInTimeFrame){
                     $data->save();
                     array_push($certificates, $data);

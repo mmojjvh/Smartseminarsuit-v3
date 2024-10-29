@@ -65,7 +65,7 @@ class EventsRepository extends Model implements IEventsRepository
             $event = self::find($request->id)? : new self;
 
             $event->name = $request->name;
-            $event->category_id = $request->category_id;
+            $event->category_id = 1;
             $event->details = $request->details;
             $event->status = $request->status?$request->status:'Pending';
             $event->start = $request->start?date('Y-m-d H:i:s',strtotime($request->start)):null;
