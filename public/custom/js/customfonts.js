@@ -89,6 +89,8 @@ const customFonts = [
   {"classname": "yanone-kaffeesatz"},
   {"classname": "zilla-slab"},
   {"classname": "zilla-slab-highlight"},
+  {"classname": "montserrat"},
+  {"classname": "contrail-one"}
 ]
 
 function loadCustomFonts(target, previewTarget) {

@@ -1,0 +1,1 @@
+<?php /**PATH C:\Users\markj\OneDrive\Desktop\Capstone 2\smartserminar-suit 1.0 (1)\smartserminar-suit\resources\views/frontend/web/_components/search.blade.php ENDPATH**/ ?>
