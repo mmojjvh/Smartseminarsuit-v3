@@ -25,13 +25,8 @@
 
  <div id="pageBody" class="certificate background {{ $loop->last?'':'page-break' }}" style="
     background: url(
-    <?php 
-        if($data["background_image"] != ''){
-            echo $data["background_image"];
-        }else{
-            echo $certificate->background_image;
-        }
-     ?>
+    
+     {{ $certificate->use_template == 1 ? URL::asset($certificate->background_image) : $certificate->background_image }}
     );
     background-size: 100% 100%;
     background-repeat: no-repeat;
@@ -84,7 +79,7 @@
       </table>
     </div>
     <div>
-      <img src="{{ URL::asset('images/logo-long.png') }}" style="width: 150px;height: 35ßpx;" />
+      <img class="app-logo" src="{{ URL::asset('images/logo-long.png') }}" style="width: 150px;height: 35ßpx;" />
     </div>
   </div>
 

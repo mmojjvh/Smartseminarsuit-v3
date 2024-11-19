@@ -383,7 +383,45 @@ $(function() {
 
   $("#addCoordBtn").on("click", function() {
     $("#coordformerror").html("")
-  })
+  });  
+
+  $("#asig-submitBtn").on("click", function(e) {
+    e.preventDefault()
+    renderAsignatory()
+    $("#exampleModal2").modal("hide")
+  });
+
+  function renderAsignatory() {
+    
+    let email = $("#asigemail").val()
+    let position = $("#asigpos").val()
+    let name = $("#asigname").val()
+    const total = $("#asig-container .asig-row").length    
+
+    $("#asig-container").append(`<div class="col-md-12 p-2 asig-row row" id="asigRow${total + 1}Main" style="border-bottom:1px solid gray;justify-content:center;align-items:center;">
+                                <div class="col-md-9 p-5" >
+                                    <button type="button" id="asigRow${total + 1}" class="btn waves-effect waves-light btn btn-sm btn-outlined btn-danger asig-row-btn">
+                                      <i class="ti-trash" style="pointer-events:none;"></i>
+                                    </button>
+                                    <label>&nbsp; ${name}</label>
+                                    <p>&nbsp; ${email} | ${position}</p>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>`);
+
+    $("#asig-email-inputs").append(`<input id="asigRow${total + 1}asigemailinput" type="text" name="asignatoryemails[]" value="${email}" multiple="multiple" style="visibility:hidden;" />`);
+    $("#asig-name-inputs").append(`<input id="asigRow${total + 1}asignameinput" type="text" name="asignatorynames[]" value="${name}" multiple="multiple" style="visibility:hidden;" />`);
+    $("#asig-pos-inputs").append(`<input id="asigRow${total + 1}asigposinput" type="text" name="asignatorypositions[]" value="${position}" multiple="multiple" style="visibility:hidden;" />`);
+
+    $(".asig-row-btn").on("click", (e) => {
+      let id = $(e.target).attr("id")
+      $(`#${id}Main`).remove()
+      $(`#${id}asigemailinput`).remove()
+      $(`#${id}asignameinput`).remove()
+    });
+
+  }
 
 </script>
 

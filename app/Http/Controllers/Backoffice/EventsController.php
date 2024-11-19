@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Logic\ImageUploader as UploadLogic;
 use App\Models\Backoffice\Coordinator;
+use App\Models\Backoffice\Asignatory;
 
 //Events
 use App\Events\SendEmailEvent;
@@ -113,6 +114,25 @@ class EventsController extends Controller
                 $coord->save();
             }
         }
+
+        if($request->asignatoryemails){
+
+            $emails = $request->asignatoryemails;
+            $names = $request->asignatorynames;
+            $positions = $request->asignatorypositions;
+
+            foreach ($request->asignatoryemails as $key => $email) {
+                $asig = new Asignatory;
+                $asig->event_id = $crudData->id;
+                $asig->name = $names[$key];
+                $asig->email = $emails[$key];
+                $asig->position = $positions[$key];
+                $asig->signature = "";
+                $asig->save();
+            }
+
+        }
+
         return redirect()->route('backoffice.events.index');
     }
     

@@ -23,7 +23,7 @@ class CertificatesRepository extends Model implements ICertificatesRepository
         return self::all();
     }
 
-    public function generateCertificate($event, $quote, $background, $styles){
+    public function generateCertificate($event, $quote, $background, $styles, $useTemplate){
         DB::beginTransaction();
         try {
             $attandanceList = $event->attendance;
@@ -54,6 +54,8 @@ class CertificatesRepository extends Model implements ICertificatesRepository
                 $data->text_color = $styles["text_color"];
                 $data->quotes_color = $styles["quotes_color"];
 
+                $data->use_template = $useTemplate;
+
                 $isInTimeFrame = $this->timeFrameValidation($event->start, $event->end, $attendance->created_at, $attendance->timeout);
                 // echo "USER: ".$attendance->user->name."<br>";
                 // echo "IS IN TIME FRAME: ".$isInTimeFrame."<br><br>";
@@ -77,7 +79,7 @@ class CertificatesRepository extends Model implements ICertificatesRepository
         }
     }
 
-    public function updateAndFetch($id, $background, $styles) {
+    public function updateAndFetch($id, $background, $styles, $useTemplate) {
         
         $certificate = self::where('event_id', $id)->update([
             'background_image' => $background,
@@ -91,6 +93,7 @@ class CertificatesRepository extends Model implements ICertificatesRepository
             'title_color' => $styles["title_color"],
             'text_color' => $styles["text_color"],
             'quotes_color' => $styles["quotes_color"],
+            'use_template' => $useTemplate
         ]);
         // $certificate->background_image = $background;
         // $certificate->save();

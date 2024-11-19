@@ -46,12 +46,12 @@
 						</ul>	
 					</li>
 					@endif
-					<li>
+					<!-- <li>
 						<a class="{{in_array(request()->route()->getName(),['backoffice.participants.index'])?'text-primary':''}}" href="{{ route('backoffice.participants.index') }}">
 							<i data-feather="users" class="{{in_array(request()->route()->getName(),['backoffice.participants.index'])?'text-primary':''}}"></i>
 							<span>Participants</span>
 						</a>
-					</li>		
+					</li>		 -->
 					<li>
 						<a class="{{in_array(request()->route()->getName(),['backoffice.attendance.index'])?'text-primary':''}}" href="{{ route('backoffice.attendance.index') }}">
 							<i data-feather="book" class="{{in_array(request()->route()->getName(),['backoffice.attendance.index'])?'text-primary':''}}"></i>

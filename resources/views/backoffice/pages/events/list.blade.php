@@ -93,7 +93,7 @@
 
                                                 <!-- <a id="generateCertificateBtn_{{ $event->id }}" style="display: none;" href="{{ route('backoffice.events.certificate-prompt', [$event->id, '']) }}" target="_blank" class=" waves-effect waves-light btn btn-warning-light"><i data-feather="award"></i>&nbsp; Generate Certificate</a> -->
 
-                                                <a id="" data-toggle="modal" data-target="#exampleModal" href="#" class="promptToggleBtn waves-effect waves-light btn btn-warning-light" data-event="{{ $event }}"><i data-feather="award"></i>&nbsp; Generate Certificate</a>
+                                                <a id="" data-toggle="modal" data-target="#exampleModal2" href="#" class="promptToggleBtn waves-effect waves-light btn btn-warning-light" data-event="{{ $event }}"><i data-feather="award"></i>&nbsp; Generate Certificate</a>
                                                 
                                                 @endif
                                                 <a class="waves-effect waves-light btn btn-light no-caret" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></a>
@@ -124,7 +124,118 @@
     </div>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+
+<div class="modal fade" id="exampleModal2" tabindex="-9" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    
+      <div class="modal-content">
+        <form action="{{ route('backoffice.events.certificate-prompt') }}" method="POST" target="_blank">
+        @csrf  <!-- This token is necessary for security reasons -->
+
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel"><i data-feather="award"></i> Generate Certificate</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container">
+            <div class="row">            
+              <p>Select the template for the event's certificate</p>
+                <div class="col-lg-12" id="templates-container" style="height:500px;overflow-y:scroll;">
+                  <div class="row" >
+
+                    <?php 
+
+                      $templates = [
+                        "images/certificates/templates/template1.png",
+                        "images/certificates/templates/template2.png",
+                        "images/certificates/templates/template3.png",
+                        "images/certificates/templates/template4.png",
+                        "images/certificates/templates/template5.png",
+                        "images/certificates/templates/template6.png",
+                        "images/certificates/templates/template7.png",
+                        "images/certificates/templates/template8.png",
+                        "images/certificates/templates/template9.png",
+                        "images/certificates/templates/template10.png",
+                        "images/certificates/templates/template11.png",
+                        "images/certificates/templates/template12.png",
+                        "images/certificates/templates/template13.png",
+                        "images/certificates/templates/template14.png",
+                      ];
+                    
+                    ?>
+
+                    @if(isset($templates))
+                      @foreach($templates as $template)
+                        <div class="col-lg-4">
+                          <div class="card active" style="padding:0;">
+                            <div class="card-body">
+                              <img src="{{ asset($template) }}" style="width:300px;height:130px;" />
+                            </div>
+                            <div class="card-footer align-items-center text-center">
+                              <a type="button" class="btn btn-secondary selectTemplateBtn" data-url=" {{ $template }} ">Select Template</a>
+                            </div>
+                          </div>
+                        </div>
+                      @endforeach
+                    @endif
+                    
+
+                    <!-- <div class="col-lg-4">
+                      <div class="card" style="padding:0;">
+                        <div class="card-body">
+                          <img src="{{ asset('images\certificates\business-orientation-seminar-and-training-program.jpg') }}" style="width:250px;height:180px;" />
+                        </div>
+                        <div class="card-footer align-items-center text-center">
+                          <a type="button" class="btn btn-primary">Select Template</a>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-4">
+                      <div class="card" style="padding:0;">
+                        <div class="card-body">
+                          <img src="{{ asset('images\certificates\capability-building-seminar-empowering-youth-leadership.jpg') }}" style="width:250px;height:180px;" />
+                        </div>
+                        <div class="card-footer align-items-center text-center">
+                          <a type="button" class="btn btn-primary">Select Template</a>
+                        </div>
+                      </div>
+                    </div> -->
+
+                  </div>
+                </div>
+            </div>
+          <br/>
+        </div>
+      </div>
+      <br><br>
+      <input required readonly type="text" name="id" id="promptEventId" style="display:none;">
+      <input required readonly type="text" name="prompt" id="" style="display:none;">
+      <input required readonly type="text" name="template" value="true" style="display:none;">
+      <input required readonly type="text" name="backgroundimage" id="templateImageUrl" style="display:none;">
+      
+      <input required readonly type="text" name="cfheading" value="" style="display:none;">
+      <input required readonly type="text" name="cftitle" value="" style="display:none;">
+      <input required readonly type="text" name="cftext" value="" style="display:none;">
+      <input required readonly type="text" name="cfquotes" value="" style="display:none;">
+      <input required readonly type="text" name="cfheadingcolor" value="" style="display:none;">
+      <input required readonly type="text" name="cftitlecolor" value="" style="display:none;">
+      <input required readonly type="text" name="cftextcolor" value="" style="display:none;">
+      <input required readonly type="text" name="cfquotescolor" value="" style="display:none;">
+
+      <div class="modal-footer float-right">
+        <button id="useCustomBtn" type="button" data-dismiss="modal" data-target="exampleModal" class="btn btn-secondary">Use Custom Design</button>
+        <button id="proceedBtn" type="submit" class="btn btn-primary">Proceed</button>
+      </div>
+    </form>
+  </div>
+    
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     
       <div class="modal-content">
@@ -146,11 +257,12 @@
           </div>
           <div class="row">
             <div class="col-md-12">
-              <input required readonly type="text" name="id" id="promptEventId" style="display:none;">
+              <input style="color:black;visibility:hidden;" required type="text" name="id" id="promptEventId2" value="{{ isset($_GET['id']) ? $_GET['id'] : 'hehe' }} " />
               <textarea required name="prompt" id="promptInput" style="width: 100%;" rows="5"></textarea>
             </div>
           </div>
           <br/>
+          
           <div class="row">
             <div class="col-md-12">
               <label>Fonts Customization:</label>
@@ -246,11 +358,12 @@
               </div>
             </div>
           </div>
+
         </div>
       </div>
       <br><br>
       <div class="modal-footer float-right">
-        <button id="useDefaultBtn" type="button" class="btn btn-secondary">Use Default</button>
+        <button id="useDefaultBtn" data-dismiss="modal" data-target="exampleModal2" type="button" class="btn btn-secondary">Use Default Template</button>
         <button id="proceedBtn" type="submit" class="btn btn-primary">Proceed</button>
       </div>
 
@@ -259,6 +372,7 @@
     
   </div>
 </div>
+
 
 @endpush
 
@@ -285,7 +399,8 @@
 
   function setPromptInputValue () {
     $("#promptInput").val(defaultPrompt.replace("%event_name%", currentEvent.name));
-    $("#promptEventId").val(currentEvent.id);
+    $("#promptEventId").attr("value", currentEvent.id);
+    $("#promptEventId2").attr("value", currentEvent.id);
   }
 
   $(".promptToggleBtn").on("click", (e) => {
@@ -294,9 +409,21 @@
     setPromptInputValue();
   });
 
-  $("#useDefaultBtn").on("click", () => {
-    setPromptInputValue();
-  });
+  $(document).ready(function() {
+    $("#useDefaultBtn").on("click", () => {
+      setPromptInputValue();
+      $("#exampleModal").modal("hide");
+      $("#exampleModal2").modal("show");
+    });
+
+    $("#useCustomBtn").on("click", () => {
+      setPromptInputValue();
+      $("#exampleModal2").modal("hide");
+      $("#exampleModal").modal("show");
+    });
+  })
+
+  
 
 
   // font customizations
@@ -319,6 +446,28 @@
 
   $("#cf-quotes-color").on("change", (e) => {
     $("#preview-quotes").css("color", e.currentTarget.value)
+  })
+
+  $(".selectTemplateBtn").on("click", (e) => {
+
+    let url = $(e.target).data("url")
+    $("#templateImageUrl").val(url)
+
+    $(".selectTemplateBtn").each((index) => {
+
+      let btn = $(".selectTemplateBtn")[index]
+      let _url = $(btn).data("url")
+
+      if(_url == url){
+        $(btn).attr("class", "btn btn-primary selectTemplateBtn")
+        $(btn).html("Selected")
+      }else{
+        $(btn).attr("class", "btn btn-secondary selectTemplateBtn")
+        $(btn).html("Select Template")
+      }
+    
+    })
+
   })
 
 </script>

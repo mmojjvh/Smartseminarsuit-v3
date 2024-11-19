@@ -31,28 +31,50 @@ class CertificateController extends Controller
         $this->data['certificates'] =  $this->certRepo->fetch();
         return view('backoffice.pages.certificates.index',$this->data);
     }
+
+    public function getPayload($payload){
+        $result = [];
+        $result["prompt"] = isset($payload["prompt"]) ? $payload["prompt"] : "";
+        $result["cfheading"] = isset($payload["cfheading"]) ? $payload["cfheading"] : "";
+        $result["cftitle"] = isset($payload["cftitle"]) ? $payload["cftitle"] : "";
+        $result["cftext"] = isset($payload["cftext"]) ? $payload["cftext"] : "";
+        $result["cfquotes"] = isset($payload["cfquotes"]) ? $payload["cfquotes"] : "";
+        $result["cfheadingcolor"] = isset($payload["cfheadingcolor"]) ? $payload["cfheadingcolor"] : "";
+        $result["cftitlecolor"] = isset($payload["cftitlecolor"]) ? $payload["cftitlecolor"] : "";
+        $result["cftextcolor"] = isset($payload["cftextcolor"]) ? $payload["cftextcolor"] : "";
+        $result["cfquotescolor"] = isset($payload["cfquotescolor"]) ? $payload["cfquotescolor"] : "";
+        return $result;
+    }
     
     public function genCert($id, Request $request){
 
         $baseUrl = $request->root();
         $payload = $request->session()->get('data');
-        $prompt = $payload["prompt"];
+
+        $payload2 = $this->getPayload($payload);
+        $prompt = $payload2["prompt"];
 
         //custom styles
         $customStyles = [];
-        $customStyles["heading"] = $payload["cfheading"];
-        $customStyles["title"] = $payload["cftitle"];
-        $customStyles["text"] = $payload["cftext"];
-        $customStyles["quotes"] = $payload["cfquotes"];
-        $customStyles["heading_color"] = $payload["cfheadingcolor"];
-        $customStyles["title_color"] = $payload["cftitlecolor"];
-        $customStyles["text_color"] = $payload["cftextcolor"];
-        $customStyles["quotes_color"] = $payload["cfquotescolor"];
+        $customStyles["heading"] = $payload2["cfheading"];
+        $customStyles["title"] = $payload2["cftitle"];
+        $customStyles["text"] = $payload2["cftext"];
+        $customStyles["quotes"] = $payload2["cfquotes"];
+        $customStyles["heading_color"] = $payload2["cfheadingcolor"];
+        $customStyles["title_color"] = $payload2["cftitlecolor"];
+        $customStyles["text_color"] = $payload2["cftextcolor"];
+        $customStyles["quotes_color"] = $payload2["cfquotescolor"];
 
         // $ai_bg = $this->generateCertificateBackground($prompt);
         // $base64_background = "data:image/png;base64,".$ai_bg;
 
-        $ai_background = DalleAIGenerator::generate($prompt);
+        $useTemplate = 0;
+        if(isset($payload["template"])){
+            $ai_background = $payload["backgroundimage"];
+            $useTemplate = 1;
+        }else{
+            $ai_background = DalleAIGenerator::generate($prompt);
+        }
 
         $event = $this->eventRepo->findOrFail($id);
         $data['title'] = 'Certificate of Completion for '.$event->name.' Participants ';
@@ -64,11 +86,11 @@ class CertificateController extends Controller
         $check = $this->certRepo->fetch($id);
 
         if($check->count() == 0){
-            $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background, $customStyles);
+            $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background, $customStyles, $useTemplate);
         }else{
 
             //update background to new generated
-            $data['certificates'] = $this->certRepo->updateAndFetch($id, $ai_background, $customStyles);
+            $data['certificates'] = $this->certRepo->updateAndFetch($id, $ai_background, $customStyles, $useTemplate);
             // $data['certificates'] = $this->certRepo->fetch($id);
         }
 

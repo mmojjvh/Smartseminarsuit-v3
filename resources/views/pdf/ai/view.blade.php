@@ -21,7 +21,7 @@
 <body>
 
   <div id="pageBody" class="certificate background" style="
-    background: url({!! $data['certificate']->background_image !!});
+    background: url({!! $data['certificate']->use_template == 1 ? URL::asset($data['certificate']->background_image) : $data['certificate']->background_image !!});
     background-size: 100% 100%;
     background-repeat: no-repeat;
     object-fit:cover;
@@ -74,7 +74,7 @@
       </div>
 
       <div>
-        <img src="{{ URL::asset('images/logo-long.png') }}" style="width: 150px;height: 35ßpx;" />
+        <img class="app-logo" src="{{ URL::asset('images/logo-long.png') }}" style="width: 150px;height: 35ßpx;" />
       </div>
 
     </div>
