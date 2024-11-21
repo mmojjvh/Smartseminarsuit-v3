@@ -13,6 +13,11 @@ class EmailSender {
     
     static public function send($emails, $content){
 
+        $smtp_host = env('SMTP_HOST');
+        $smtp_name = env('SMTP_NAME');
+        $smtp_password = env('SMTP_PASSWORD');
+        $smtp_port = env('SMTP_PORT');
+
         $from = 'noreply@smartseminarsuit.com';
         $subject = 'SmartSeminar Suit';
         $message = 'Good Day! Attached file is the certificate from the event.';
@@ -21,12 +26,12 @@ class EmailSender {
         try {
             // Server settings
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com'; // Set the SMTP server to send through
+            $mail->Host       = $smtp_host; // Set the SMTP server to send through
             $mail->SMTPAuth   = true; 
-            $mail->Username   = 'caramelmacchiato209@gmail.com'; // SMTP username
-            $mail->Password   = 'sbph tbsn aufm wbai'; // SMTP password
+            $mail->Username   = $smtp_name; // SMTP username
+            $mail->Password   = $smtp_password; // SMTP password
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Enable TLS encryption
-            $mail->Port       = 587; // TCP port to connect to
+            $mail->Port       = $smtp_port; // TCP port to connect to
     
             // Recipients
             $mail->setFrom($from, 'Mailer');        
