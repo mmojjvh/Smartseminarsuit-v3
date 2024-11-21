@@ -150,7 +150,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <label class="form-label">E-Sginature <span class="text-danger">*</span></label>
+                        <label class="form-label">E-Sginature <span class="text-danger"></span></label>
                         <canvas id="sig-canvas" width="740" height="220">
                             Get a better browser, bro.
                         </canvas>
