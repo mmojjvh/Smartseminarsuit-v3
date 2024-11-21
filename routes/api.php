@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
-
+use App\Http\Controllers\Backoffice\EventsController;
+use App\Http\Controllers\Backoffice\CertificateController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -13,6 +14,5 @@ use Illuminate\Http\Request;
 |
 */
 
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::any('/events/monitor', [EventsController::class, 'monitorEvents']);
+Route::post('/certificate/distribute', [CertificateController::class, 'distributeCertificate']);

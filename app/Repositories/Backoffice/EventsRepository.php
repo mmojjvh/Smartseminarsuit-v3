@@ -30,6 +30,10 @@ class EventsRepository extends Model implements IEventsRepository
         return self::where('status','!=','Completed')->orderBy('start','ASC')->get();
     }
 
+    public function fetchMonitoring(){
+        return self::where('status','=','Happening')->orderBy('start','ASC')->get();
+    }
+
     public function fetchCompleted(){
         $attendance = Attendance::where('user_id', auth()->user()->id)->pluck('event_id');
         return self::where('status','Completed')->whereIn('id', $attendance)->orderBy('start','DESC')->get();
@@ -118,6 +122,13 @@ class EventsRepository extends Model implements IEventsRepository
         $event = self::where('id', $id)->first();
         $event->status = $status;
         $event->save();
+    }
+
+    public function updateStatusAuto($id, $status){
+        $event = self::where('id', $id)->first();
+        $event->status = $status;
+        $event->save();
+        return $event;
     }
 
     public function quitEvent($id){

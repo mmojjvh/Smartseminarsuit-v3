@@ -321,6 +321,7 @@ $(function() {
     var dataUrl = canvas.toDataURL();
     var name = $("#coordname").val()
     var position = $("#coordpos").val()
+    var email = $("#coordemail").val()
     // sigText.innerHTML = dataUrl;
 
     // convert to Blob (async)
@@ -329,7 +330,7 @@ $(function() {
       const dT = new DataTransfer();
       dT.items.add( file );
       // document.getElementById("signatureInput").files = dT.files;
-      renderCoordinator(name, position, dataUrl, dT.files);
+      renderCoordinator(name, position, email, dataUrl, dT.files);
       // document.querySelector( "input" ).files = dT.files;
     } );
     
@@ -337,9 +338,8 @@ $(function() {
     // sigImage.setAttribute("src", dataUrl);
   }, false);	
 
-  function renderCoordinator(name, position, img, file) {
+  function renderCoordinator(name, position, email, img, file) {
 
-    
     const total = $("#co-container .coord-row").length    
 
     $("#co-container").append(`<div class="col-md-12 p-2 coord-row row" id="coordRow${total + 1}Main" style="border-bottom:1px solid gray;justify-content:center;align-items:center;">
@@ -357,7 +357,8 @@ $(function() {
     $("#co-sig-inputs").append(`<input id="coordRow${total + 1}cosiginput" type="file" accept="image/*" name="coordinatesigs[]" multiple="multiple" style="visibility:hidden;" />`);
     $("#co-name-inputs").append(`<input id="coordRow${total + 1}conameinput" type="text" name="coordinatenames[]" value="${name}" multiple="multiple" style="visibility:hidden;" />`);
     $("#co-pos-inputs").append(`<input id="coordRow${total + 1}coposinput" type="text" name="coordinatepositions[]" value="${position}" multiple="multiple" style="visibility:hidden;" />`);
-    
+    $("#co-email-inputs").append(`<input id="coordRow${total + 1}coemailinput" type="email" name="coordinateemails[]" value="${email}" multiple="multiple" style="visibility:hidden;" />`);
+
     document.getElementById(`coordRow${total + 1}cosiginput`).files = file
 
     $(".coord-row-btn").on("click", (e) => {
@@ -365,6 +366,7 @@ $(function() {
       $(`#${id}Main`).remove()
       $(`#${id}cosiginput`).remove()
       $(`#${id}conameinput`).remove()
+      $(`#${id}coemailinput`).remove()
     });
     
   }
@@ -384,44 +386,6 @@ $(function() {
   $("#addCoordBtn").on("click", function() {
     $("#coordformerror").html("")
   });  
-
-  $("#asig-submitBtn").on("click", function(e) {
-    e.preventDefault()
-    renderAsignatory()
-    $("#exampleModal2").modal("hide")
-  });
-
-  function renderAsignatory() {
-    
-    let email = $("#asigemail").val()
-    let position = $("#asigpos").val()
-    let name = $("#asigname").val()
-    const total = $("#asig-container .asig-row").length    
-
-    $("#asig-container").append(`<div class="col-md-12 p-2 asig-row row" id="asigRow${total + 1}Main" style="border-bottom:1px solid gray;justify-content:center;align-items:center;">
-                                <div class="col-md-9 p-5" >
-                                    <button type="button" id="asigRow${total + 1}" class="btn waves-effect waves-light btn btn-sm btn-outlined btn-danger asig-row-btn">
-                                      <i class="ti-trash" style="pointer-events:none;"></i>
-                                    </button>
-                                    <label>&nbsp; ${name}</label>
-                                    <p>&nbsp; ${email} | ${position}</p>
-                                </div>
-                                <div class="col-md-3">
-                                </div>
-                            </div>`);
-
-    $("#asig-email-inputs").append(`<input id="asigRow${total + 1}asigemailinput" type="text" name="asignatoryemails[]" value="${email}" multiple="multiple" style="visibility:hidden;" />`);
-    $("#asig-name-inputs").append(`<input id="asigRow${total + 1}asignameinput" type="text" name="asignatorynames[]" value="${name}" multiple="multiple" style="visibility:hidden;" />`);
-    $("#asig-pos-inputs").append(`<input id="asigRow${total + 1}asigposinput" type="text" name="asignatorypositions[]" value="${position}" multiple="multiple" style="visibility:hidden;" />`);
-
-    $(".asig-row-btn").on("click", (e) => {
-      let id = $(e.target).attr("id")
-      $(`#${id}Main`).remove()
-      $(`#${id}asigemailinput`).remove()
-      $(`#${id}asignameinput`).remove()
-    });
-
-  }
 
 </script>
 

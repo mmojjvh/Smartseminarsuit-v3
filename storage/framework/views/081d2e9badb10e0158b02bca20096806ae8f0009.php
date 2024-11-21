@@ -97,34 +97,18 @@
         <div class="col-md-6">
             <div class="box-body">
                 <div class="form-group">
-                    <label class="form-label">Coordinators <span class="text-danger"></span></label><br>
+                    <label class="form-label">Signatories <span class="text-danger"></span></label><br>
                     <label class="text-danger" id="coordformerror"></label><br>
                     <div class="form-controlx">
                         <button type="button" data-toggle="modal" id="addCoordBtn" data-target="#exampleModal" class="btn waves-effect waves-light btn btn-outlined btn-primary ">
-                            <i class="ti-plus"></i> Add Coordinator
+                            <i class="ti-plus"></i> Add Signatory
                         </button>
 
                         <div class="row mt-5 p-5" id="co-container"></div>
                         <div id="co-name-inputs"></div>
                         <div id="co-pos-inputs"></div>
                         <div id="co-sig-inputs"></div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="box-body">
-                <div class="form-group">
-                    <label class="form-label">Asignatory <span class="text-danger"></span></label><br>
-                    <label class="text-danger" id="asigformerror"></label><br>
-                    <div class="form-controlx">
-                        <button type="button" data-toggle="modal" id="addAsigBtn" data-target="#exampleModal2" class="btn waves-effect waves-light btn btn-outlined btn-primary ">
-                            <i class="ti-plus"></i> Add Asignatory
-                        </button>
-
-                        <div class="row mt-5 p-5" id="asig-container"></div>
-                        <div id="asig-name-inputs"></div>
-                        <div id="asig-pos-inputs"></div>
-                        <div id="asig-email-inputs"></div>
+                        <div id="co-email-inputs"></div>
 
                     </div>
                 </div>
@@ -143,7 +127,7 @@
         <?php echo csrf_field(); ?>  <!-- This token is necessary for security reasons -->
 
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"><i data-feather="users"></i>  &nbsp;Add Coordinator</h5>
+            <h5 class="modal-title" id="exampleModalLabel"><i data-feather="users"></i>  &nbsp;Add Signatory</h5>
             <button type="button" class="btn btn-sm btn-outlined" data-dismiss="modal" aria-label="Close" style="border:none;">
               <i data-feather="x"></i>
             </button>
@@ -158,6 +142,11 @@
                     <div class="form-group <?php echo e($errors->has('position')?'error':null); ?> end-date">
                         <label class="form-label">Position <span class="text-danger">*</span></label>
                         <input type="text" name="coordpos" id="coordpos" class="form-control" placeholder="">  
+                    </div>
+                    <div class="form-group <?php echo e($errors->has('email')?'error':null); ?> end-date">
+                        <label class="form-label">Email <span class="text-danger">*</span></label>
+                        <input type="email" name="coordemail" id="coordemail" class="form-control" placeholder="">  
+                        <p class="text-secondary m-2"><i data-feather="info"></i> The certificate will be sent to this email</p>
                     </div>
                 </div>
                 <div class="row">
@@ -180,49 +169,6 @@
         <div class="modal-footer">
             <button id="sig-submitBtn" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
             <button id="sig-clearBtn" type="button" class="btn btn-secondary">Reset</button>
-        </div>
-
-        </form>
-      </div>
-    
-  </div>
-</div>
-
-<div class="modal show" id="exampleModal2" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel2" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-    
-      <div class="modal-content">
-        <form action="<?php echo e(route('backoffice.events.certificate-prompt')); ?>" method="POST" target="_blank">
-        <?php echo csrf_field(); ?>  <!-- This token is necessary for security reasons -->
-
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel2"><i data-feather="users"></i>  &nbsp;Add Asignatory</h5>
-            <button type="button" class="btn btn-sm btn-outlined" data-dismiss="modal" aria-label="Close" style="border:none;">
-              <i data-feather="x"></i>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="container">
-                <div class="row">
-                    <div class="form-group <?php echo e($errors->has('name')?'error':null); ?> end-date">
-                        <label class="form-label">Full Name <span class="text-danger">*</span></label>
-                        <input type="text" name="asigname" id="asigname" class="form-control" placeholder="">  
-                    </div>
-                    <div class="form-group <?php echo e($errors->has('position')?'error':null); ?> end-date">
-                        <label class="form-label">Position <span class="text-danger">*</span></label>
-                        <input type="text" name="asigpos" id="asigpos" class="form-control" placeholder="">  
-                    </div>
-                    <div class="form-group <?php echo e($errors->has('asigemail')?'error':null); ?> end-date">
-                        <label class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="email" name="asigemail" id="asigemail" class="form-control" placeholder="">  
-                    </div>
-                </div>
-                <br/>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <button id="asig-submitBtn" type="button" data-dismiss="modal" class="btn btn-primary">Save</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
 
         </form>

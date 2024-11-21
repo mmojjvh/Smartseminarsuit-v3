@@ -14,6 +14,7 @@ use App\Domain\Interfaces\Repositories\Backoffice\IParticipantsRepository;
 use App\Models\Backoffice\Coordinator;
 
 use App\Logic\DalleAIGenerator;
+use App\Logic\EmailSender;
 use App\Logic\QRCode\QRCodeMaker;
 
 use Input, App, PDF;
@@ -85,7 +86,7 @@ class CertificateController extends Controller
         $data['certificates'] = [];
         $check = $this->certRepo->fetch($id);
 
-        if($check->count() == 0){
+        if($check->count() == 0){            
             $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background, $customStyles, $useTemplate);
         }else{
 
@@ -154,6 +155,32 @@ class CertificateController extends Controller
     public function getCertificatePrompt(Request $request){
         $data = $request->all();
         return redirect()->route('backoffice.events.generate_certificate', $data["id"])->with('data', $data);
+    }
+
+    public function distributeCertificate(Request $request){
+
+        $data = $request->all();
+
+        if(isset($data["fileDataURI"]) && isset($data["emails"])){
+            
+            $emails = $data["emails"];
+            $pdfdoc = $data['fileDataURI'];
+            $b64file = trim( str_replace('data:application/pdf;filename=generated.pdf;base64,', '',$pdfdoc));
+            $b64file = str_replace(' ', '+',$b64file);
+            $decoded_pdf = base64_decode($b64file);
+
+            $status = EmailSender::send($emails, $decoded_pdf);
+            
+            if($status){
+                return "Email Sent!";
+            }else{
+                return "Unable to send email. Try again later";
+            }
+        }else{
+            echo json_encode($data);
+            echo "Fuck...";
+        }
+
     }
 
 }

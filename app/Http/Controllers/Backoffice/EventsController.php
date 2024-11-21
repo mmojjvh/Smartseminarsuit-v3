@@ -92,17 +92,26 @@ class EventsController extends Controller
         }
 
         $coordinators = array();
-            
-        if($request->hasFile("coordinatesigs")) {
 
-            $signatures = $request->file("coordinatesigs");
+        if(isset($request->coordinatenames) || count($request->coordinatenames) > 0){
+
             $names = $request->coordinatenames;
             $positions = $request->coordinatepositions;
+            $emails = $request->coordinateemails;
 
-            foreach ($signatures as $key => $signature) {
-                $upload = UploadLogic::upload($signature, 'storage/coordinators/');                    
-                $esignature = $upload["esignature"];
-                $coordinators[] = ['name'=> $names[$key], 'position'=> $positions[$key], 'signature'=> $esignature];
+            if($request->hasFile("coordinatesigs")) {
+
+                $signatures = $request->file("coordinatesigs");
+                foreach ($signatures as $key => $signature) {
+                    $upload = UploadLogic::upload($signature, 'storage/coordinators/');                    
+                    $esignature = $upload["esignature"];
+                    $coordinators[] = ['name'=> $names[$key], 'position'=> $positions[$key], 'signature'=> $esignature, 'email'=> $emails[$key]];
+                }
+
+            }else{
+                foreach ($names as $key => $name) {
+                    $coordinators[] = ['name'=> $names[$key], 'position'=> $positions[$key], 'signature'=> '', 'email'=> $emails[$key]];
+                }
             }
 
             foreach ($coordinators as $key => $coordinator) {
@@ -111,24 +120,8 @@ class EventsController extends Controller
                 $coord->name = $coordinator['name'];
                 $coord->position = $coordinator['position'];
                 $coord->signature = $coordinator['signature'];
+                $coord->email = $coordinator['email'];
                 $coord->save();
-            }
-        }
-
-        if($request->asignatoryemails){
-
-            $emails = $request->asignatoryemails;
-            $names = $request->asignatorynames;
-            $positions = $request->asignatorypositions;
-
-            foreach ($request->asignatoryemails as $key => $email) {
-                $asig = new Asignatory;
-                $asig->event_id = $crudData->id;
-                $asig->name = $names[$key];
-                $asig->email = $emails[$key];
-                $asig->position = $positions[$key];
-                $asig->signature = "";
-                $asig->save();
             }
 
         }
@@ -196,5 +189,25 @@ class EventsController extends Controller
     public function quitEvent($id){
         $this->data['event'] = $this->repo->quitEvent($id);
         return redirect()->back();
+    }
+
+    public function monitorEvents(){
+
+        $list = $this->repo->fetchMonitoring();
+        $statuses = [];
+
+        foreach ($list as $key => $event) {
+            $endTime = strtotime($event->end);
+            $timeNow = strtotime("now");
+            if($timeNow > $endTime){
+                $statuses[] = $this->repo->updateStatusAuto($event->id, "Completed");
+            }
+        }
+        $result = array();
+        $result["list"] = $list;
+        $result["statuses"] = $statuses;
+        $result["updates"] = count($statuses);
+
+        echo json_encode($result);
     }
 }
