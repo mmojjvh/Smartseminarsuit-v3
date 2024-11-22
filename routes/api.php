@@ -16,3 +16,4 @@ use App\Http\Controllers\Backoffice\CertificateController;
 
 Route::any('/events/monitor', [EventsController::class, 'monitorEvents']);
 Route::post('/certificate/distribute', [CertificateController::class, 'distributeCertificate']);
+Route::get('/certificate/generate', [CertificateController::class, 'generateCertificate']);

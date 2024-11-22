@@ -53,7 +53,6 @@ class CertificateController extends Controller
         $payload = $request->session()->get('data');
 
         $payload2 = $this->getPayload($payload);
-        $prompt = $payload2["prompt"];
 
         //custom styles
         $customStyles = [];
@@ -68,13 +67,11 @@ class CertificateController extends Controller
 
         // $ai_bg = $this->generateCertificateBackground($prompt);
         // $base64_background = "data:image/png;base64,".$ai_bg;
-
+        $ai_background = $payload["backgroundimage"];
+        
         $useTemplate = 0;
-        if(isset($payload["template"])){
-            $ai_background = $payload["backgroundimage"];
+        if(isset($payload["use_template"]) && $payload["use_template"] == "true"){
             $useTemplate = 1;
-        }else{
-            $ai_background = DalleAIGenerator::generate($prompt);
         }
 
         $event = $this->eventRepo->findOrFail($id);
@@ -178,9 +175,18 @@ class CertificateController extends Controller
             }
         }else{
             echo json_encode($data);
-            echo "Fuck...";
         }
 
+    }
+
+    public function generateCertificate(Request $request){
+        $data = $request->all();
+        $result = "";
+        if(isset($data["prompt"])){
+            $prompt = $data["prompt"];
+            $result = DalleAIGenerator::generate($prompt);
+        }
+        return $result;
     }
 
 }

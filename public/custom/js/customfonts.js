@@ -1,4 +1,5 @@
 const customFonts = [
+  {"classname": "arial"},
   {"classname": "playwrite-gb-s"},
   {"classname": "belgrano"},
   {"classname": "bangers"},
@@ -93,12 +94,12 @@ const customFonts = [
   {"classname": "contrail-one"}
 ]
 
-function loadCustomFonts(target, previewTarget) {
+function loadCustomFonts(target, previewTarget, callback) {
   
   let field = document.getElementById(target)
   let previewField = document.getElementById(previewTarget)
   
-  customFonts.map((font, index) => {
+  customFonts.sort((a, b) => a.classname.localeCompare(b.classname)).map((font, index) => {
     let option = document.createElement("option")
     option.value = font.classname
     option.className = font.classname
@@ -108,6 +109,7 @@ function loadCustomFonts(target, previewTarget) {
   })
   field.onchange = (e) => {
     previewField.className = e.currentTarget.value
+    if(callback) callback(e.currentTarget.value)
   }
   return field
 }

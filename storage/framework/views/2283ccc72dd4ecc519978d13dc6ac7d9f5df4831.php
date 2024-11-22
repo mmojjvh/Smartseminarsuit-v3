@@ -3,6 +3,7 @@
 <?php $__env->startPush('title',$title.' List'); ?>
 
 <?php echo $__env->make('commons.customfonts', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <link rel="stylesheet" href="<?php echo e(URL::asset('custom/customfonts.css')); ?>">
 
 <?php $__env->startPush('css'); ?>
@@ -10,8 +11,38 @@
     .overflow-visible { 
       overflow: visible;
     }
+    .editable {
+      cursor:hand;
+    }
   </style>
 <?php $__env->stopPush(); ?>
+
+<?php 
+
+  $templates = [
+    "images/certificates/templates/template1.png",
+    "images/certificates/templates/template2.png",
+    "images/certificates/templates/template3.png",
+    "images/certificates/templates/template4.png",
+    "images/certificates/templates/template5.png",
+    "images/certificates/templates/template6.png",
+    "images/certificates/templates/template7.png",
+    "images/certificates/templates/template8.png",
+    "images/certificates/templates/template9.png",
+    "images/certificates/templates/template10.png",
+    "images/certificates/templates/template11.png",
+    "images/certificates/templates/template12.png",
+    "images/certificates/templates/template13.png",
+    "images/certificates/templates/template14.png",
+  ];
+
+  $commands = [
+    "Blue border and a small gold seal, use light colors and gradients. Do not use dark colors.",
+    "Test",
+
+  ]
+                      
+?>
 
 <?php $__env->startPush('content'); ?>
 <div class="content-wrapper">
@@ -94,7 +125,7 @@
 
                                                 <!-- <a id="generateCertificateBtn_<?php echo e($event->id); ?>" style="display: none;" href="<?php echo e(route('backoffice.events.certificate-prompt', [$event->id, ''])); ?>" target="_blank" class=" waves-effect waves-light btn btn-warning-light"><i data-feather="award"></i>&nbsp; Generate Certificate</a> -->
 
-                                                <a id="" data-toggle="modal" data-target="#exampleModal2" href="#" class="promptToggleBtn waves-effect waves-light btn btn-warning-light" data-event="<?php echo e($event); ?>"><i data-feather="award"></i>&nbsp; Generate Certificate</a>
+                                                <a id="" data-toggle="modal" data-target="#exampleModal" href="#" class="promptToggleBtn waves-effect waves-light btn btn-warning-light" data-event="<?php echo e($event); ?>"><i data-feather="award"></i>&nbsp; Generate Certificate</a>
                                                 
                                                 <?php endif; ?>
                                                 <a class="waves-effect waves-light btn btn-light no-caret" data-bs-toggle="dropdown"><i class="fa fa-ellipsis-h"></i></a>
@@ -125,122 +156,60 @@
     </div>
 </div>
 
-
-<div class="modal fade" id="exampleModal2" tabindex="-9" role="dialog" aria-labelledby="exampleModalLabel">
+<div class="modal fade" id="templateModal" tabindex="-5" role="dialog" aria-labelledby="templateModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
     
       <div class="modal-content">
-        <form action="<?php echo e(route('backoffice.events.certificate-prompt')); ?>" method="POST" target="_blank">
-        <?php echo csrf_field(); ?>  <!-- This token is necessary for security reasons -->
 
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel"><i data-feather="award"></i> Generate Certificate</h5>
+          <h5 class="modal-title" id="templateModalLabel"><i data-feather="award"></i> Generate Certificate</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
+
         <div class="modal-body">
           <div class="container">
             <div class="row">            
               <p>Select the template for the event's certificate</p>
-                <div class="col-lg-12" id="templates-container" style="height:500px;overflow-y:scroll;">
-                  <div class="row" >
+              <div class="col-lg-12" id="templates-container" style="height:500px;overflow-y:scroll;">
+                <div class="row" >
 
-                    <?php 
-
-                      $templates = [
-                        "images/certificates/templates/template1.png",
-                        "images/certificates/templates/template2.png",
-                        "images/certificates/templates/template3.png",
-                        "images/certificates/templates/template4.png",
-                        "images/certificates/templates/template5.png",
-                        "images/certificates/templates/template6.png",
-                        "images/certificates/templates/template7.png",
-                        "images/certificates/templates/template8.png",
-                        "images/certificates/templates/template9.png",
-                        "images/certificates/templates/template10.png",
-                        "images/certificates/templates/template11.png",
-                        "images/certificates/templates/template12.png",
-                        "images/certificates/templates/template13.png",
-                        "images/certificates/templates/template14.png",
-                      ];
-                    
-                    ?>
-
-                    <?php if(isset($templates)): ?>
-                      <?php $__currentLoopData = $templates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $template): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <div class="col-lg-4">
-                          <div class="card active" style="padding:0;">
-                            <div class="card-body">
-                              <img src="<?php echo e(asset($template)); ?>" style="width:300px;height:130px;" />
-                            </div>
-                            <div class="card-footer align-items-center text-center">
-                              <a type="button" class="btn btn-secondary selectTemplateBtn" data-url=" <?php echo e($template); ?> ">Select Template</a>
-                            </div>
+                  <?php if(isset($templates)): ?>
+                    <?php $__currentLoopData = $templates; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $template): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                      <div class="col-lg-4">
+                        <div class="card active" style="padding:0;">
+                          <div class="card-body">
+                            <img src="<?php echo e(asset($template)); ?>" style="width:300px;height:130px;" />
+                          </div>
+                          <div class="card-footer align-items-center text-center">
+                            <a type="button" class="btn btn-secondary selectTemplateBtn" data-url=" <?php echo e($template); ?> ">Select Template</a>
                           </div>
                         </div>
-                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    <?php endif; ?>
-                    
-
-                    <!-- <div class="col-lg-4">
-                      <div class="card" style="padding:0;">
-                        <div class="card-body">
-                          <img src="<?php echo e(asset('images\certificates\business-orientation-seminar-and-training-program.jpg')); ?>" style="width:250px;height:180px;" />
-                        </div>
-                        <div class="card-footer align-items-center text-center">
-                          <a type="button" class="btn btn-primary">Select Template</a>
-                        </div>
                       </div>
-                    </div>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                  <?php endif; ?>
 
-                    <div class="col-lg-4">
-                      <div class="card" style="padding:0;">
-                        <div class="card-body">
-                          <img src="<?php echo e(asset('images\certificates\capability-building-seminar-empowering-youth-leadership.jpg')); ?>" style="width:250px;height:180px;" />
-                        </div>
-                        <div class="card-footer align-items-center text-center">
-                          <a type="button" class="btn btn-primary">Select Template</a>
-                        </div>
-                      </div>
-                    </div> -->
-
-                  </div>
                 </div>
+              </div>
             </div>
-          <br/>
+          </div>
+        </div>
+        <br><br>
+        <div class="modal-footer float-right">
+          <button id="cancelSelectTemplateBtn" data-dismiss="modal" class="btn btn-secondary">Cancel</button>
+          <button id="doneSelectTemplateBtn" data-dismiss="modal" class="btn btn-primary">Done</button>
         </div>
       </div>
-      <br><br>
-      <input required readonly type="text" name="id" id="promptEventId" style="display:none;">
-      <input required readonly type="text" name="prompt" id="" style="display:none;">
-      <input required readonly type="text" name="template" value="true" style="display:none;">
-      <input required readonly type="text" name="backgroundimage" id="templateImageUrl" style="display:none;">
-      
-      <input required readonly type="text" name="cfheading" value="" style="display:none;">
-      <input required readonly type="text" name="cftitle" value="" style="display:none;">
-      <input required readonly type="text" name="cftext" value="" style="display:none;">
-      <input required readonly type="text" name="cfquotes" value="" style="display:none;">
-      <input required readonly type="text" name="cfheadingcolor" value="" style="display:none;">
-      <input required readonly type="text" name="cftitlecolor" value="" style="display:none;">
-      <input required readonly type="text" name="cftextcolor" value="" style="display:none;">
-      <input required readonly type="text" name="cfquotescolor" value="" style="display:none;">
-
-      <div class="modal-footer float-right">
-        <button id="useCustomBtn" type="button" data-dismiss="modal" data-target="exampleModal" class="btn btn-secondary">Use Custom Design</button>
-        <button id="proceedBtn" type="submit" class="btn btn-primary">Proceed</button>
-      </div>
-    </form>
-  </div>
     
   </div>
 </div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
     
-      <div class="modal-content">
-        <form action="<?php echo e(route('backoffice.events.certificate-prompt')); ?>" method="POST" target="_blank">
+    <div class="modal-content">
+      <form action="<?php echo e(route('backoffice.events.certificate-prompt')); ?>" method="POST" target="_blank">
         <?php echo csrf_field(); ?>  <!-- This token is necessary for security reasons -->
 
         <div class="modal-header">
@@ -251,125 +220,109 @@
         </div>
         <div class="modal-body">
           <div class="container">
-          <div class="row">
+
+            <div class="row">
               <div class="col-md-12">
-                  <p>Enter the prompt that the AI will use to generate the certificate background.</p>
-              </div>
-          </div>
-          <div class="row">
-            <div class="col-md-12">
-              <input style="color:black;visibility:hidden;" required type="text" name="id" id="promptEventId2" value="<?php echo e(isset($_GET['id']) ? $_GET['id'] : 'hehe'); ?> " />
-              <textarea required name="prompt" id="promptInput" style="width: 100%;" rows="5"></textarea>
-            </div>
-          </div>
-          <br/>
-          
-          <div class="row">
-            <div class="col-md-12">
-              <label>Fonts Customization:</label>
-              <br>
-            </div>
-            <div class="col-md-12">
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label>Heading</label>
-                    <div class="row">
-                      <div class="col-lg-10">
-                        <select class="form-control" id="cf-heading" name="cfheading">
-                          <option disabled>Select Font</option>
-                        </select>
-                      </div>
-                      <div class="col-lg-2">
-                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-heading-color" name="cfheadingcolor" />
-                      </div>
-                    </div>
-                  </div>
+
+                <input style="color:black;visibility:hidden;" required type="text" name="id" id="promptEventId" />
+                <input required readonly type="text" name="backgroundimage" id="backgroundImageInput" style="display:none;">
+                <input required readonly type="text" name="use_template" id="useTemplateInput" style="display:none;">
+                                  
+                <p>Enter the prompt that the AI will use to generate the certificate background.</p>
+
+                <div class="row">
+                  <div class="col-lg-12">
+                    <select class="form-control" id="commandsSelect">
+                      <option selected disabled>* Select pre-defined template commands</option>
+                      <?php $__currentLoopData = $commands; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $command): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <option value="<?php echo e($command); ?>"><?php echo e($command); ?></option>
+                      <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                    </select>
+                  </div>                  
                 </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label>Title</label>
-                    <div class="row">
-                      <div class="col-lg-10">
-                        <select class="form-control" id="cf-title" name="cftitle">
-                        </select>
-                      </div>
-                      <div class="col-lg-2">
-                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-title-color" name="cftitlecolor" />
-                      </div>
-                    </div>
+                <div class="row col-lg-12 m-1 mt-2">
+                  <textarea class="form-control" name="prompt" id="promptInput" style="width: 100%;" rows="5"></textarea>
+                  <div class="col-sm-6 mt-2">
+                    <button type="button" id="generateBtn" class="btn btn-secondary">Generate Image</button>
+                    <button type="button" data-dismiss="modal" id="selectTemplateBtn" class="btn btn-secondary">Select Template</button>
                   </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label>Text</label>
+                  <div class="col-lg-6">
                     <div class="row">
-                      <div class="col-lg-10">
-                        <select class="form-control" id="cf-text" name="cftext">
-                        </select>
+                      <div class="col-md-12 mt-2">
+                        <label>Fonts Customization:</label>
+                        <br>
                       </div>
-                      <div class="col-lg-2">
-                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-text-color" name="cftextcolor" />
+                      <div class="col-md-12">
+                        <div class="row">
+                          <div class="col-lg-12">
+                            <div class="form-group">
+                              <div class="row">
+                                <div class="col-lg-10">
+                                  <select class="form-control" id="fontSelect">
+                                    <option selected disabled>Select Font</option>
+                                  </select>
+                                </div>
+                                <div class="col-lg-2">
+                                  <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="colorSelect" />
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6">
-                  <div class="form-group">
-                    <label>Quotes</label>
-                    <div class="row">
-                      <div class="col-lg-10">
-                        <select class="form-control" id="cf-quotes" name="cfquotes">
-                        </select>
-                      </div>
-                      <div class="col-lg-2">
-                        <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="cf-quotes-color" name="cfquotescolor" />
-                      </div>
+                      <input readonly type="text" name="cfheading" id="cfheading" style="display:none;">
+                      <input readonly type="text" name="cftitle" id="cftitle" style="display:none;">
+                      <input readonly type="text" name="cftext" id="cftext" style="display:none;">
+                      <input readonly type="text" name="cfquotes" id="cfquotes" style="display:none;">
+
+                      <input readonly type="text" name="cfheadingcolor" id="cfheadingcolor" style="display:none;">
+                      <input readonly type="text" name="cftitlecolor" id="cftitlecolor" style="display:none;">
+                      <input readonly type="text" name="cftextcolor" id="cftextcolor" style="display:none;">
+                      <input readonly type="text" name="cfquotescolor" id="cfquotescolor" style="display:none;">
+
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
+            </div>   
 
-          <div class="mt-5">
-            <div class="col-md-12">
-              <label>Preview:</label>
-              <br>
-              <div class="row">
+            <div class="mt-5">
+              <div class="col-md-12">
+                <label>Preview:</label>
+                <br>
+                <div class="row m-3 p-2">
+                  <div class="preview-body">
+                    <center>
+                      <br><br>
+                      <h1 class="editable" id="preview-heading">CERTIFICATE OF COMPLETION</h1>
+                      <label>IS PRESENTED TO:</label>
+                      <br />
+                      <h2 class="editable" id="preview-title">Juan Dela Cruz</h2>
+                      <br />
 
-                <center>
-
-                  <h1 id="preview-heading">CERTIFICATE OF COMPLETION</h1>
-                  <label>IS PRESENTED TO:</label>
-                  <br />
-                  <h2 id="preview-title">Juan Dela Cruz</h2>
-                  <br />
-
-                  <div class="text-center" style="text-align:center;">
-                    <label id="preview-text" >This is the texts section this is the texts section</label>
-                    <br />
-                    <label id="preview-quotes" style="font-style:italic;">" This is a sample quotation section "</label>
+                      <div class="text-center" style="text-align:center;">
+                        <label class="editable" id="preview-text" >This is the texts section this is the texts section</label>
+                        <br />
+                        <label class="editable" id="preview-quotes" style="font-style:italic;">" This is a sample quotation section "</label>
+                      </div>
+                      <br>
+                      <br><br>
+                    </center>
                   </div>
 
-                </center>
-
+                </div>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
-      </div>
-      <br><br>
-      <div class="modal-footer float-right">
-        <button id="useDefaultBtn" data-dismiss="modal" data-target="exampleModal2" type="button" class="btn btn-secondary">Use Default Template</button>
-        <button id="proceedBtn" type="submit" class="btn btn-primary">Proceed</button>
-      </div>
+        <div class="modal-footer float-right">
+          <button data-dismiss="modal" type="button" class="btn btn-secondary">Cancel</button>
+          <button id="proceedBtn" type="submit" class="btn btn-primary">Proceed</button>
+        </div>
 
-    </form>
-  </div>
+      </form>
+    </div>
     
   </div>
 </div>
@@ -387,14 +340,22 @@
 
 <script src="<?php echo e(URL::asset('custom/js/customfonts.js')); ?>"></script>
 
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script> -->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
+<script>
+    // "global" vars, built using blade
+    var templatesUrl = '<?php echo e(URL::asset('images/certificates/templates/')); ?>';
 
+    $(function () {
+      $('[data-toggle="popover"]').popover()
+    })
+</script>
 <script type="text/javascript">
 
   let currentEvent = {id: null, name: ''};
+  let selectedItemToEdit = null;  
 
   const defaultPrompt = '<?php echo e(env('DEFAULT_PROMPT')); ?>';
 
@@ -407,53 +368,80 @@
   $(".promptToggleBtn").on("click", (e) => {
     let data = $(e.currentTarget).data("event");
     currentEvent = data;
-    setPromptInputValue();
+    $("#promptEventId").attr("value", currentEvent.id);
   });
 
-  $(document).ready(function() {
-    $("#useDefaultBtn").on("click", () => {
-      setPromptInputValue();
-      $("#exampleModal").modal("hide");
-      $("#exampleModal2").modal("show");
-    });
+  $("#commandsSelect").on("change", (e) => {
+    $("#promptInput").val(e.target.value);
+  });
 
-    $("#useCustomBtn").on("click", () => {
-      setPromptInputValue();
-      $("#exampleModal2").modal("hide");
-      $("#exampleModal").modal("show");
-    });
+  $("#selectTemplateBtn").on("click", (e) => {
+    $("#templateModal").modal("show");
+  });
+
+  $("#doneSelectTemplateBtn").on("click", (e) => {
+    let urlvalue = $("#backgroundImageInput").val()
+    let url = urlvalue.split("/")[3]
+    console.log(url)
+    $("#useTemplateInput").val("true")
+    $(".preview-body").attr("style", `
+      background: url(${templatesUrl}/${url});
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      object-fit:cover;`);
+      $("#templateModal").modal("hide");
+    $("#exampleModal").modal("show");
+  });
+
+  $("#cancelSelectTemplateBtn").on("click", (e) => {
+    $("#backgroundImageInput").val("")
   })
 
-  
-
-
-  // font customizations
-  loadCustomFonts("cf-heading", "preview-heading")
-  loadCustomFonts("cf-title", "preview-title")
-  loadCustomFonts("cf-text", "preview-text")
-  loadCustomFonts("cf-quotes", "preview-quotes")
-
-  $("#cf-heading-color").on("change", (e) => {
-    $("#preview-heading").css("color", e.currentTarget.value)
+  $(".editable").on("click", (e) => {
+    let id = $(e.currentTarget).attr("id")
+    loadCustomFonts("fontSelect", id, (val) => {
+      $(`#cf${id.replace("preview-", "")}`).val(val)
+    })
+    $("#colorSelect").attr("data-target", id)
+    selectedItemToEdit = id
   })
 
-  $("#cf-title-color").on("change", (e) => {
-    $("#preview-title").css("color", e.currentTarget.value)
+  $("#colorSelect").on("change", (e) => {
+    $(`#${selectedItemToEdit}`).css("color", e.currentTarget.value)
+    $(`#cf${selectedItemToEdit.replace("preview-", "")}color`).val(e.currentTarget.value)
   })
 
-  $("#cf-text-color").on("change", (e) => {
-    $("#preview-text").css("color", e.currentTarget.value)
-  })
+  $("#generateBtn").on("click", (e) => {
+    $("#generateBtn").html('<span class="spinner-border spinner-border-sm" aria-hidden="true"></span><span role="status"> Generating</span>')
+    let prompt = $("#promptInput").val()
+    let url = window.location.origin + '/api/certificate/generate?prompt='+prompt
+    $.get(url).then((res) => {
+      console.log(res)
+      $("#generateBtn").html("Generate Image")
 
-  $("#cf-quotes-color").on("change", (e) => {
-    $("#preview-quotes").css("color", e.currentTarget.value)
+      if(res){
+        $(".preview-body").attr("style", `
+          background: url(${res});
+          background-size: 100% 100%;
+          background-repeat: no-repeat;
+          object-fit:cover;`);
+        $("#backgroundImageInput").val(res)
+        $("#useTemplateInput").val("")
+      }
+
+    }).catch((error) => {
+      console.log(error)
+      $("#generateBtn").html("Generate Image")
+    })
+    
   })
 
   $(".selectTemplateBtn").on("click", (e) => {
 
     let url = $(e.target).data("url")
-    $("#templateImageUrl").val(url)
-
+    $("#backgroundImageInput").val(url)
+    $("#promptInput").val("")
+    
     $(".selectTemplateBtn").each((index) => {
 
       let btn = $(".selectTemplateBtn")[index]
