@@ -113,6 +113,20 @@
                     </div>
                 </div>
             </div>
+
+            <div class="box-body">
+                <div class="form-group">
+                    <label class="form-label">Feedback Questionnaires <span class="text-danger"></span></label><br>
+                    <label class="text-danger" id="coordformerror"></label><br>
+                    <div class="form-controlx">
+                        <button type="button" data-toggle="modal" id="addFeedBtn" data-target="#feedbackModal" class="btn waves-effect waves-light btn btn-outlined btn-primary ">
+                            <i class="ti-plus"></i> Add Question
+                        </button>
+                        <div class="row mt-5 p-5" id="feed-container"></div>
+                        <div id="feed-inputs"></div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- /.box-body -->
@@ -169,6 +183,41 @@
         <div class="modal-footer">
             <button id="sig-submitBtn" type="button" class="btn btn-primary" data-dismiss="modal">Save</button>
             <button id="sig-clearBtn" type="button" class="btn btn-secondary">Reset</button>
+        </div>
+
+        </form>
+      </div>
+    
+  </div>
+</div>
+
+<div class="modal show" id="feedbackModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+    
+      <div class="modal-content">
+        <form action="<?php echo e(route('backoffice.events.certificate-prompt')); ?>" method="POST" target="_blank">
+        <?php echo csrf_field(); ?>  <!-- This token is necessary for security reasons -->
+
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel"><i data-feather="users"></i>  &nbsp;Add Feedback Questionnaire</h5>
+            <button type="button" class="btn btn-sm btn-outlined" data-dismiss="modal" aria-label="Close" style="border:none;">
+              <i data-feather="x"></i>
+            </button>
+        </div>
+        <div class="modal-body">
+            <div class="container">
+                <div class="row">
+                    <div class="form-group <?php echo e($errors->has('name')?'error':null); ?> end-date">
+                        <label class="form-label">Question <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="feedQInput" style="width: 100%;" rows="5"></textarea>  
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button id="feed-submitBtn" type="button" class="btn btn-primary" data-dismiss="modal">Done</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
 
         </form>

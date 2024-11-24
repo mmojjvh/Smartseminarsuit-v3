@@ -126,6 +126,9 @@ class EventsController extends Controller
 
         }
 
+        //QUESTIONAIRES
+        
+
         return redirect()->route('backoffice.events.index');
     }
     

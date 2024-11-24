@@ -5,15 +5,16 @@ namespace App\Models\Backoffice;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Asignatory extends Model
+class FeedbackQuestion extends Model
 {
     use SoftDeletes;
 
-    protected $table = 'asignatories';
+    protected $table = 'feedback_questions';
     
     protected $guarded = [];
 
     public function event(){
-      return $this->belongsTo('App\Models\Event', 'event_id','id');
+        return $this->belongsTo('App\Models\Backoffice\Event', 'event_id','id');
     }
+
 }

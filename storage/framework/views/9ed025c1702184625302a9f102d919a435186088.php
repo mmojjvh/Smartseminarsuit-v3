@@ -387,6 +387,36 @@ $(function() {
     $("#coordformerror").html("")
   });  
 
+  $("#feed-submitBtn").on("click", function() {
+    let q = $("#feedQInput").val()
+    renderQuestionnaire(q)
+  })
+
+  function renderQuestionnaire(question) {
+
+    const total = $("#feed-container .feed-row").length    
+
+    $("#feed-container").append(`<div class="col-md-12 p-2 feed-row row" id="feedRow${total + 1}Main" style="border-bottom:1px solid gray;justify-content:center;align-items:center;">
+                                <div class="col-md-9 p-5" >
+                                    <button type="button" id="feedRow${total + 1}" class="btn waves-effect waves-light btn btn-sm btn-outlined btn-danger coord-row-btn">
+                                      <i class="ti-trash" style="pointer-events:none;"></i>
+                                    </button>
+                                    <label>&nbsp; ${question}</label>
+                                </div>
+                                <div class="col-md-3">
+                                </div>
+                            </div>`);
+
+    $("#feed-inputs").append(`<input id="feedRow${total + 1}input" type="text" name="feedquestions[]" multiple="multiple" style="visibility:hidden;" />`);
+
+    $(".coord-row-btn").on("click", (e) => {
+      let id = $(e.target).attr("id")
+      $(`#${id}Main`).remove()
+      $(`#${id}input`).remove()
+    });
+
+}
+
 </script>
 
 <?php $__env->stopPush(); ?>
