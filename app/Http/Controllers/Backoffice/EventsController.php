@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Logic\ImageUploader as UploadLogic;
 use App\Models\Backoffice\Coordinator;
-use App\Models\Backoffice\Asignatory;
+use App\Models\Backoffice\FeedbackQuestion;
 
 //Events
 use App\Events\SendEmailEvent;
@@ -127,7 +127,14 @@ class EventsController extends Controller
         }
 
         //QUESTIONAIRES
-        
+        if(isset($request->feedquestions) || count($request->feedquestions) > 0){
+            foreach ($request->feedquestions as $key => $feedquestion) {
+                $feedq = new FeedbackQuestion;
+                $feedq->event_id = $crudData->id;
+                $feedq->question = $feedquestion;
+                $feedq->save();
+            }
+        }
 
         return redirect()->route('backoffice.events.index');
     }
@@ -151,7 +158,13 @@ class EventsController extends Controller
     }
 
     public function view($id){
+        
         $this->data['feedbacks'] = $this->feedbackRepo->fetchFeedbacks($id);
+        
+        $questions = $this->feedbackRepo->fetchEventFeedbackQuestions($id);
+        $answers = $this->feedbackRepo->fetchUserFeedbackAnswers($id);
+        $this->data['feedback_questions_with_answer'] = $this->feedbackRepo->fetchUserFeedbacks($questions, $answers);
+
         $this->data['event'] = $this->repo->findOrFail($id);
         if(!$this->data['event']){
             return abort(404);

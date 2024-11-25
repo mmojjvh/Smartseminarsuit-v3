@@ -52,7 +52,8 @@
                                           <th>#</th>
                                           <th>Event</th>
                                           <th>Participant</th>
-                                          <th>Comment</th>
+                                          <th>Question</th>
+                                          <th>Answer</th>
                                       </tr>
                                   </thead>
                                   <tbody>
@@ -61,7 +62,8 @@
                                           <td>{{$index+1}}</td>
                                           <td><a href="{{ route('backoffice.events.view', $feedback->event_id) }}">{{$feedback->event->name}}</a></td>
                                           <td><a href="{{ route('backoffice.participants.view', $feedback->user->participant->id) }}">{{$feedback->user->name}}</a></td>
-                                          <td>{{Str::limit($feedback->comment, 50)}}</td>
+                                          <td>{{Str::limit($feedback->question, 100)}}</td>
+                                          <td>{{Str::limit($feedback->comment, 100)}}</td>
                                       </tr>
                                       @empty
                                       <tr class="hover-primary">

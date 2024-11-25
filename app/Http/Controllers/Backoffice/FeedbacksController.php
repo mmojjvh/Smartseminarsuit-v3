@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Backoffice;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
+use App\Models\Backoffice\FeedbackAnswer;
+
 //Events
 use App\Events\SendEmailEvent;
 
@@ -40,6 +42,7 @@ class FeedbacksController extends Controller
 
     public function add(FeedbackRequest $request){
         $crudData = $this->CRUDservice->save($request, $this->repo);
-        return redirect()->back();
+        $result = $this->repo->addFeedbackAnswer($request);
+        return redirect()->back();        
     }
 }

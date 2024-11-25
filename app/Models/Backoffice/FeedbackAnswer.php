@@ -21,4 +21,8 @@ class FeedbackAnswer extends Model
         return $this->belongsTo('App\Models\Backoffice\Event', 'event_id','id');
     }
 
+    public function question(){
+        return $this->belongsTo('App\Models\Backoffice\FeedbackQuestion', 'feedback_question_id', 'id');
+    }
+
 }

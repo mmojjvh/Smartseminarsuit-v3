@@ -198,7 +198,7 @@
         @csrf  <!-- This token is necessary for security reasons -->
 
         <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel"><i data-feather="users"></i>  &nbsp;Add Feedback Questionnaire</h5>
+            <h5 class="modal-title" id="exampleModalLabel"><i data-feather="clipboard"></i>  &nbsp;Add Feedback Questionnaire</h5>
             <button type="button" class="btn btn-sm btn-outlined" data-dismiss="modal" aria-label="Close" style="border:none;">
               <i data-feather="x"></i>
             </button>

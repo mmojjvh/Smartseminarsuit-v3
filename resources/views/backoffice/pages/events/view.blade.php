@@ -64,7 +64,7 @@
                 </div>
                 <div class="col-md-5">
                     
-					<div class="box">
+					<!-- <div class="box">
 						<div class="box-header with-border">
 							<h4 class="box-title"><i data-feather="message-square"></i> Feedbacks</h4>
 						</div>
@@ -100,6 +100,9 @@
                                 @endforelse
 							</div>
 						</div>
+
+                       
+
 						<div class="box-footer">
                             @if(auth()->user()->type != 'participant')
 							<a href="{{ route('backoffice.feedbacks.index', ['event_id' => $event->id]) }}" class="d-block w-p100 waves-effect waves-light btn btn-primary-light">See More Feedbacks</a>
@@ -127,7 +130,65 @@
                             @endif
                             @endif
 						</div>
-					</div>
+					</div> -->
+
+                    <div class="box">
+						<div class="box-header with-border">
+							<h4 class="box-title"><i data-feather="message-square"></i> Feedbacks</h4>
+						</div>
+						<div class="box-body p-0">
+							<div class="inner-user-div">
+                                @foreach($feedback_questions_with_answer as $feedback)
+                                    <div class="media-list bb-1 bb-dashed border-light">
+                                        <div class="media pt-2">
+                                            <p class="text-">{{$feedback->question}}</p>
+                                        </div>
+                                        @if(isset($feedback->user_answer) && $feedback->user_answer != '')
+                                            <div class="media align-items-center">                                        
+                                                <div class="media-body">
+                                                    <p class="text-primary">{{$feedback->user_answer}}</p>
+                                                </div>
+                                                <div class="media-rightx">                                            
+                                                    <span class="text-muted">{{ $feedback->user_answer_date != '' ? $feedback->user_answer_date->diffForHumans() : '' }}</span>
+                                                </div>
+                                            </div>
+                                        @else
+                                            @if(auth()->user()->type != 'participant')
+							                    <a href="{{ route('backoffice.feedbacks.index', ['event_id' => $event->id]) }}" class="d-block w-p100 waves-effect waves-light btn btn-primary-light">See More Feedbacks</a>
+                                            @else
+                                            @if($attendance)
+                                                <form action="{{ route('backoffice.feedbacks.add') }}" method="POST">
+                                                    {!! csrf_field() !!}
+                                                    <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                                    <input type="hidden" name="feedback_question_id" value="{{ $feedback->id }}">
+                                                    <input type="hidden" name="feedback_question" value="{{ $feedback->question }}">
+
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="form-group {{$errors->has('comment')?'error':null}}">
+                                                                <div class="input-group">
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="comment" class="form-control ps-15 bg-transparent form-control-md" placeholder="Your answer..." required>
+                                                                </div>
+                                                                @if($errors->has('comment'))
+                                                                <span class="help-block"><ul role="alert"><li>{{$errors->first('comment')}}</li></ul></span>
+                                                                @endif
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <button type="submit" class="waves-effect waves-light btn btn-primary-light btn-circle btn-sm"><i data-feather="send"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                @endif
+                                            @endif
+                                        @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </section>

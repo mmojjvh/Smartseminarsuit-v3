@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-md-5">
                     
-					<div class="box">
+					<!-- <div class="box">
 						<div class="box-header with-border">
 							<h4 class="box-title"><i data-feather="message-square"></i> Feedbacks</h4>
 						</div>
@@ -101,6 +101,9 @@
                                 <?php endif; ?>
 							</div>
 						</div>
+
+                       
+
 						<div class="box-footer">
                             <?php if(auth()->user()->type != 'participant'): ?>
 							<a href="<?php echo e(route('backoffice.feedbacks.index', ['event_id' => $event->id])); ?>" class="d-block w-p100 waves-effect waves-light btn btn-primary-light">See More Feedbacks</a>
@@ -129,7 +132,66 @@
                             <?php endif; ?>
                             <?php endif; ?>
 						</div>
-					</div>
+					</div> -->
+
+                    <div class="box">
+						<div class="box-header with-border">
+							<h4 class="box-title"><i data-feather="message-square"></i> Feedbacks</h4>
+						</div>
+						<div class="box-body p-0">
+							<div class="inner-user-div">
+                                <?php $__currentLoopData = $feedback_questions_with_answer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feedback): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <div class="media-list bb-1 bb-dashed border-light">
+                                        <div class="media pt-2">
+                                            <p class="text-"><?php echo e($feedback->question); ?></p>
+                                        </div>
+                                        <?php if(isset($feedback->user_answer) && $feedback->user_answer != ''): ?>
+                                            <div class="media align-items-center">                                        
+                                                <div class="media-body">
+                                                    <p class="text-primary"><?php echo e($feedback->user_answer); ?></p>
+                                                </div>
+                                                <div class="media-rightx">                                            
+                                                    <span class="text-muted"><?php echo e($feedback->user_answer_date != '' ? $feedback->user_answer_date->diffForHumans() : ''); ?></span>
+                                                </div>
+                                            </div>
+                                        <?php else: ?>
+                                            <?php if(auth()->user()->type != 'participant'): ?>
+							                    <a href="<?php echo e(route('backoffice.feedbacks.index', ['event_id' => $event->id])); ?>" class="d-block w-p100 waves-effect waves-light btn btn-primary-light">See More Feedbacks</a>
+                                            <?php else: ?>
+                                            <?php if($attendance): ?>
+                                                <form action="<?php echo e(route('backoffice.feedbacks.add')); ?>" method="POST">
+                                                    <?php echo csrf_field(); ?>
+
+                                                    <input type="hidden" name="event_id" value="<?php echo e($event->id); ?>">
+                                                    <input type="hidden" name="feedback_question_id" value="<?php echo e($feedback->id); ?>">
+                                                    <input type="hidden" name="feedback_question" value="<?php echo e($feedback->question); ?>">
+
+                                                    <div class="row">
+                                                        <div class="col-md-10">
+                                                            <div class="form-group <?php echo e($errors->has('comment')?'error':null); ?>">
+                                                                <div class="input-group">
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="comment" class="form-control ps-15 bg-transparent form-control-md" placeholder="Your answer..." required>
+                                                                </div>
+                                                                <?php if($errors->has('comment')): ?>
+                                                                <span class="help-block"><ul role="alert"><li><?php echo e($errors->first('comment')); ?></li></ul></span>
+                                                                <?php endif; ?>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-1">
+                                                            <button type="submit" class="waves-effect waves-light btn btn-primary-light btn-circle btn-sm"><i data-feather="send"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                                <?php endif; ?>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
             </div>
         </section>

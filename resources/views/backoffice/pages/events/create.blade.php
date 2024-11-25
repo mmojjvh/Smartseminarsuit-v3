@@ -397,17 +397,18 @@ $(function() {
     const total = $("#feed-container .feed-row").length    
 
     $("#feed-container").append(`<div class="col-md-12 p-2 feed-row row" id="feedRow${total + 1}Main" style="border-bottom:1px solid gray;justify-content:center;align-items:center;">
-                                <div class="col-md-9 p-5" >
-                                    <button type="button" id="feedRow${total + 1}" class="btn waves-effect waves-light btn btn-sm btn-outlined btn-danger coord-row-btn">
+                                <div class="col-md-9 p-5" >                                    
+                                    <label>&nbsp; ${question} 
+                                      <button type="button" id="feedRow${total + 1}" class="btn waves-effect waves-light btn btn-sm btn-outlined btn-danger coord-row-btn float-right">
                                       <i class="ti-trash" style="pointer-events:none;"></i>
                                     </button>
-                                    <label>&nbsp; ${question}</label>
+                                    </label>
                                 </div>
                                 <div class="col-md-3">
                                 </div>
                             </div>`);
 
-    $("#feed-inputs").append(`<input id="feedRow${total + 1}input" type="text" name="feedquestions[]" multiple="multiple" style="visibility:hidden;" />`);
+    $("#feed-inputs").append(`<input id="feedRow${total + 1}input" type="text" value="${question}" name="feedquestions[]" multiple="multiple" style="visibility:hidden;" />`);
 
     $(".coord-row-btn").on("click", (e) => {
       let id = $(e.target).attr("id")
