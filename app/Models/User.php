@@ -53,6 +53,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Models\Backoffice\Certificate', 'user_id','id');
     }
 
+    public function feedback(){
+        return $this->hasMany('App\Models\Backoffice\Feedback', 'user_id','id');
+    }
+
     public function getAvatar(){
         if(auth()->user()->type == 'participant')
             return $this->participant->getAvatar();
@@ -61,5 +65,9 @@ class User extends Authenticatable
 
     public function myCertificate($eventId){
         return $this->certificate->where('event_id', $eventId)->first();
+    }
+
+    public function myFeedback($eventId){
+        return $this->feedback->where('event_id', $eventId)->where('user_id', auth()->user()->id)->first();
     }
 }

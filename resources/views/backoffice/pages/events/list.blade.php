@@ -109,7 +109,7 @@
                                               <div class="btn-group pull-right">
                                                 @if(auth()->user()->type == 'participant')
                                                 <!-- {{ auth()->user()->myCertificate($event->id) }} -->
-                                                @if(auth()->user()->myCertificate($event->id))
+                                                @if(auth()->user()->myCertificate($event->id) && auth()->user()->myFeedback($event->id))
                                                 <a href="{{ route('backoffice.certificates.view', auth()->user()->myCertificate($event->id)->certificate_id) }}" target="_blank" class="waves-effect waves-light btn btn-warning-light"><i data-feather="award"></i>&nbsp; View Certificate</a>
                                                 @endif
                                                 <a href="{{ route('backoffice.events.view', $event->id) }}" class="waves-effect waves-light btn btn-primary-light"><i data-feather="message-square"></i>&nbsp; Give Feedback</a>

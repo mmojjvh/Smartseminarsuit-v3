@@ -110,7 +110,7 @@
                                               <div class="btn-group pull-right">
                                                 <?php if(auth()->user()->type == 'participant'): ?>
                                                 <!-- <?php echo e(auth()->user()->myCertificate($event->id)); ?> -->
-                                                <?php if(auth()->user()->myCertificate($event->id)): ?>
+                                                <?php if(auth()->user()->myCertificate($event->id) && auth()->user()->myFeedback($event->id)): ?>
                                                 <a href="<?php echo e(route('backoffice.certificates.view', auth()->user()->myCertificate($event->id)->certificate_id)); ?>" target="_blank" class="waves-effect waves-light btn btn-warning-light"><i data-feather="award"></i>&nbsp; View Certificate</a>
                                                 <?php endif; ?>
                                                 <a href="<?php echo e(route('backoffice.events.view', $event->id)); ?>" class="waves-effect waves-light btn btn-primary-light"><i data-feather="message-square"></i>&nbsp; Give Feedback</a>
