@@ -122,7 +122,9 @@
                             <i class="ti-plus"></i> Add Question
                         </button>
                         <div class="row mt-5 p-5" id="feed-container"></div>
-                        <div id="feed-inputs"></div>
+                        <div id="feed-questions"></div>
+                        <div id="feed-types"></div>
+                        <div id="feed-choices"></div>
                     </div>
                 </div>
             </div>
@@ -209,6 +211,30 @@
                     <div class="form-group {{$errors->has('name')?'error':null}} end-date">
                         <label class="form-label">Question <span class="text-danger">*</span></label>
                         <textarea class="form-control" id="feedQInput" style="width: 100%;" rows="5"></textarea>  
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="form-group">
+                            <label>Choose answer type</label>
+                            <select class="form-control" id="feed-que-type">
+                                <option>--</option>
+                                <option value="rating">Rating from 1-5</option>
+                                <option value="select">Selection</option>
+                                <option value="fill">Fill</option>
+                            </select>                        
+                        </div>
+                    </div>
+                    <div class="col-lg-8 hidden" id="feed-quee-select-form" style="display:none;">   
+                        <label>Enter a choice / answer</label>                         
+                        <div class="input-group mb-3x">                                                    
+                            <input type="text" class="form-control" id="feed-que-select-form-input">
+                            <div class="input-group-prepend">
+                                <button type="button" id="feed-que-select-form-submit" class="btn btn-sm btn-default">Add Selection</button>
+                            </div>
+                        </div>
+                    </div>                    
+                    
+                    <div class="form-group" id="feed-answer-container">
+                        
                     </div>
                 </div>
                 <br/>
