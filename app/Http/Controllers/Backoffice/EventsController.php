@@ -131,13 +131,16 @@ class EventsController extends Controller
             foreach ($request->feedquestions as $key => $feedquestion) {
                 $feedq = new FeedbackQuestion;
                 $feedq->event_id = $crudData->id;
+                // $feedq->event_id = 123;
                 $feedq->question = str_replace("?", "QUE", $feedquestion);
                 $feedq->type = $request->feedtypes[$key];
+                $feedq->choices = '';
 
-                if(isset($request->feedchoices) && isset($request->feedchoices[$key])){
-                    $feedq->choices = $request->feedchoices[$key];
-                }else{
-                    $feedq->choices = '';
+                if($request->feedtypes[$key] == 'select'){
+
+                    if(isset($request->feedchoices) && isset($request->feedchoices[$key])){
+                        $feedq->choices = $request->feedchoices[$key];
+                    }
                 }
 
                 $feedq->save();

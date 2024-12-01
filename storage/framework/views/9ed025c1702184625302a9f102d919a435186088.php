@@ -213,10 +213,13 @@ $(function() {
       feedbackQuestionnaireObj.question = q
       feedbackQuestionnaires.push(feedbackQuestionnaireObj)    
       renderQuestionnaire()
+    
+      $("#feedQInput").val("")
+      $("#feed-que-type").val("--")
+      $("#feed-answer-container").html("")
+      $("#feed-quee-select-form").hide()
+
     }
-
-
-    // ADD TO feedbackQuestionnaires list
 
   })
 
@@ -259,10 +262,12 @@ $(function() {
                 </div>
                 <div class="col-md-3"></div>
               </div>`;
-      inputs += `<input id="feedquestions${x}input" type="text" value="${question}" name="feedquestions[]" multiple="multiple" style="visibility:visible;" />`
-      typeshtml += `<input id="feedtypes${x}input" type="text" value="${type}" name="feedtypes[]" multiple="multiple" style="visibility:visible;" />`
+      inputs += `<input id="feedquestions${x}input" type="text" value="${question}" name="feedquestions[]" multiple="multiple" style="visibility:visible;" /><br>`
+      typeshtml += `<input id="feedtypes${x}input" type="text" value="${type}" name="feedtypes[]" multiple="multiple" style="visibility:visible;" /><br>`
       if(type == "select"){
-        choiceshtml += `<input id="feedchoices${x}input" type="text" value="${choices.join("andseparator")}" name="feedchoices[]" multiple="multiple" style="visibility:visible;" />`
+        choiceshtml += `<input id="feedchoices${x}input" type="text" value="${choices.join("andseparator")}" name="feedchoices[]" multiple="multiple" style="visibility:visible;" /><br>`
+      }else{
+        choiceshtml += `<input id="feedchoices${x}input" type="text" value="" name="feedchoices[]" multiple="multiple" style="visibility:visible;" /><br>`
       }
     }
 
