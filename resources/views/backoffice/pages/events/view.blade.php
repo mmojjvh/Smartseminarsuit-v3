@@ -132,6 +132,8 @@
 						</div>
 					</div> -->
 
+                    @if($event->status == 'Completed')
+
                     <div class="box">
 						<div class="box-header with-border">
 							<h4 class="box-title"><i data-feather="message-square"></i> Feedbacks</h4>
@@ -225,6 +227,8 @@
                             </div>
                         </div>
                     </div>
+
+                    @endif
 
 
                 </div>
