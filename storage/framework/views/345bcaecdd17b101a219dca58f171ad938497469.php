@@ -49,7 +49,7 @@
     </div>
 
     <center class="content">
-      <h2 class="head <?php echo e($certificate->heading_style); ?>" style="color: <?php echo e($certificate->heading_color); ?> ;">CERTIFICATE OF COMPLETION</h2>
+      <h2 class="head <?php echo e($certificate->heading_style); ?>" style="color: <?php echo e($certificate->heading_color); ?> ;"><?php echo e($certificate->title); ?></h2>
       <label style="color: <?php echo e($certificate->text_color); ?> ;">IS PRESENTED TO:</label>
 
       <br />

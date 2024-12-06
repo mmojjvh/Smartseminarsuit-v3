@@ -224,6 +224,8 @@
             <div class="row">
               <div class="col-md-12">
 
+                <input type="text" class="form-control" placeholder="Enter certificate title" name="cert_title" required id="certTitleInput" />
+
                 <input style="color:black;visibility:hidden;" required type="text" name="id" id="promptEventId" />
                 <input required readonly type="text" name="backgroundimage" id="backgroundImageInput" style="display:none;">
                 <input required readonly type="text" name="use_template" id="useTemplateInput" style="display:none;">
@@ -263,7 +265,7 @@
                                   </select>
                                 </div>
                                 <div class="col-lg-2">
-                                  <input type="color" class="form-control btn-sm" style="width:50px;height:30px:" id="colorSelect" />
+                                  <input type="color" class="form-control btn-sm" style="width:50px;height:30px;" id="colorSelect" />
                                 </div>
                               </div>
                             </div>
@@ -294,7 +296,7 @@
                   <div class="preview-body">
                     <center>
                       <br><br>
-                      <h1 class="editable" id="preview-heading">CERTIFICATE OF COMPLETION</h1>
+                      <h1 class="editable" id="preview-heading" style="text-transform:uppercase;">CERTIFICATE OF COMPLETION</h1>
                       <label>IS PRESENTED TO:</label>
                       <br />
                       <h2 class="editable" id="preview-title">Juan Dela Cruz</h2>
@@ -457,6 +459,10 @@
     
     })
 
+  })
+
+  $("#certTitleInput").on("input", (e) => {
+    $("#preview-heading").html(e.currentTarget.value)
   })
 
 </script>

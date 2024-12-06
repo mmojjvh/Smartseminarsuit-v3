@@ -48,7 +48,7 @@
     </div>
 
     <center class="content">
-      <h2 class="head {{ $certificate->heading_style }}" style="color: {{ $certificate->heading_color }} ;">CERTIFICATE OF COMPLETION</h2>
+      <h2 class="head {{ $certificate->heading_style }}" style="color: {{ $certificate->heading_color }} ;">{{ $certificate->title }}</h2>
       <label style="color: {{ $certificate->text_color }} ;">IS PRESENTED TO:</label>
 
       <br />

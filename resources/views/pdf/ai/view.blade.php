@@ -37,7 +37,7 @@
       </div>
 
       <center class="content">
-        <h2 class="head {{ $data['certificate']->heading_style }}" style="color: {{ $data['certificate']->heading_color }} ;">CERTIFICATE OF COMPLETION</h2>
+        <h2 class="head {{ $data['certificate']->heading_style }}" style="color: {{ $data['certificate']->heading_color }} ;">{{ $data['certificate']->title }}</h2>
         <label style="color: {{ $data['certificate']->text_color }} ;">IS PRESENTED TO:</label>
 
         <br />

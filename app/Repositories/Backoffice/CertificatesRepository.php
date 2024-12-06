@@ -23,7 +23,7 @@ class CertificatesRepository extends Model implements ICertificatesRepository
         return self::all();
     }
 
-    public function generateCertificate($event, $quote, $background, $styles, $useTemplate){
+    public function generateCertificate($event, $quote, $background, $styles, $useTemplate, $title){
         DB::beginTransaction();
         try {
             $attandanceList = $event->attendance;
@@ -43,6 +43,7 @@ class CertificatesRepository extends Model implements ICertificatesRepository
                 $data->directory = $event->certCat->directory;
                 $data->filename = $event->certCat->filename;
                 $data->background_image = $background;
+                $data->title = $title;
 
                 $data->heading_style = $styles["heading"];
                 $data->title_style = $styles["title"];
@@ -79,10 +80,11 @@ class CertificatesRepository extends Model implements ICertificatesRepository
         }
     }
 
-    public function updateAndFetch($id, $background, $styles, $useTemplate) {
+    public function updateAndFetch($id, $background, $styles, $useTemplate, $title) {
         
         $certificate = self::where('event_id', $id)->update([
             'background_image' => $background,
+            'title' => $title,
 
             'heading_style' => $styles["heading"],
             'title_style' => $styles["title"],
