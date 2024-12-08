@@ -207,7 +207,7 @@
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
   <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" role="document">
     
-    <div class="modal-content">
+    <div class="modal-content" style="overflow:auto;overflow-y:scroll;height: 630px;">
       <form action="{{ route('backoffice.events.certificate-prompt') }}" method="POST" target="_blank">
         @csrf  <!-- This token is necessary for security reasons -->
 

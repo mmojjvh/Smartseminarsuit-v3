@@ -53,7 +53,7 @@
 
       <br />
 
-      <h2 class="{{ $certificate->title_style }}" style="color: {{ $certificate->title_color }} ;">{{ $certificate->user_name }}</h2>
+      <h2 id="recipient_name" class="{{ $certificate->title_style }}" style="color: {{ $certificate->title_color }} ;">{{ $certificate->user_name }}</h2>
       <br />
       <hr class="large" />
       
@@ -93,6 +93,83 @@
 </div>
 
 <!-- PRINTABLE END -->
+</div>
+
+<div id="asig-certs" style="display:none;">
+
+  @if(isset($data["certificates"][0]))
+
+    @foreach ($data['coordinators'] as $coordinatorMain)
+      <div class="page-body" id="asig-certs-id-{{ $coordinatorMain->id }}">
+        <div id="pageBody" class="certificate background {{ $loop->last?'':'page-break' }}" style="
+      background: url(
+      
+      {{ $certificate->use_template == 1 ? URL::asset($certificate->background_image) : $certificate->background_image }}
+      );
+      background-size: 100% 100%;
+      background-repeat: no-repeat;
+      object-fit:cover;
+    "> 
+
+        <br /><br />
+        <div class="main">
+
+          <div class="header row">
+            <div class="col">
+              <img src="{{ URL::asset('images/psu-logo.png') }}" style="width: 100px;height: 100px;" />
+              <img class="qrcode float-right" src="{{ $certificate->qrcode }}" style="width: 100px;height: 100px;" />
+            </div>
+          </div>
+
+          <center class="content">
+            <h2 class="head {{ $certificate->heading_style }}" style="color: {{ $certificate->heading_color }} ;">{{ $certificate->title }}</h2>
+            <label style="color: {{ $certificate->text_color }} ;">IS PRESENTED TO:</label>
+
+            <br />
+
+            <h2 id="recipient_name" class="{{ $certificate->title_style }}" style="color: {{ $certificate->title_color }} ;">{{ $coordinatorMain->name }}</h2>
+            <br />
+            <hr class="large" />
+            
+
+            <!-- <p class="details">For completing the <strong>{{ $certificate->category }}</strong> with the event <br> -->
+            <p class="details {{ $certificate->text_style }}" style="color: {{ $certificate->text_color }} ;">For completing the event title of "<strong>{{ Str::title($certificate->event_name) }}</strong>" that was held on <strong>{{$certificate->date?date('M d, Y', strtotime($certificate->date)):'---'}}.</strong></p>
+            <br />
+            <p class="quote {{ $certificate->quotes_style }}" style="color: {{ $certificate->quotes_color }} ;">" {!!$certificate->quote!!} "</p>
+
+          </center>
+
+          <div>
+            <table class="signatures-table">
+              <tr>
+                <!-- Loop through the coordinators -->
+                @foreach ($data['coordinators'] as $coordinator)
+                  @if($coordinatorMain->id !== $coordinator->id)
+                    <td>
+                      <img class="" src="{{ $coordinator->signature }}" />
+                      <br>
+                      <span class="name" style="color: {{ $certificate->text_color }} ;">{{ $coordinator->name }}</span>
+                      <div class="signature-line"></div>
+                      <br>
+                      <span class="role" style="color: {{ $certificate->text_color }} ;"> {{ $coordinator->position }} </span>                        
+                    </td>
+                  @endif
+                @endforeach
+              </tr>
+            </table>
+          </div>
+          <div>
+            <img class="app-logo" src="{{ URL::asset('images/logo-long.png') }}" style="width: 150px;height: 35px;" />
+          </div>
+        </div>
+
+
+      </div>
+      </div>
+    @endforeach
+
+  @endif
+
 </div>
 
 <div class="modal show" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -151,31 +228,41 @@
           $("#exampleModal").modal("show")
           $("#sendBtn").on("click", function() {
 
+            $("#asig-certs").show()
             $("#sendBtn").html("Sending")
             $(".certificate").addClass("pdf-height")
-            
-            let opt = {
-              margin: 0,
-              filename: 'certificate.pdf',
-              image: { type: 'jpeg', quality: 0.95 },
-              html2canvas: { scrollX: 0, scrollY: 0 },
-              jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape', floatPrecision: 6 },
-              // pagebreak: { mode: 'avoid-all', after: '.page-break' }
-            }
 
-            html2pdf()
-            .set(opt)
-            .from(document.getElementById("pageBody-main"))
-            .toPdf()
-            .output('datauristring')
-            .then(function( pdfAsString ) {
-              console.log(pdfAsString)
-              let data = {
-                'fileDataURI': pdfAsString,
-                'emails': emails
+            data?.map((asignatory) => {
+
+              let email = asignatory?.email
+              let opt = {
+                margin: 0,
+                filename: 'certificate.pdf',
+                image: { type: 'jpeg', quality: 0.95 },
+                html2canvas: { scrollX: 0, scrollY: 0 },
+                jsPDF: { unit: 'in', format: 'A4', orientation: 'landscape', floatPrecision: 6 },
+                // pagebreak: { mode: 'avoid-all', after: '.page-break' }
               }
-              send(data)
-            });
+
+              html2pdf()
+              .set(opt)
+              .from(document.getElementById("asig-certs-id-" + asignatory?.id))
+              .toPdf()
+              .output('datauristring')
+              .then(function( pdfAsString ) {
+                console.log(pdfAsString)
+                let data = {
+                  'fileDataURI': pdfAsString,
+                  'emails': email
+                }
+                send(data)
+              });
+
+            })
+
+            // html2pdf().set(opt).from(document.getElementById("pageBody-main")).toPdf().get('pdf').then(function (pdf) {
+            //   window.open(pdf.output('bloburl'), '_blank');
+            // });
 
           })
         }
@@ -191,7 +278,8 @@
         console.log("Raw value:", raw)
         $(".certificate").removeClass("pdf-height")
         $("#sendBtn").html("Sent")
-        $("#exampleModal").modal("hide")
+        $("#asig-certs").hide()
+        $("#exampleModal").modal("hide")        
       } catch (error) {
         console.log(error)
         $(".certificate").removeClass("pdf-height")
