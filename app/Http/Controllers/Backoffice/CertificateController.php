@@ -76,6 +76,7 @@ class CertificateController extends Controller
 
         $event = $this->eventRepo->findOrFail($id);
         $title = $payload["cert_title"];
+        $description = $payload["cert_desc"];
         $data['title'] = 'Certificate of Completion for '.$event->name.' Participants ';
         // $data['certCat'] = $event->certCat;
         $key = array_rand(__('quotes'));
@@ -85,11 +86,11 @@ class CertificateController extends Controller
         $check = $this->certRepo->fetch($id);
 
         if($check->count() == 0){            
-            $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background, $customStyles, $useTemplate, $title);
+            $data['certificates'] = $this->certRepo->generateCertificate($event, $data['quote'], $ai_background, $customStyles, $useTemplate, $title, $description);
         }else{
 
             //update background to new generated
-            $data['certificates'] = $this->certRepo->updateAndFetch($id, $ai_background, $customStyles, $useTemplate, $title);
+            $data['certificates'] = $this->certRepo->updateAndFetch($id, $ai_background, $customStyles, $useTemplate, $title, $description);
             // $data['certificates'] = $this->certRepo->fetch($id);
         }
 

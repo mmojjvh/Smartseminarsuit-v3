@@ -46,7 +46,8 @@
         <hr class="large" />
         <br />
 
-        <p class="details <?php echo e($data['certificate']->text_style); ?>" style="color: <?php echo e($data['certificate']->text_color); ?> ;" >For completing the event title of "<strong><?php echo e(Str::title($data['certificate']->event_name)); ?></strong>" that was held on <strong><?php echo e($data['certificate']->date?date('M d, Y', strtotime($data['certificate']->date)):'---'); ?>.</strong></p>
+        <!-- <p class="details <?php echo e($data['certificate']->text_style); ?>" style="color: <?php echo e($data['certificate']->text_color); ?> ;" >For completing the event title of "<strong><?php echo e(Str::title($data['certificate']->event_name)); ?></strong>" that was held on <strong><?php echo e($data['certificate']->date?date('M d, Y', strtotime($data['certificate']->date)):'---'); ?>.</strong></p> -->
+        <p class="details <?php echo e($data['certificate']->text_style); ?>" style="color: <?php echo e($data['certificate']->text_color); ?> ;"><?php echo e($data['certificate']->description); ?></p>
         <br />
         <p class="quote <?php echo e($data['certificate']->quotes_style); ?>" style="color: <?php echo e($data['certificate']->quotes_color); ?> ;">" <?php echo $data['certificate']->quote; ?> "</p>
 

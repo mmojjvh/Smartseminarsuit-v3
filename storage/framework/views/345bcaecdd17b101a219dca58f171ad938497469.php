@@ -60,7 +60,8 @@
       
 
       <!-- <p class="details">For completing the <strong><?php echo e($certificate->category); ?></strong> with the event <br> -->
-      <p class="details <?php echo e($certificate->text_style); ?>" style="color: <?php echo e($certificate->text_color); ?> ;">For completing the event title of "<strong><?php echo e(Str::title($certificate->event_name)); ?></strong>" that was held on <strong><?php echo e($certificate->date?date('M d, Y', strtotime($certificate->date)):'---'); ?>.</strong></p>
+      <!-- <p class="details <?php echo e($certificate->text_style); ?>" style="color: <?php echo e($certificate->text_color); ?> ;">For completing the event title of "<strong><?php echo e(Str::title($certificate->event_name)); ?></strong>" that was held on <strong><?php echo e($certificate->date?date('M d, Y', strtotime($certificate->date)):'---'); ?>.</strong></p> -->
+      <p class="details <?php echo e($certificate->text_style); ?>" style="color: <?php echo e($certificate->text_color); ?> ;"><?php echo e($certificate->description); ?></p>
       <br />
       <p class="quote <?php echo e($certificate->quotes_style); ?>" style="color: <?php echo e($certificate->quotes_color); ?> ;">" <?php echo $certificate->quote; ?> "</p>
 
@@ -135,7 +136,8 @@
             
 
             <!-- <p class="details">For completing the <strong><?php echo e($certificate->category); ?></strong> with the event <br> -->
-            <p class="details <?php echo e($certificate->text_style); ?>" style="color: <?php echo e($certificate->text_color); ?> ;">For completing the event title of "<strong><?php echo e(Str::title($certificate->event_name)); ?></strong>" that was held on <strong><?php echo e($certificate->date?date('M d, Y', strtotime($certificate->date)):'---'); ?>.</strong></p>
+            <!-- <p class="details <?php echo e($certificate->text_style); ?>" style="color: <?php echo e($certificate->text_color); ?> ;">For completing the event title of "<strong><?php echo e(Str::title($certificate->event_name)); ?></strong>" that was held on <strong><?php echo e($certificate->date?date('M d, Y', strtotime($certificate->date)):'---'); ?>.</strong></p> -->
+            <p class="details <?php echo e($certificate->text_style); ?>" style="color: <?php echo e($certificate->text_color); ?> ;"><?php echo e($certificate->description); ?></p>
             <br />
             <p class="quote <?php echo e($certificate->quotes_style); ?>" style="color: <?php echo e($certificate->quotes_color); ?> ;">" <?php echo $certificate->quote; ?> "</p>
 
@@ -199,7 +201,7 @@
         </div>
         <div class="modal-footer">
             <button id="sendBtn" type="button" class="btn btn-primary" data-dismiss="modal" >Send</button>
-            <button type="button" class="btn btn-secondary">Cancel</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
 
         </form>

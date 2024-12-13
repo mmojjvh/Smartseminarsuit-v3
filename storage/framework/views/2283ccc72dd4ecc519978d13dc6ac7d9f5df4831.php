@@ -225,6 +225,7 @@
               <div class="col-md-12">
 
                 <input type="text" class="form-control" placeholder="Enter certificate title" name="cert_title" required id="certTitleInput" />
+                <textarea class="form-control mt-2" rows="2" id="certDescInput" name="cert_desc" style="width: 100%;">Enter certificate details</textarea>
 
                 <input style="color:black;visibility:hidden;" required type="text" name="id" id="promptEventId" />
                 <input required readonly type="text" name="backgroundimage" id="backgroundImageInput" style="display:none;">
@@ -464,6 +465,11 @@
   $("#certTitleInput").on("input", (e) => {
     $("#preview-heading").html(e.currentTarget.value)
   })
+
+  $("#certDescInput").on("input", (e) => {
+    $("#preview-text").html(e.currentTarget.value)
+  })
+
 
 </script>
 

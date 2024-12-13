@@ -46,7 +46,8 @@
         <hr class="large" />
         <br />
 
-        <p class="details {{ $data['certificate']->text_style }}" style="color: {{ $data['certificate']->text_color }} ;" >For completing the event title of "<strong>{{ Str::title($data['certificate']->event_name) }}</strong>" that was held on <strong>{{$data['certificate']->date?date('M d, Y', strtotime($data['certificate']->date)):'---'}}.</strong></p>
+        <!-- <p class="details {{ $data['certificate']->text_style }}" style="color: {{ $data['certificate']->text_color }} ;" >For completing the event title of "<strong>{{ Str::title($data['certificate']->event_name) }}</strong>" that was held on <strong>{{$data['certificate']->date?date('M d, Y', strtotime($data['certificate']->date)):'---'}}.</strong></p> -->
+        <p class="details {{ $data['certificate']->text_style }}" style="color: {{ $data['certificate']->text_color }} ;">{{ $data['certificate']->description }}</p>
         <br />
         <p class="quote {{ $data['certificate']->quotes_style }}" style="color: {{ $data['certificate']->quotes_color }} ;">" {!!$data['certificate']->quote!!} "</p>
 

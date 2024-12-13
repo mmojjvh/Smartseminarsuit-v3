@@ -59,7 +59,8 @@
       
 
       <!-- <p class="details">For completing the <strong>{{ $certificate->category }}</strong> with the event <br> -->
-      <p class="details {{ $certificate->text_style }}" style="color: {{ $certificate->text_color }} ;">For completing the event title of "<strong>{{ Str::title($certificate->event_name) }}</strong>" that was held on <strong>{{$certificate->date?date('M d, Y', strtotime($certificate->date)):'---'}}.</strong></p>
+      <!-- <p class="details {{ $certificate->text_style }}" style="color: {{ $certificate->text_color }} ;">For completing the event title of "<strong>{{ Str::title($certificate->event_name) }}</strong>" that was held on <strong>{{$certificate->date?date('M d, Y', strtotime($certificate->date)):'---'}}.</strong></p> -->
+      <p class="details {{ $certificate->text_style }}" style="color: {{ $certificate->text_color }} ;">{{ $certificate->description }}</p>
       <br />
       <p class="quote {{ $certificate->quotes_style }}" style="color: {{ $certificate->quotes_color }} ;">" {!!$certificate->quote!!} "</p>
 
@@ -133,7 +134,8 @@
             
 
             <!-- <p class="details">For completing the <strong>{{ $certificate->category }}</strong> with the event <br> -->
-            <p class="details {{ $certificate->text_style }}" style="color: {{ $certificate->text_color }} ;">For completing the event title of "<strong>{{ Str::title($certificate->event_name) }}</strong>" that was held on <strong>{{$certificate->date?date('M d, Y', strtotime($certificate->date)):'---'}}.</strong></p>
+            <!-- <p class="details {{ $certificate->text_style }}" style="color: {{ $certificate->text_color }} ;">For completing the event title of "<strong>{{ Str::title($certificate->event_name) }}</strong>" that was held on <strong>{{$certificate->date?date('M d, Y', strtotime($certificate->date)):'---'}}.</strong></p> -->
+            <p class="details {{ $certificate->text_style }}" style="color: {{ $certificate->text_color }} ;">{{ $certificate->description }}</p>
             <br />
             <p class="quote {{ $certificate->quotes_style }}" style="color: {{ $certificate->quotes_color }} ;">" {!!$certificate->quote!!} "</p>
 
@@ -197,7 +199,7 @@
         </div>
         <div class="modal-footer">
             <button id="sendBtn" type="button" class="btn btn-primary" data-dismiss="modal" >Send</button>
-            <button type="button" class="btn btn-secondary">Cancel</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
         </div>
 
         </form>
