@@ -142,6 +142,10 @@
 						</div>
 						<div class="box-body p-0">
 							<div class="inner-user-div">
+                                <form action="<?php echo e(route('backoffice.feedbacks.add')); ?>" method="POST">
+                                <?php echo csrf_field(); ?>
+
+                                <input type="hidden" name="event_id" value="<?php echo e($event->id); ?>">
                                 <?php $__currentLoopData = $feedback_questions_with_answer; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $feedback): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                                     <div class="media-list bb-1 bb-dashed border-light">
                                         <div class="media pt-2">
@@ -161,39 +165,37 @@
 							                    <a href="<?php echo e(route('backoffice.feedbacks.index', ['event_id' => $event->id])); ?>" class="d-block w-p100 waves-effect waves-light btn btn-primary-light">See More Feedbacks</a>
                                             <?php else: ?>
                                             <?php if($attendance): ?>
-                                                <form action="<?php echo e(route('backoffice.feedbacks.add')); ?>" method="POST">
-                                                    <?php echo csrf_field(); ?>
-
-                                                    <input type="hidden" name="event_id" value="<?php echo e($event->id); ?>">
-                                                    <input type="hidden" name="feedback_question_id" value="<?php echo e($feedback->id); ?>">
-                                                    <input type="hidden" name="feedback_question" value="<?php echo e($feedback->question); ?>">
+                                                
+                                                    
+                                                    <input type="hidden" name="feedback_question_id[]" value="<?php echo e($feedback->id); ?>">
+                                                    <input type="hidden" name="feedback_question[]" value="<?php echo e($feedback->question); ?>">
 
                                                     <div class="row">
                                                         <div class="col-md-10">
                                                             <div class="form-group <?php echo e($errors->has('comment')?'error':null); ?>">
                                                                 <div class="input-group">
                                                                     <?php if($feedback->type == 'fill'): ?>
-                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="comment" class="form-control ps-15 bg-transparent form-control-md" placeholder="Your answer..." required>
+                                                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="comment[]" class="form-control ps-15 bg-transparent form-control-md" placeholder="Your answer..." required>
                                                                     <?php elseif($feedback->type == 'rating'): ?>
                                                                     <div>                                                                        
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment" type="radio" id="ratingradio1id<?php echo e($feedback->id); ?>" value="1" required>
+                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio1id<?php echo e($feedback->id); ?>" value="1" required>
                                                                             <label class="form-check-label" for="ratingradio1id<?php echo e($feedback->id); ?>">1</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment" type="radio" id="ratingradio2id<?php echo e($feedback->id); ?>" value="2" required>
+                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio2id<?php echo e($feedback->id); ?>" value="2" required>
                                                                             <label class="form-check-label" for="ratingradio2id<?php echo e($feedback->id); ?>">2</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment" type="radio" id="ratingradio3id<?php echo e($feedback->id); ?>" value="3" required>
+                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio3id<?php echo e($feedback->id); ?>" value="3" required>
                                                                             <label class="form-check-label" for="ratingradio3id<?php echo e($feedback->id); ?>">3</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment" type="radio" id="ratingradio4id<?php echo e($feedback->id); ?>" value="4" required>
+                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio4id<?php echo e($feedback->id); ?>" value="4" required>
                                                                             <label class="form-check-label" for="ratingradio4id<?php echo e($feedback->id); ?>">4</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment" type="radio" id="ratingradio5id<?php echo e($feedback->id); ?>" value="5" required>
+                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio5id<?php echo e($feedback->id); ?>" value="5" required>
                                                                             <label class="form-check-label" for="ratingradio5id<?php echo e($feedback->id); ?>">5</label>
                                                                         </div>
                                                                         <p class="text-light"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strongly Disagree <span style="float:right;">Strongly Agree</span></p>
@@ -204,7 +206,7 @@
                                                                             $choices = explode('andseparator', $feedback->choices);
                                                                             foreach ($choices as $key => $choice) {
                                                                                 echo '<div class="form-check">
-                                                                                    <input class="form-check-input" name="comment" type="radio" id="selectradio'.$key.'id'.$feedback->id.'" value="'.$choice.'" required>
+                                                                                    <input class="form-check-input" name="comment[]" type="radio" id="selectradio'.$key.'id'.$feedback->id.'" value="'.$choice.'" required>
                                                                                     <label class="form-check-label" for="selectradio'.$key.'id'.$feedback->id.'">'.$choice.'</label>
                                                                                 </div>';
                                                                             }
@@ -217,16 +219,21 @@
                                                                 <?php endif; ?>
                                                             </div>
                                                         </div>
-                                                        <div class="col-md-1">
-                                                            <button type="submit" class="waves-effect waves-light btn btn-primary-light btn-circle btn-sm"><i data-feather="send"></i></button>
-                                                        </div>
+                                                        
                                                     </div>
-                                                </form>
+                                                
                                                 <?php endif; ?>
                                             <?php endif; ?>
                                         <?php endif; ?>
                                     </div>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                <div class="row col-md-12 m-5 p-5 d-flex">
+                                    <div class="col-lg-8"></div>
+                                    <div class="col-lg-3 btn btn-info float-right">
+                                        <span>Submit</span> <button type="submit" class="waves-effect waves-light btn btn-primary-light btn-circle btn-sm"><i data-feather="send"></i></button>
+                                    </div>
+                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>

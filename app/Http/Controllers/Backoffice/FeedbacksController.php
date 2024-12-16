@@ -41,8 +41,24 @@ class FeedbacksController extends Controller
     }
 
     public function add(FeedbackRequest $request){
-        $crudData = $this->CRUDservice->save($request, $this->repo);
-        $result = $this->repo->addFeedbackAnswer($request);
+
+        $data = $request->all();
+        $payload = new \stdClass();
+        
+        if(isset($data["feedback_question_id"]) && isset($data["comment"])){
+            
+            foreach ($data["feedback_question_id"] as $key => $value) {
+
+                $payload->event_id = $data["event_id"];
+                $payload->comment = $data["comment"][$key];
+                $payload->feedback_question = $data["feedback_question"][$key];
+                $payload->feedback_question_id = $value;
+                
+                $crudData = $this->CRUDservice->save($payload, $this->repo);
+                $result = $this->repo->addFeedbackAnswer($payload);
+            }
+        }
+        
         return redirect()->back();        
     }
 }
