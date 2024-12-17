@@ -177,25 +177,26 @@
                                                                     <?php if($feedback->type == 'fill'): ?>
                                                                     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" name="comment[]" class="form-control ps-15 bg-transparent form-control-md" placeholder="Your answer..." required>
                                                                     <?php elseif($feedback->type == 'rating'): ?>
-                                                                    <div>                                                                        
+                                                                    <div>           
+                                                                        <input type="hidden" name="comment[]" id="ratingradioid<?php echo e($feedback->id); ?>" />                                                             
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio1id<?php echo e($feedback->id); ?>" value="1" required>
+                                                                            <input class="form-check-input" name="ratingradioid<?php echo e($feedback->id); ?>" type="radio" id="ratingradio1id<?php echo e($feedback->id); ?>" value="1" required data-for="ratingradioid<?php echo e($feedback->id); ?>">
                                                                             <label class="form-check-label" for="ratingradio1id<?php echo e($feedback->id); ?>">1</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio2id<?php echo e($feedback->id); ?>" value="2" required>
+                                                                            <input class="form-check-input" name="ratingradioid<?php echo e($feedback->id); ?>" type="radio" id="ratingradio2id<?php echo e($feedback->id); ?>" value="2" required data-for="ratingradioid<?php echo e($feedback->id); ?>">
                                                                             <label class="form-check-label" for="ratingradio2id<?php echo e($feedback->id); ?>">2</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio3id<?php echo e($feedback->id); ?>" value="3" required>
+                                                                            <input class="form-check-input" name="ratingradioid<?php echo e($feedback->id); ?>" type="radio" id="ratingradio3id<?php echo e($feedback->id); ?>" value="3" required data-for="ratingradioid<?php echo e($feedback->id); ?>">
                                                                             <label class="form-check-label" for="ratingradio3id<?php echo e($feedback->id); ?>">3</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio4id<?php echo e($feedback->id); ?>" value="4" required>
+                                                                            <input class="form-check-input" name="ratingradioid<?php echo e($feedback->id); ?>" type="radio" id="ratingradio4id<?php echo e($feedback->id); ?>" value="4" required data-for="ratingradioid<?php echo e($feedback->id); ?>">
                                                                             <label class="form-check-label" for="ratingradio4id<?php echo e($feedback->id); ?>">4</label>
                                                                         </div>
                                                                         <div class="form-check form-check-inline">
-                                                                            <input class="form-check-input" name="comment[]" type="radio" id="ratingradio5id<?php echo e($feedback->id); ?>" value="5" required>
+                                                                            <input class="form-check-input" name="ratingradioid<?php echo e($feedback->id); ?>" type="radio" id="ratingradio5id<?php echo e($feedback->id); ?>" value="5" required data-for="ratingradioid<?php echo e($feedback->id); ?>">
                                                                             <label class="form-check-label" for="ratingradio5id<?php echo e($feedback->id); ?>">5</label>
                                                                         </div>
                                                                         <p class="text-light"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Strongly Disagree <span style="float:right;">Strongly Agree</span></p>
@@ -269,5 +270,14 @@
 <!-- Rhythm Admin App -->
 <script src="<?php echo e(asset('vet-clinic/main/js/template.js')); ?>"></script>
 <script src="<?php echo e(asset('vet-clinic/main/js/pages/advanced-form-element.js')); ?>"></script>
+
+<script>
+    $(".form-check-input").on("click", (e) => {
+        let value = $(e.currentTarget).val()
+        let commentInputId = $(e.currentTarget).data("for")
+        $(`#${commentInputId}`).val(value)
+    })
+</script>
+
 <?php $__env->stopPush(); ?>
 <?php echo $__env->make('backoffice._layout.main', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\wamp64\www\Smartseminarsuit-v3\resources\views/backoffice/pages/events/view.blade.php ENDPATH**/ ?>
